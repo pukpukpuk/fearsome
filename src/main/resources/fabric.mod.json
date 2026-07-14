@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "fearsome",
+  "version": "${version}",
+  "name": "Fearsome",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "unlicense",
+  "icon": "icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "fabric-datagen": [
+      "one.autremel.fearsome.FearsomeDataGenerator"
+    ],
+    "client": [
+      "one.autremel.fearsome.FearsomeMod"
+    ]
+  },
+  "mixins": [
+    "fearsome.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
