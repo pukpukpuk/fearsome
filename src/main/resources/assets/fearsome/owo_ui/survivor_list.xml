@@ -1,0 +1,75 @@
+<owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.20/owo-ui.xsd">
+    <components>
+        <flow-layout direction="vertical">
+            <children>
+                <flow-layout direction="vertical" id="root">
+                    <children/>
+
+                    <surface>
+                        <blur quality="4" size="40"/>
+                    </surface>
+
+                    <sizing>
+                        <horizontal method="content">0</horizontal>
+                        <vertical method="content">0</vertical>
+                    </sizing>
+                    <positioning type="relative">100,0</positioning>
+
+                    <padding>
+                        <all>2</all>
+                    </padding>
+                    <margins>
+                        <all>4</all>
+                    </margins>
+                    <gap>2</gap>
+                </flow-layout>
+            </children>
+        </flow-layout>
+    </components>
+    <templates>
+        <template name="survivor_entry">
+            <flow-layout direction="horizontal">
+                <children>
+                    <flow-layout direction="horizontal" id="skin_icon_container">
+                        <children/>
+                    </flow-layout>
+                    <flow-layout direction="vertical">
+                        <children>
+                            <label>
+                                <text>{{display_name}}</text>
+                            </label>
+                            <flow-layout direction="horizontal">
+                                <children>
+                                    <label>
+                                        <text>⏺</text>
+                                        <color>green</color>
+                                    </label>
+                                    <label>
+                                        <text>,_, 7-8 .i.</text>
+                                        <color>light-purple</color>
+                                    </label>
+                                </children>
+                                <gap>4</gap>
+                            </flow-layout>
+                        </children>
+                    </flow-layout>
+                </children>
+
+                <gap>4</gap>
+
+                <padding>
+                    <all>4</all>
+                </padding>
+
+                <sizing>
+                    <horizontal method="content">0</horizontal>
+                    <vertical method="content">0</vertical>
+                </sizing>
+                <surface>
+                    <flat>#90181818</flat>
+                </surface>
+            </flow-layout>
+        </template>
+    </templates>
+</owo-ui>
