@@ -32,29 +32,42 @@
             <flow-layout direction="horizontal">
                 <children>
                     <flow-layout direction="horizontal" id="skin_icon_container">
-                        <children/>
+                        <children>
+                            <texture
+                                    texture="fearsome:textures/survivor_list.png"
+                                    u="0" v="12"
+                                    region-width="12" region-height="12"
+                                    texture-width="256" texture-height="256"
+                            >
+                                <positioning type="relative">50,50</positioning>
+                                <sizing>
+                                    <vertical method="fill">100</vertical>
+                                    <horizontal method="fill">100</horizontal>
+                                </sizing>
+                            </texture>
+                        </children>
                     </flow-layout>
                     <flow-layout direction="vertical">
                         <children>
                             <label>
                                 <text>{{display_name}}</text>
                             </label>
-                            <flow-layout direction="horizontal">
-                                <children>
-                                    <label>
-                                        <text>⏺</text>
-                                        <color>green</color>
-                                    </label>
-                                    <label>
-                                        <text>,_, 7-8 .i.</text>
-                                        <color>light-purple</color>
-                                    </label>
-                                </children>
-                                <gap>4</gap>
-                            </flow-layout>
+                            <label>
+                                <text>,_, 7-8 .i.</text>
+                                <color>light-purple</color>
+                            </label>
+                            <label>
+                                <text>Чинит уу</text>
+                            </label>
                         </children>
+                        <margins>
+                            <bottom>-1</bottom>
+                        </margins>
                     </flow-layout>
+
                 </children>
+
+                <vertical-alignment>top</vertical-alignment>
 
                 <gap>4</gap>
 

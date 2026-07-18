@@ -3,9 +3,7 @@ package one.autremel.fearsome;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
-import one.autremel.fearsome.network.Networking;
-import one.autremel.fearsome.ui.OverlayScreenRegistrar;
-import one.autremel.fearsome.ui.survivor_list.SurvivorList;
+import one.autremel.fearsome.network.ping.ModPingController;
 
 
 public class FearsomeMod implements ClientModInitializer {
@@ -16,9 +14,26 @@ public class FearsomeMod implements ClientModInitializer {
             .orElse("unknown");
 
 
+    private final ModPingController modPingController
+            = new ModPingController(this::onSuccessfulHandshake, this::onDisconnectFromGame);
+
+    public boolean isGameActive() {
+        return modPingController.isGameActive();
+    }
+
+
     @Override
     public void onInitializeClient() {
-        Networking.initializeHandshake();
+        modPingController.initialize();
+    }
+
+
+    private void onSuccessfulHandshake() {
+
+    }
+
+    private void onDisconnectFromGame() {
+
     }
 
 

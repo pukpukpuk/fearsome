@@ -2,10 +2,12 @@ package one.autremel.fearsome.ui.survivor_list;
 
 import io.wispforest.owo.ui.component.UIComponents;
 import io.wispforest.owo.ui.container.FlowLayout;
+import io.wispforest.owo.ui.core.Insets;
 import io.wispforest.owo.ui.core.Positioning;
 import io.wispforest.owo.ui.core.Sizing;
 import net.minecraft.util.Identifier;
 import one.autremel.fearsome.FearsomeMod;
+import one.autremel.fearsome.ui.HideableTextureComponent;
 import one.autremel.fearsome.ui.TiledTextureComponent;
 import one.autremel.fearsome.ui.OverlayScreen;
 
@@ -19,7 +21,7 @@ public class SurvivorList extends OverlayScreen {
     private static final Identifier SHEET_ID = FearsomeMod.textureIdentifier("survivor_list");
 
     private static final int HEALTH_TEXTURE_SIZE = 12;
-    private static final int ICON_SIZE = HEALTH_TEXTURE_SIZE * 2 + 1;
+    private static final int ICON_SIZE = 20;
 
     private final List<TextEntry> textEntriesList;
     private final HashMap<String, Entry> survivorEntryMap = new HashMap<>();
@@ -42,10 +44,10 @@ public class SurvivorList extends OverlayScreen {
         if (this.uiAdapter == null) return;
 
         var maxWidth = 0;
-
         for (var textEntry : textEntriesList) {
             var entry = addSurvivorEntry(textEntry);
             entry.setHealth(10);
+            entry.setDeadState(new Random().nextBoolean());
 
             survivorEntryMap.put(entry.name(), entry);
             maxWidth = Math.max(maxWidth, entry.baseElement().width());
@@ -67,16 +69,15 @@ public class SurvivorList extends OverlayScreen {
         var texture = FearsomeMod.skinsIdentifier("survivors/"+entry.survivorKey());
         var skinIconContainer = prepareSkinIconContainer(baseElement);
 
-        createHeadTextureComponent(texture, skinIconContainer, 0);
-        createHeadTextureComponent(texture, skinIconContainer, 1);
+        addHeadIcon(texture, skinIconContainer, 0);
+        addHeadIcon(texture, skinIconContainer, 1);
+        var deadMarkTexture = addDeadMarkTexture(skinIconContainer);
 
         var healthBarProgress = createHealthBar(skinIconContainer);
 
         this.uiAdapter.rootComponent.childById(FlowLayout.class, "root").child(baseElement);
 
-        var result = new Entry(entry.name(), baseElement, healthBarProgress);
-
-        return result;
+        return new Entry(entry.name(), baseElement, healthBarProgress, deadMarkTexture);
     }
 
     private FlowLayout prepareSkinIconContainer(FlowLayout baseElement) {
@@ -86,29 +87,37 @@ public class SurvivorList extends OverlayScreen {
         return skinIconContainer;
     }
 
-    private void createHeadTextureComponent(Identifier texture, FlowLayout skinIconContainer, int layer) {
+    private void addHeadIcon(Identifier texture, FlowLayout skinIconContainer, int layer) {
         var skinIconTexture = UIComponents.texture(
                 texture,
                 8 + (layer * 32), 8,
                 8, 8,
                 64, 64);
-        skinIconTexture.sizing(Sizing.fixed(ICON_SIZE - 8));
+        skinIconTexture.margins(Insets.of(avatarMargin()));
+        skinIconTexture.sizing(Sizing.fill());
         skinIconTexture.positioning(Positioning.relative(50, 50));
 
         skinIconContainer.child(skinIconTexture);
     }
 
-    private TiledTextureComponent createHealthBar(FlowLayout skinIconContainer) {
-        var barBackground = UIComponents.texture(
+    private HideableTextureComponent addDeadMarkTexture(FlowLayout skinIconContainer) {
+        var deadMarkTexture = new HideableTextureComponent(
                 SHEET_ID,
-                0, HEALTH_TEXTURE_SIZE,
-                HEALTH_TEXTURE_SIZE, HEALTH_TEXTURE_SIZE,
+                0, HEALTH_TEXTURE_SIZE*2,
+                8, 8,
                 256, 256
         );
-        barBackground.positioning(Positioning.relative(50, 50));
-        barBackground.sizing(Sizing.fixed(ICON_SIZE));
-        skinIconContainer.child(barBackground);
+        deadMarkTexture.margins(Insets.of(avatarMargin()));
+        deadMarkTexture.sizing(Sizing.fill());
+        deadMarkTexture.positioning(Positioning.relative(50, 50));
 
+        deadMarkTexture.blend(true);
+        skinIconContainer.child(deadMarkTexture);
+
+        return deadMarkTexture;
+    }
+
+    private TiledTextureComponent createHealthBar(FlowLayout skinIconContainer) {
         var progressComponent = new TiledTextureComponent(
                 SHEET_ID,
                 0, 0,
@@ -121,5 +130,9 @@ public class SurvivorList extends OverlayScreen {
 
         skinIconContainer.child(progressComponent);
         return progressComponent;
+    }
+
+    private static int avatarMargin() {
+        return Math.ceilDiv(2 * ICON_SIZE, HEALTH_TEXTURE_SIZE);
     }
 }

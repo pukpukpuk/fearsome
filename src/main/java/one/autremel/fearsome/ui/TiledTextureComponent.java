@@ -19,6 +19,8 @@ public class TiledTextureComponent extends BaseUIComponent {
     @Setter
     private boolean blend = false;
     @Setter
+    private boolean isVisible = true;
+    @Setter
     private int tileX, tileY;
     @Setter
     private int color = -1;
@@ -26,6 +28,7 @@ public class TiledTextureComponent extends BaseUIComponent {
 
     @Override
     public void draw(OwoUIGraphics graphics, int mouseX, int mouseY, float partialTicks, float delta) {
+        if (!isVisible) return;
         var matrices = graphics.getMatrices();
         matrices.pushMatrix();
         matrices.translate(x, y);
