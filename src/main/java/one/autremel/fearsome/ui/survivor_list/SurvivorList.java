@@ -11,10 +11,7 @@ import one.autremel.fearsome.ui.HideableTextureComponent;
 import one.autremel.fearsome.ui.TiledTextureComponent;
 import one.autremel.fearsome.ui.OverlayScreen;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class SurvivorList extends OverlayScreen {
     public static final Identifier ID = FearsomeMod.uiIdentifier("survivor_list");
@@ -23,12 +20,12 @@ public class SurvivorList extends OverlayScreen {
     private static final int HEALTH_TEXTURE_SIZE = 12;
     private static final int ICON_SIZE = 20;
 
-    private final List<TextEntry> textEntriesList;
+    private final TextEntry[] entries;
     private final HashMap<String, Entry> survivorEntryMap = new HashMap<>();
 
-    public SurvivorList(List<TextEntry> entries) {
+    public SurvivorList(TextEntry[] entries) {
         super("survivor_list");
-        textEntriesList = entries;
+        this.entries = entries;
     }
 
 
@@ -44,11 +41,8 @@ public class SurvivorList extends OverlayScreen {
         if (this.uiAdapter == null) return;
 
         var maxWidth = 0;
-        for (var textEntry : textEntriesList) {
+        for (var textEntry : entries) {
             var entry = addSurvivorEntry(textEntry);
-            entry.setHealth(10);
-            entry.setDeadState(new Random().nextBoolean());
-
             survivorEntryMap.put(entry.name(), entry);
             maxWidth = Math.max(maxWidth, entry.baseElement().width());
         }

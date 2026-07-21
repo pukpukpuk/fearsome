@@ -3,8 +3,9 @@ package one.autremel.fearsome;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
+import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.network.ping.ModPingController;
-
+import one.autremel.fearsome.ui.UiController;
 
 public class FearsomeMod implements ClientModInitializer {
     public static final String NAMESPACE = "fearsome";
@@ -13,33 +14,24 @@ public class FearsomeMod implements ClientModInitializer {
             .map(container -> container.getMetadata().getVersion().getFriendlyString())
             .orElse("unknown");
 
-
-    private final ModPingController modPingController
-            = new ModPingController(this::onSuccessfulHandshake, this::onDisconnectFromGame);
-
-    public boolean isGameActive() {
-        return modPingController.isGameActive();
-    }
-
-
     @Override
     public void onInitializeClient() {
-        modPingController.initialize();
+        NetworkController.initialize();
+        ModPingController.initialize(this::onSuccessfulHandshake, this::onDisconnectFromGame);
+
+        UiController.initialize();
     }
 
 
     private void onSuccessfulHandshake() {
-
+        //TODO
     }
 
     private void onDisconnectFromGame() {
-
+        //TODO
     }
 
 
-    public static Identifier payloadIdentifier(String path) {
-        return identifier("payloads/"+path);
-    }
     public static Identifier uiIdentifier(String path) {
         return identifier("ui/"+path);
     }

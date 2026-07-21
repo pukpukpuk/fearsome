@@ -1,35 +1,42 @@
 package one.autremel.fearsome.network.ping;
 
+import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.text.Text;
 import one.autremel.fearsome.FearsomeMod;
+import one.autremel.fearsome.network.NetworkController;
+import one.autremel.fearsome.network.PayloadCodecsContainer;
+import one.autremel.fearsome.network.PayloadId;
 import one.autremel.fearsome.ui.WrongVersionDisconnectScreen;
 
 @RequiredArgsConstructor
 public class ModPingController {
-    private final Runnable successfulHandshakeCallback;
-    private final Runnable disconnectFromGameCallback;
+    private static ModPingController INSTANCE;
 
-    @Getter
+    private final Runnable successfulHandshakeCallback, disconnectFromGameCallback;
+
     private boolean isGameActive;
 
     private boolean isWaitingServerResponse;
 
-    public void initialize() {
-        PayloadTypeRegistry.playC2S().register(PingPayload.ID, PingPayload.CODEC);
-        PayloadTypeRegistry.playS2C().register(PingPayload.ID, PingPayload.CODEC);
+    public static void initialize(Runnable successfulHandshakeCallback, Runnable disconnectFromGameCallback) {
+        Preconditions.checkState(INSTANCE == null);
+        INSTANCE = new ModPingController(successfulHandshakeCallback, disconnectFromGameCallback);
 
-        ClientPlayConnectionEvents.JOIN.register(this::onJoin);
-        ClientPlayConnectionEvents.DISCONNECT.register(this::onDisconnect);
+        ClientPlayConnectionEvents.JOIN.register(INSTANCE::onJoin);
+        ClientPlayConnectionEvents.DISCONNECT.register(INSTANCE::onDisconnect);
 
-        ClientPlayNetworking.registerGlobalReceiver(PingPayload.ID, this::handlePacketFromServer);
+        NetworkController.register(PayloadId.PING, INSTANCE::handlePingPayload);
+    }
+
+    public static boolean isGameActive() {
+        return INSTANCE.isGameActive;
     }
 
 
@@ -48,14 +55,14 @@ public class ModPingController {
     }
 
 
-    private void handlePacketFromServer(PingPayload payload, ClientPlayNetworking.Context context) {
+    private void handlePingPayload(PingPayload payload) {
         if (!isWaitingServerResponse) return;
         isWaitingServerResponse = false;
 
         var server = payload.version();
         var own = FearsomeMod.VERSION;
 
-        var client = context.client();
+        var client = MinecraftClient.getInstance();
         if (!own.equals(server)) {
             client.disconnect(Text.of(String.format("Mod version mismatch! Server: %s, Client: %s", server, own)));
 

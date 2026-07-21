@@ -3,19 +3,17 @@ package one.autremel.fearsome.network.ping;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
-import one.autremel.fearsome.FearsomeMod;
+import one.autremel.fearsome.network.IPayload;
+import one.autremel.fearsome.network.PayloadId;
 
-record PingPayload(String version) implements CustomPayload {
-    public static final Id<PingPayload> ID = new Id<>(FearsomeMod.payloadIdentifier("mod_ping"));
-
+public record PingPayload(String version) implements IPayload { //TODO
     public static final PacketCodec<RegistryByteBuf, PingPayload> CODEC = PacketCodec.tuple(
             PacketCodecs.STRING, PingPayload::version,
             PingPayload::new
     );
 
     @Override
-    public Id<? extends CustomPayload> getId() {
-        return ID;
+    public PayloadId<PingPayload> getPayloadId() {
+        return PayloadId.PING;
     }
 }
