@@ -4,6 +4,7 @@ import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import one.autremel.fearsome.network.IPayload;
 import one.autremel.fearsome.network.PayloadId;
+import org.jspecify.annotations.NonNull;
 
 public record CreateSurvivorListPayload(TextEntry[] entries) implements IPayload {
     public static final PacketCodec<RegistryByteBuf, CreateSurvivorListPayload> CODEC
@@ -28,7 +29,7 @@ public record CreateSurvivorListPayload(TextEntry[] entries) implements IPayload
 
 
     @Override
-    public PayloadId<CreateSurvivorListPayload> getPayloadId() {
+    public @NonNull PayloadId<CreateSurvivorListPayload> getPayloadId() {
         return PayloadId.CREATE_SURVIVOR_LIST;
     }
 }

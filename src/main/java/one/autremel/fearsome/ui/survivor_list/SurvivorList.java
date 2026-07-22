@@ -20,14 +20,19 @@ public class SurvivorList extends OverlayScreen {
     private static final int HEALTH_TEXTURE_SIZE = 12;
     private static final int ICON_SIZE = 20;
 
-    private final TextEntry[] entries;
-    private final HashMap<String, Entry> survivorEntryMap = new HashMap<>();
+    private final TextEntry[] textEntries;
+    private final Entry[] entries;
 
-    public SurvivorList(TextEntry[] entries) {
+    public SurvivorList(TextEntry[] textEntries) {
         super("survivor_list");
-        this.entries = entries;
+        this.textEntries = textEntries;
+
+        entries = new Entry[textEntries.length];
     }
 
+    public Entry getEntry(int index) {
+        return entries[index];
+    }
 
 
     @Override
@@ -41,15 +46,15 @@ public class SurvivorList extends OverlayScreen {
         if (this.uiAdapter == null) return;
 
         var maxWidth = 0;
-        for (var textEntry : entries) {
-            var entry = addSurvivorEntry(textEntry);
-            survivorEntryMap.put(entry.name(), entry);
+        for (int i = 0; i < textEntries.length; i++) {
+            var entry = addSurvivorEntry(textEntries[i]);
+            entries[i] = entry;
             maxWidth = Math.max(maxWidth, entry.baseElement().width());
         }
 
         var size = Sizing.fixed(maxWidth);
-        for (var element : survivorEntryMap.values()) {
-            element.baseElement().horizontalSizing(size);
+        for (var entry : entries) {
+            entry.baseElement().horizontalSizing(size);
         }
     }
 

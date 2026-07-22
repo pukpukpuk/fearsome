@@ -11,7 +11,6 @@ import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.text.Text;
 import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.network.NetworkController;
-import one.autremel.fearsome.network.PayloadCodecsContainer;
 import one.autremel.fearsome.network.PayloadId;
 import one.autremel.fearsome.ui.WrongVersionDisconnectScreen;
 

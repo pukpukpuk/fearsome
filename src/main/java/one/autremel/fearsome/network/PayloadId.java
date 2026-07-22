@@ -6,6 +6,8 @@ import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import one.autremel.fearsome.network.ping.PingPayload;
 import one.autremel.fearsome.ui.survivor_list.CreateSurvivorListPayload;
+import one.autremel.fearsome.ui.survivor_list.SetSurvivorDeadStatePayload;
+import one.autremel.fearsome.ui.survivor_list.SetSurvivorHealthAmountPayload;
 import org.apache.logging.log4j.util.Lazy;
 
 import java.lang.reflect.Modifier;
@@ -22,6 +24,10 @@ public final class PayloadId<T extends IPayload> {
     public static final PayloadId<PingPayload> PING = new PayloadId<>(0, PingPayload.CODEC, false);
 
     public static final PayloadId<CreateSurvivorListPayload> CREATE_SURVIVOR_LIST = new PayloadId<>(1, CreateSurvivorListPayload.CODEC);
+    public static final PayloadId<SetSurvivorHealthAmountPayload> SET_SURVIVOR_HEALTH_AMOUNT = new PayloadId<>(2, SetSurvivorHealthAmountPayload.CODEC);
+    public static final PayloadId<SetSurvivorDeadStatePayload> SET_SURVIVOR_DEAD_STATE = new PayloadId<>(3, SetSurvivorDeadStatePayload.CODEC);
+
+    public static final PayloadId<RemoveScreensPayload> REMOVE_SCREENS = new PayloadId<>(10, RemoveScreensPayload.CODEC);
 
 
     @Getter
@@ -83,7 +89,10 @@ public final class PayloadId<T extends IPayload> {
     private static PayloadId<? extends IPayload>[] calculateValuesIdMap() {
         var result = new PayloadId[PayloadId.getMaxId() + 1];
         for (var payloadId : getValues()) {
-            result[payloadId.getIntId()] = payloadId;
+            var index = payloadId.getIntId();
+            Preconditions.checkState(result[index] == null);
+
+            result[index] = payloadId;
         }
 
         return result;

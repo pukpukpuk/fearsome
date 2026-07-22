@@ -5,7 +5,7 @@ import io.wispforest.owo.ui.container.FlowLayout;
 import one.autremel.fearsome.ui.HideableTextureComponent;
 import one.autremel.fearsome.ui.TiledTextureComponent;
 
-record Entry(
+public record Entry(
         String name,
         FlowLayout baseElement,
         TiledTextureComponent healthBarProgress,
