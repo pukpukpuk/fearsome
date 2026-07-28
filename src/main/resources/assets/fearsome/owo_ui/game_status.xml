@@ -1,0 +1,60 @@
+<owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.20/owo-ui.xsd">
+    <components>
+        <flow-layout direction="vertical">
+            <children>
+                <flow-layout direction="vertical" id="root">
+                    <children>
+                        <flow-layout direction="horizontal">
+                            <children>
+                                <label>
+                                    <text translate="true">gui.game_status.until_end</text>
+                                </label>
+                                <label id="until_end_time">
+                                    <text>14:88</text>
+                                </label>
+                            </children>
+                        </flow-layout>
+                        <flow-layout direction="horizontal">
+                            <children>
+                                <label>
+                                    <text translate="true">gui.game_status.generators.count</text>
+                                </label>
+                                <label id="generators_count">
+                                    <text>1/5</text>
+                                </label>
+                            </children>
+                        </flow-layout>
+                        <flow-layout direction="horizontal">
+                            <children>
+                                <label>
+                                    <text translate="true">gui.game_status.generators.status</text>
+                                </label>
+                                <label id="generators_status">
+                                    <text translate="true"/>
+                                </label>
+                                <label id="quests_count">
+                                    <text>1/2</text>
+                                </label>
+                            </children>
+                        </flow-layout>
+                    </children>
+
+                    <positioning type="relative">0,0</positioning>
+
+                    <surface>
+                        <flat>#90181818</flat>
+                    </surface>
+                </flow-layout>
+            </children>
+
+            <padding>
+                <all>2</all>
+            </padding>
+
+            <surface>
+                <blur quality="4" size="40"/>
+            </surface>
+        </flow-layout>
+    </components>
+</owo-ui>

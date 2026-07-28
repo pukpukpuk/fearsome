@@ -3,7 +3,9 @@ package one.autremel.fearsome.network;
 import com.google.common.base.Preconditions;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.network.ping.ModPingController;
+import one.autremel.fearsome.network.ping.PingPayload;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,6 @@ public class NetworkController {
         PayloadTypeRegistry.playC2S().register(PayloadCodecsContainer.ID, PayloadCodecsContainer.MAIN_CODEC);
         PayloadTypeRegistry.playS2C().register(PayloadCodecsContainer.ID, PayloadCodecsContainer.MAIN_CODEC);
 
-
         ClientPlayNetworking.registerGlobalReceiver(PayloadCodecsContainer.ID, INSTANCE::handleReceivedPacket);
     }
 
@@ -30,6 +31,10 @@ public class NetworkController {
 
         var handlers = INSTANCE.registeredHandlers.get(index);
         handlers.add(new PayloadHandler<>(consumer));
+    }
+
+    public static void send(IPayload payload) {
+        ClientPlayNetworking.send(payload);
     }
 
     private static void call(IPayload payload) {

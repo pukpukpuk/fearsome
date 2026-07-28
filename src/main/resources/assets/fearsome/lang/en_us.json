@@ -1,4 +1,0 @@
-{
-  "gui.go_to_mod_github": "Download actual version",
-  "gui.mod_version_mismatch": "The mod version does not match the server version!\nOn server: %1$s, on client: %2$s"
-}

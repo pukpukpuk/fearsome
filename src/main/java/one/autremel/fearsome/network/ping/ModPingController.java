@@ -1,10 +1,8 @@
 package one.autremel.fearsome.network.ping;
 
 import com.google.common.base.Preconditions;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -40,7 +38,11 @@ public class ModPingController {
 
 
     private void onJoin(ClientPlayNetworkHandler handler, PacketSender sender, MinecraftClient client) {
-        ClientPlayNetworking.send(new PingPayload(FearsomeMod.VERSION));
+        var t1 = System.currentTimeMillis();
+        TimeSynchronizer.setT1(t1);
+
+        var payload = new PingPayload(FearsomeMod.VERSION, t1);
+        NetworkController.send(payload);
         isWaitingServerResponse = true;
     }
 
@@ -70,6 +72,8 @@ public class ModPingController {
             client.execute(() -> client.setScreen(screen));
             return;
         }
+
+        TimeSynchronizer.calculateDelta(payload);
 
         isGameActive = true;
         client.execute(successfulHandshakeCallback);

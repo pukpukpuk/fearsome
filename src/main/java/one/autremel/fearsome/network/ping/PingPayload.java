@@ -7,9 +7,10 @@ import one.autremel.fearsome.network.IPayload;
 import one.autremel.fearsome.network.PayloadId;
 import org.jspecify.annotations.NonNull;
 
-public record PingPayload(String version) implements IPayload {
+public record PingPayload(String version, long senderTimestamp) implements IPayload {
     public static final PacketCodec<RegistryByteBuf, PingPayload> CODEC = PacketCodec.tuple(
             PacketCodecs.STRING, PingPayload::version,
+            PacketCodecs.LONG, PingPayload::senderTimestamp,
             PingPayload::new
     );
 

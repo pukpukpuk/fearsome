@@ -6,7 +6,7 @@
   "description": "",
   "authors": [],
   "contact": {},
-  "license": "unlicense",
+  "license": "MIT",
   "icon": "icon.png",
   "environment": "client",
   "entrypoints": {
@@ -17,9 +17,6 @@
       "one.autremel.fearsome.FearsomeMod"
     ]
   },
-  "mixins": [
-    "fearsome.mixins.json"
-  ],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",

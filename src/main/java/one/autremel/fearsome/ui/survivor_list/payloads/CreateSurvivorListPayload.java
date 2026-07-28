@@ -1,9 +1,10 @@
-package one.autremel.fearsome.ui.survivor_list;
+package one.autremel.fearsome.ui.survivor_list.payloads;
 
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import one.autremel.fearsome.network.IPayload;
 import one.autremel.fearsome.network.PayloadId;
+import one.autremel.fearsome.ui.survivor_list.TextEntry;
 import org.jspecify.annotations.NonNull;
 
 public record CreateSurvivorListPayload(TextEntry[] entries) implements IPayload {

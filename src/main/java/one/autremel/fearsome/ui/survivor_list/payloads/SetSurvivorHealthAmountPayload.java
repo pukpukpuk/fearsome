@@ -1,4 +1,4 @@
-package one.autremel.fearsome.ui.survivor_list;
+package one.autremel.fearsome.ui.survivor_list.payloads;
 
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;

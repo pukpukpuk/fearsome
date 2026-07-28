@@ -2,12 +2,15 @@ package one.autremel.fearsome.ui.survivor_list;
 
 import io.wispforest.owo.ui.component.UIComponents;
 import io.wispforest.owo.ui.container.FlowLayout;
+import io.wispforest.owo.ui.container.StackLayout;
 import io.wispforest.owo.ui.core.Insets;
 import io.wispforest.owo.ui.core.Positioning;
 import io.wispforest.owo.ui.core.Sizing;
+import lombok.Getter;
 import net.minecraft.util.Identifier;
 import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.ui.HideableTextureComponent;
+import one.autremel.fearsome.ui.LinearBar;
 import one.autremel.fearsome.ui.TiledTextureComponent;
 import one.autremel.fearsome.ui.OverlayScreen;
 
@@ -18,10 +21,14 @@ public class SurvivorList extends OverlayScreen {
     private static final Identifier SHEET_ID = FearsomeMod.textureIdentifier("survivor_list");
 
     private static final int HEALTH_TEXTURE_SIZE = 12;
-    private static final int ICON_SIZE = 20;
+    private static final int ICON_SIZE = 18;
 
-    private final TextEntry[] textEntries;
+    private TextEntry[] textEntries;
     private final Entry[] entries;
+    private TextBlocksResizer textBlocksResizer;
+
+    @Getter
+    private boolean isCollapsed;
 
     public SurvivorList(TextEntry[] textEntries) {
         super("survivor_list");
@@ -34,10 +41,16 @@ public class SurvivorList extends OverlayScreen {
         return entries[index];
     }
 
+    public void setCollapsed(boolean isCollapsed) {
+        if (this.isCollapsed == isCollapsed) return;
+        this.isCollapsed = isCollapsed;
+
+        textBlocksResizer.setExpandedState(isCollapsed);
+    }
+
 
     @Override
     protected void build(FlowLayout rootComponent) {
-
     }
 
     @Override
@@ -45,17 +58,16 @@ public class SurvivorList extends OverlayScreen {
         super.init();
         if (this.uiAdapter == null) return;
 
-        var maxWidth = 0;
         for (int i = 0; i < textEntries.length; i++) {
             var entry = addSurvivorEntry(textEntries[i]);
             entries[i] = entry;
-            maxWidth = Math.max(maxWidth, entry.baseElement().width());
         }
 
-        var size = Sizing.fixed(maxWidth);
-        for (var entry : entries) {
-            entry.baseElement().horizontalSizing(size);
-        }
+        textEntries = null;
+
+        textBlocksResizer = new TextBlocksResizer(entries);
+        textBlocksResizer.calculateMaxWidth();
+        textBlocksResizer.setExpandedState(false);
     }
 
     private Entry addSurvivorEntry(TextEntry entry) {
@@ -65,28 +77,32 @@ public class SurvivorList extends OverlayScreen {
                 Map.of("display_name", entry.name())
         );
 
+        baseElement.verticalSizing(Sizing.fixed(ICON_SIZE + baseElement.padding().get().vertical()));
+
         var texture = FearsomeMod.skinsIdentifier("survivors/"+entry.survivorKey());
         var skinIconContainer = prepareSkinIconContainer(baseElement);
 
         addHeadIcon(texture, skinIconContainer, 0);
         addHeadIcon(texture, skinIconContainer, 1);
+        var healthBarProgress = createHealthBar(skinIconContainer);
         var deadMarkTexture = addDeadMarkTexture(skinIconContainer);
 
-        var healthBarProgress = createHealthBar(skinIconContainer);
+        var textBlock = baseElement.childById(FlowLayout.class, "text_block");
+
+        var deathTimerBar = createDeathTimerBar(baseElement);
 
         this.uiAdapter.rootComponent.childById(FlowLayout.class, "root").child(baseElement);
-
-        return new Entry(entry.name(), baseElement, healthBarProgress, deadMarkTexture);
+        return new Entry(entry.name(), baseElement, healthBarProgress, deadMarkTexture, textBlock, deathTimerBar);
     }
 
-    private FlowLayout prepareSkinIconContainer(FlowLayout baseElement) {
-        var skinIconContainer = baseElement.childById(FlowLayout.class, "skin_icon_container");
+    private StackLayout prepareSkinIconContainer(FlowLayout baseElement) {
+        var skinIconContainer = baseElement.childById(StackLayout.class, "skin_icon_container");
         skinIconContainer.sizing(Sizing.fixed(ICON_SIZE));
 
         return skinIconContainer;
     }
 
-    private void addHeadIcon(Identifier texture, FlowLayout skinIconContainer, int layer) {
+    private void addHeadIcon(Identifier texture, StackLayout skinIconContainer, int layer) {
         var skinIconTexture = UIComponents.texture(
                 texture,
                 8 + (layer * 32), 8,
@@ -94,12 +110,11 @@ public class SurvivorList extends OverlayScreen {
                 64, 64);
         skinIconTexture.margins(Insets.of(avatarMargin()));
         skinIconTexture.sizing(Sizing.fill());
-        skinIconTexture.positioning(Positioning.relative(50, 50));
 
         skinIconContainer.child(skinIconTexture);
     }
 
-    private HideableTextureComponent addDeadMarkTexture(FlowLayout skinIconContainer) {
+    private HideableTextureComponent addDeadMarkTexture(StackLayout skinIconContainer) {
         var deadMarkTexture = new HideableTextureComponent(
                 SHEET_ID,
                 0, HEALTH_TEXTURE_SIZE*2,
@@ -108,7 +123,6 @@ public class SurvivorList extends OverlayScreen {
         );
         deadMarkTexture.margins(Insets.of(avatarMargin()));
         deadMarkTexture.sizing(Sizing.fill());
-        deadMarkTexture.positioning(Positioning.relative(50, 50));
 
         deadMarkTexture.blend(true);
         skinIconContainer.child(deadMarkTexture);
@@ -116,7 +130,7 @@ public class SurvivorList extends OverlayScreen {
         return deadMarkTexture;
     }
 
-    private TiledTextureComponent createHealthBar(FlowLayout skinIconContainer) {
+    private TiledTextureComponent createHealthBar(StackLayout skinIconContainer) {
         var progressComponent = new TiledTextureComponent(
                 SHEET_ID,
                 0, 0,
@@ -124,12 +138,20 @@ public class SurvivorList extends OverlayScreen {
                 256, 256
         );
 
-        progressComponent.positioning(Positioning.relative(50, 50));
-        progressComponent.sizing(Sizing.fixed(ICON_SIZE));
+        progressComponent.sizing(Sizing.fill());
 
         skinIconContainer.child(progressComponent);
         return progressComponent;
     }
+
+    private LinearBar createDeathTimerBar(FlowLayout baseElement) {
+        var bar = new LinearBar(0xFF3C3C3C, true);
+
+        var container = baseElement.childById(StackLayout.class, "death_timer_container");
+        container.child(bar);
+        return bar;
+    }
+
 
     private static int avatarMargin() {
         return Math.ceilDiv(2 * ICON_SIZE, HEALTH_TEXTURE_SIZE);

@@ -3,8 +3,13 @@ package one.autremel.fearsome;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
+import one.autremel.fearsome.config.ClientConfig;
+import one.autremel.fearsome.config.GameConfig;
+import one.autremel.fearsome.input.KeyBindings;
+import one.autremel.fearsome.input.KeyEvents;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.network.ping.ModPingController;
+import one.autremel.fearsome.network.ping.TimeSynchronizer;
 import one.autremel.fearsome.ui.UiController;
 
 public class FearsomeMod implements ClientModInitializer {
@@ -13,9 +18,14 @@ public class FearsomeMod implements ClientModInitializer {
             .getModContainer(NAMESPACE)
             .map(container -> container.getMetadata().getVersion().getFriendlyString())
             .orElse("unknown");
+    public static final ClientConfig CONFIG = ClientConfig.createAndLoad();
+    public static final GameConfig GAME_CONFIG = GameConfig.createAndLoad();
 
     @Override
     public void onInitializeClient() {
+        KeyBindings.initialize();
+        KeyEvents.initialize();
+
         NetworkController.initialize();
         ModPingController.initialize(this::onSuccessfulHandshake, this::onDisconnectFromGame);
 
@@ -28,9 +38,15 @@ public class FearsomeMod implements ClientModInitializer {
     }
 
     private void onDisconnectFromGame() {
-        //TODO
+        TimeSynchronizer.reset();
+        UiController.reset();
     }
 
+
+
+    public static String keyTextIdentifier(String path) {
+        return NAMESPACE+".key."+path;
+    }
 
     public static Identifier uiIdentifier(String path) {
         return identifier("ui/"+path);
