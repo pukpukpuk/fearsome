@@ -1,4 +1,5 @@
 {
+    "modmenu.descriptionTranslation.fearsome": "Необходимый клиентский мод для игры в Fear: GOTY Edition",
     "gui.{}": {
         "go_to_mod_github": "Скачать актуальную версию",
         "mod_version_mismatch": "Несоответствие версии мода с версией сервера!\nНа сервере: %1$s, клиент: %2$s"
@@ -15,6 +16,7 @@
         "enum.survivorListExpandType.hold": "Зажатие",
         "enum.survivorListExpandType.toggle": "Переключение"
     },
+
 
     "gui.game_status.{}": {
         "until_end": "До конца: ",

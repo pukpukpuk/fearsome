@@ -1,26 +1,41 @@
 {
-  "schemaVersion": 1,
-  "id": "fearsome",
-  "version": "${version}",
-  "name": "Fearsome",
-  "description": "",
-  "authors": [],
-  "contact": {},
-  "license": "MIT",
-  "icon": "icon.png",
-  "environment": "client",
-  "entrypoints": {
-    "fabric-datagen": [
-      "one.autremel.fearsome.FearsomeDataGenerator"
-    ],
-    "client": [
-      "one.autremel.fearsome.FearsomeMod"
-    ]
-  },
-  "depends": {
-    "fabricloader": ">=${loader_version}",
-    "fabric-api": "*",
-    "minecraft": "${minecraft_version}",
-    "owo-lib": "${owo_version}"
-  }
+    "schemaVersion": 1,
+    "id": "fearsome",
+    "version": "${version}",
+    "environment": "client",
+    "entrypoints": {
+        "fabric-datagen": [
+            "one.autremel.fearsome.FearsomeDataGenerator"
+        ],
+        "client": [
+            "one.autremel.fearsome.FearsomeMod"
+        ]
+    },
+    "depends": {
+        "fabricloader": ">=${loader_version}",
+        "fabric-api": "*",
+        "minecraft": "${minecraft_version}",
+        "owo-lib": "${owo_version}"
+    },
+
+    "name": "Fearsome",
+    "icon": "icon.png",
+    "authors": ["pukpukpuk"],
+    "description": "A required client-side mod for Fear: GOTY Edition",
+    "license": "MIT",
+    "contact": {
+        "homepage": "https://www.youtube.com/watch?v=PkT0PJwy8mI",
+        "issues": "https://github.com/pukpukpuk/fearsome/issues"
+    },
+    "custom": {
+        "modmenu": {
+            "links": {
+                "modmenu.discord": "https://discord.gg/trmFnBRUGg",
+                "modmenu.github_releases": "https://github.com/pukpukpuk/fearsome/releases",
+                "modmenu.source": "https://github.com/pukpukpuk/fearsome"
+            },
+            "update_checker": false
+        }
+    }
+
 }
