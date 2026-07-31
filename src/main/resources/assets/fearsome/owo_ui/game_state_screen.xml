@@ -1,0 +1,109 @@
+<owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.20/owo-ui.xsd">
+    <components>
+        <flow-layout direction="vertical">
+            <children>
+                <flow-layout direction="horizontal">
+                    <children>
+                        <stack-layout id="minimap_root">
+                            <children>
+                                <box>
+                                    <color>#FF000000</color>
+                                    <fill>true</fill>
+                                    <sizing>
+                                        <vertical method="fill">100</vertical>
+                                        <horizontal method="fill">100</horizontal>
+                                    </sizing>
+                                </box>
+                                <label>
+                                    <text>карта</text>
+                                </label>
+                            </children>
+                            <sizing>
+                                <horizontal method="fixed">48</horizontal>
+                                <vertical method="fixed">48</vertical>
+                            </sizing>
+                        </stack-layout>
+                        <flow-layout direction="vertical" id="personal_info_root">
+                            <children>
+
+                            </children>
+                        </flow-layout>
+                    </children>
+                    <gap>2</gap>
+                </flow-layout>
+                <flow-layout direction="vertical" id="global_info_root">
+                    <children>
+<!--                        first line-->
+                        <flow-layout direction="horizontal">
+                            <children>
+                                <texture texture="fearsome:textures/ui/icons/hourglass.png"
+                                         u="0" v="0"
+                                         region-width="7" region-height="7"
+                                         texture-width="7" texture-height="7"
+                                >
+                                </texture>
+                                <label id="until_end_timer">
+                                    <text>14:88</text>
+                                    <sizing>
+                                        <vertical method="fixed">8</vertical>
+                                    </sizing>
+                                </label>
+                            </children>
+                            <gap>2</gap>
+                        </flow-layout>
+
+<!--                        second line-->
+                        <flow-layout direction="horizontal">
+                            <children>
+<!--                                generators part-->
+                                <flow-layout direction="horizontal">
+                                    <children>
+                                        <texture texture="fearsome:textures/ui/icons/generator.png"
+                                                 u="0" v="0"
+                                                 region-width="7" region-height="7"
+                                                 texture-width="7" texture-height="7"
+                                        >
+                                        </texture>
+                                        <label id="generators_count">
+                                            <text>0/0</text>
+                                            <sizing>
+                                                <vertical method="fixed">8</vertical>
+                                            </sizing>
+                                        </label>
+                                    </children>
+                                    <gap>2</gap>
+                                </flow-layout>
+
+<!--                                quests part-->
+                                <flow-layout direction="horizontal">
+                                    <children>
+<!--                                        <texture texture="fearsome:textures/ui/icons/quest.png"-->
+<!--                                                 u="0" v="0"-->
+<!--                                                 region-width="7" region-height="7"-->
+<!--                                                 texture-width="7" texture-height="7"-->
+<!--                                                 id="quests_icon"-->
+<!--                                        >-->
+<!--                                        </texture>-->
+                                        <label id="quests_count">
+                                            <text>2</text>
+                                            <sizing>
+                                                <vertical method="fixed">8</vertical>
+                                            </sizing>
+                                        </label>
+                                    </children>
+                                    <gap>2</gap>
+                                </flow-layout>
+                            </children>
+                            <gap>6</gap>
+                        </flow-layout>
+                    </children>
+                    <gap>1</gap>
+                </flow-layout>
+            </children>
+
+            <padding><all>4</all></padding>
+            <gap>2</gap>
+        </flow-layout>
+    </components>
+</owo-ui>

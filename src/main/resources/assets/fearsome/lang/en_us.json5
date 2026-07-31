@@ -16,17 +16,4 @@
         "enum.survivorListExpandType.hold": "Hold",
         "enum.survivorListExpandType.toggle": "Toggle"
     },
-
-
-    "gui.game_status.{}": {
-        "until_end": "Until end: ",
-        "generators.{}": {
-            "count": "Generators: ",
-            "status.{}": {
-                "": "Generators status: ",
-                "charged": "Charged",
-                "discharged": "Discharged"
-            },
-        },
-    }
 }

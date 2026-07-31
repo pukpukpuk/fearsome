@@ -9,45 +9,21 @@ import lombok.Setter;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.util.Identifier;
 
-@RequiredArgsConstructor
-public class TiledTextureComponent extends BaseUIComponent {
-    private final Identifier texture;
-    protected final int u, v;
-    protected final int regionWidth, regionHeight;
-    protected final int textureWidth, textureHeight;
-
-    @Setter
-    private boolean blend = false;
-    @Setter
-    private boolean isVisible = true;
+public class TiledTextureComponent extends ColorableTextureComponent {
     @Setter
     private int tileX, tileY;
-    @Setter
-    private int color = -1;
 
+    public TiledTextureComponent(Identifier texture, int u, int v, int regionWidth, int regionHeight, int textureWidth, int textureHeight) {
+        super(texture, u, v, regionWidth, regionHeight, textureWidth, textureHeight);
+    }
 
     @Override
-    public void draw(OwoUIGraphics graphics, int mouseX, int mouseY, float partialTicks, float delta) {
-        if (!isVisible) return;
-        var matrices = graphics.getMatrices();
-        matrices.pushMatrix();
-        matrices.translate(x, y);
-        matrices.scale(this.width / (float) this.regionWidth, this.height / (float) this.regionHeight);
+    protected int getU() {
+        return u + tileX * regionWidth;
+    }
 
-        graphics.drawTexture(this.blend ? RenderPipelines.GUI_TEXTURED : OwoUIPipelines.GUI_TEXTURED_NO_BLEND,
-                this.texture,
-                0,
-                0,
-                u + tileX * regionWidth,
-                v + tileY * regionHeight,
-                regionWidth,
-                regionHeight,
-                regionWidth,
-                regionHeight,
-                this.textureWidth, this.textureHeight,
-                color
-        );
-
-        matrices.popMatrix();
+    @Override
+    protected int getV() {
+        return v + tileY * regionHeight;
     }
 }

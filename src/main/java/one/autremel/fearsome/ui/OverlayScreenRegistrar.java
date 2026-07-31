@@ -2,7 +2,10 @@ package one.autremel.fearsome.ui;
 
 import io.wispforest.owo.ui.event.WindowResizeCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.hud.DebugHud;
+import net.minecraft.client.gui.hud.debug.chart.DebugChart;
 import net.minecraft.util.Identifier;
 import one.autremel.fearsome.FearsomeMod;
 
@@ -17,15 +20,10 @@ public class OverlayScreenRegistrar {
         remove(identifier);
 
         var window = MinecraftClient.getInstance().getWindow();
-
         screen.init(window.getScaledWidth(), window.getScaledHeight());
 
         screen.setVisible(true);
         visibleMap.put(identifier, screen);
-    }
-
-    public static OverlayScreen get(Identifier identifier) {
-        return visibleMap.get(identifier);
     }
 
     public static void remove(Identifier identifier) {
@@ -43,7 +41,7 @@ public class OverlayScreenRegistrar {
             }
         });
 
-        HudElementRegistry.addLast(ID, (context, tickCounter) -> {
+        HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, ID, (context, tickCounter) -> {
             for (var screen : visibleMap.values()) {
                 if (!screen.isVisible()) return;
                 screen.getAdapter().render(context, -100, -100, tickCounter.getTickProgress(false));

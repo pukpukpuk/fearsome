@@ -7,7 +7,7 @@
                     <children/>
 
                     <surface>
-                        <blur quality="4" size="40"/>
+                        <blur quality="5" size="40"/>
                     </surface>
 
                     <sizing>
@@ -16,12 +16,8 @@
                     </sizing>
                     <positioning type="relative">100,0</positioning>
 
-                    <padding>
-                        <all>2</all>
-                    </padding>
-                    <margins>
-                        <all>4</all>
-                    </margins>
+                    <padding><all>2</all></padding>
+                    <margins><all>2</all></margins>
                     <gap>2</gap>
                 </flow-layout>
             </children>
@@ -57,7 +53,7 @@
                     <stack-layout id="skin_icon_container">
                         <children>
                             <texture
-                                    texture="fearsome:textures/survivor_list.png"
+                                    texture="fearsome:textures/ui/survivor_list.png"
                                     u="0" v="12"
                                     region-width="12" region-height="12"
                                     texture-width="256" texture-height="256"

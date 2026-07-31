@@ -10,7 +10,10 @@ import one.autremel.fearsome.input.KeyEvents;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.network.ping.ModPingController;
 import one.autremel.fearsome.network.ping.TimeSynchronizer;
+import one.autremel.fearsome.timer.TimerUpdater;
+import one.autremel.fearsome.ui.OverlayScreenRegistrar;
 import one.autremel.fearsome.ui.UiController;
+import one.autremel.fearsome.ui.game_state.GameStateScreen;
 
 public class FearsomeMod implements ClientModInitializer {
     public static final String NAMESPACE = "fearsome";
@@ -29,12 +32,15 @@ public class FearsomeMod implements ClientModInitializer {
         NetworkController.initialize();
         ModPingController.initialize(this::onSuccessfulHandshake, this::onDisconnectFromGame);
 
+        TimerUpdater.initialize();
+
         UiController.initialize();
     }
 
 
     private void onSuccessfulHandshake() {
         //TODO
+        OverlayScreenRegistrar.create(GameStateScreen.ID, new GameStateScreen());
     }
 
     private void onDisconnectFromGame() {

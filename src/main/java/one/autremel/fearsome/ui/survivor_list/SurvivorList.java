@@ -4,12 +4,11 @@ import io.wispforest.owo.ui.component.UIComponents;
 import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.container.StackLayout;
 import io.wispforest.owo.ui.core.Insets;
-import io.wispforest.owo.ui.core.Positioning;
 import io.wispforest.owo.ui.core.Sizing;
 import lombok.Getter;
 import net.minecraft.util.Identifier;
 import one.autremel.fearsome.FearsomeMod;
-import one.autremel.fearsome.ui.HideableTextureComponent;
+import one.autremel.fearsome.ui.ColorableTextureComponent;
 import one.autremel.fearsome.ui.LinearBar;
 import one.autremel.fearsome.ui.TiledTextureComponent;
 import one.autremel.fearsome.ui.OverlayScreen;
@@ -18,7 +17,7 @@ import java.util.*;
 
 public class SurvivorList extends OverlayScreen {
     public static final Identifier ID = FearsomeMod.uiIdentifier("survivor_list");
-    private static final Identifier SHEET_ID = FearsomeMod.textureIdentifier("survivor_list");
+    private static final Identifier SHEET_ID = FearsomeMod.textureIdentifier("ui/survivor_list");
 
     private static final int HEALTH_TEXTURE_SIZE = 12;
     private static final int ICON_SIZE = 18;
@@ -26,6 +25,8 @@ public class SurvivorList extends OverlayScreen {
     private TextEntry[] textEntries;
     private final Entry[] entries;
     private TextBlocksResizer textBlocksResizer;
+
+    private final List<Entry> unmodifiableEntryList;
 
     @Getter
     private boolean isCollapsed;
@@ -35,10 +36,15 @@ public class SurvivorList extends OverlayScreen {
         this.textEntries = textEntries;
 
         entries = new Entry[textEntries.length];
+        unmodifiableEntryList = Collections.unmodifiableList(Arrays.asList(entries));
     }
 
-    public Entry getEntry(int index) {
-        return entries[index];
+    public Entry getEntry(int characterIndex) {
+        return entries[characterIndex - 1];
+    }
+
+    public List<Entry> getEntries() {
+        return unmodifiableEntryList;
     }
 
     public void setCollapsed(boolean isCollapsed) {
@@ -114,8 +120,8 @@ public class SurvivorList extends OverlayScreen {
         skinIconContainer.child(skinIconTexture);
     }
 
-    private HideableTextureComponent addDeadMarkTexture(StackLayout skinIconContainer) {
-        var deadMarkTexture = new HideableTextureComponent(
+    private ColorableTextureComponent addDeadMarkTexture(StackLayout skinIconContainer) {
+        var deadMarkTexture = new ColorableTextureComponent(
                 SHEET_ID,
                 0, HEALTH_TEXTURE_SIZE*2,
                 8, 8,
@@ -124,7 +130,7 @@ public class SurvivorList extends OverlayScreen {
         deadMarkTexture.margins(Insets.of(avatarMargin()));
         deadMarkTexture.sizing(Sizing.fill());
 
-        deadMarkTexture.blend(true);
+        deadMarkTexture.setBlend(true);
         skinIconContainer.child(deadMarkTexture);
 
         return deadMarkTexture;

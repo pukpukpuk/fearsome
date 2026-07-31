@@ -16,17 +16,4 @@
         "enum.survivorListExpandType.hold": "Зажатие",
         "enum.survivorListExpandType.toggle": "Переключение"
     },
-
-
-    "gui.game_status.{}": {
-        "until_end": "До конца: ",
-        "generators.{}": {
-            "count": "Генераторы: ",
-            "status.{}": {
-                "": "Состояние генераторов: ",
-                "charged": "Заряжены",
-                "discharged": "Разряжены"
-            },
-        },
-    },
 }

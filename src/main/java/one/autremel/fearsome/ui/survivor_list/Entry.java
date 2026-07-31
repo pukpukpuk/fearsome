@@ -2,10 +2,9 @@ package one.autremel.fearsome.ui.survivor_list;
 
 import com.google.common.base.Preconditions;
 import io.wispforest.owo.ui.container.FlowLayout;
-import io.wispforest.owo.ui.core.Sizing;
 import lombok.*;
 import lombok.experimental.Accessors;
-import one.autremel.fearsome.ui.HideableTextureComponent;
+import one.autremel.fearsome.ui.ColorableTextureComponent;
 import one.autremel.fearsome.ui.LinearBar;
 import one.autremel.fearsome.ui.TiledTextureComponent;
 
@@ -20,12 +19,11 @@ public class Entry {
     private static final int DEATH_TIMER_HIGH = 0xFFF2F27B;
     private static final int DEATH_TIMER_MEDIUM = 0xFFFFA538;
     private static final int DEATH_TIMER_LOW = 0xFFE8634E;
-    private static final int DEATH_TIMER_DEAD = 0xFFAFAFAF;
 
     private final String name;
     private final FlowLayout baseElement;
     private final TiledTextureComponent healthBarProgress;
-    private final HideableTextureComponent deadMarkTexture;
+    private final ColorableTextureComponent deadMarkTexture;
     private final FlowLayout textBlock;
     private final LinearBar deathTimerBar;
 
@@ -49,12 +47,9 @@ public class Entry {
 
         deadMarkTexture.setVisible(isDead);
         healthBarProgress.setVisible(!isDead);
-        deathTimerBar.setProgressColor(DEATH_TIMER_DEAD);
     }
 
     public void setDeathTimerProgress(float progress) {
-        if (isDead) return;
-
         progress = Math.min(Math.max(progress, 0f), 1f);
 
         var color = DEATH_TIMER_LOW;

@@ -1,11 +1,13 @@
 package one.autremel.fearsome.ui;
 
+import one.autremel.fearsome.ui.game_state.GameStateScreenController;
 import one.autremel.fearsome.ui.survivor_list.SurvivorList;
 import one.autremel.fearsome.ui.survivor_list.SurvivorListController;
 
 public class UiController {
     public static void initialize() {
         SurvivorListController.initialize();
+        GameStateScreenController.initialize();
     }
 
     public static void reset() {

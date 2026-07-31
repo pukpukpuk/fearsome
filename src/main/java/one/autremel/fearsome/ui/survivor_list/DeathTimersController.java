@@ -7,59 +7,51 @@ import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.network.PayloadId;
 import one.autremel.fearsome.network.RemoveScreensPayload;
 import one.autremel.fearsome.network.ping.TimeSynchronizer;
+import one.autremel.fearsome.timer.TimerSignature;
+import one.autremel.fearsome.timer.TimerUpdater;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+
 class DeathTimersController {
-    private static final Map<Entry, RunningTimerData> dataMap = new HashMap<>();
+    private static final String TIMER_KEY = "death_timer";
+    private static final List<TimerSignature> cachedSignatures = new ArrayList<>();
 
     static void initialize() {
-        NetworkController.register(PayloadId.SET_SURVIVOR_DEATH_TIMER_STATE, DeathTimersController::handleSetSurvivorDeathTimerState);
-        NetworkController.register(PayloadId.REMOVE_SCREENS, DeathTimersController::handleRemoveScreens);
-
         ClientTickEvents.END_CLIENT_TICK.register(DeathTimersController::onTick);
     }
 
-    private static void handleRemoveScreens(RemoveScreensPayload payload) {
-        dataMap.clear();
-    }
-
-    private static void handleSetSurvivorDeathTimerState(SetSurvivorDeathTimerStatePayload payload) {
-        var list = SurvivorListController.getList();
-        if (list == null) return;
-
-        var entry = list.getEntry(payload.index());
-
-        if (!payload.isRunning()) {
-            var progress = (float) payload.value() / getInitialValue();
-            entry.setDeathTimerProgress(progress);
-            dataMap.remove(entry);
-        } else {
-            var startTime = TimeSynchronizer.toLocalTime(payload.serverTime());
-            dataMap.put(entry, new RunningTimerData(startTime, payload.value()));
-        }
-    }
-
     private static void onTick(MinecraftClient client) {
-        var currentTime = System.currentTimeMillis();
+        var survivorList = SurvivorListController.getListNow();
+        if (survivorList == null) return;
 
-        for (var dataEntry : dataMap.entrySet()) {
-            var data = dataEntry.getValue();
+        var initialValue = FearsomeMod.GAME_CONFIG.deathTimerInitialValue();
 
-            var elapsed = currentTime - data.startTime;
-            var currentValue = data.startValue + elapsed * (-1);
-            var progress = (float)currentValue / getInitialValue();
+        var entries = survivorList.getEntries();
+        for (int i = 0; i < entries.size(); i++) {
+            var progress = 0f;
+            var entry = entries.get(i);
+            if (!entry.isDead()) {
+                var timer = TimerUpdater.getTimer(getSignatureFor(i));
 
-            dataEntry.getKey().setDeathTimerProgress(progress);
+                var remainingTime = timer != null ? timer.getRemainingTime() : 0;
+                progress = (float) remainingTime / initialValue;
+            }
+
+            entry.setDeathTimerProgress(progress);
         }
     }
 
+    private static TimerSignature getSignatureFor(int survivorIndex) {
+        while (survivorIndex >= cachedSignatures.size()) {
+            var characterIndex = survivorIndex + 1;
+            var signature = new TimerSignature(TIMER_KEY, characterIndex);
+            cachedSignatures.add(signature);
+        }
 
-
-    private static int getInitialValue() {
-        return FearsomeMod.GAME_CONFIG.deathTimerInitialValue();
+        return cachedSignatures.get(survivorIndex);
     }
-
-    private record RunningTimerData(long startTime, long startValue) {}
 }
