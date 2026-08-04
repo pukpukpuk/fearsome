@@ -1,24 +1,25 @@
 package one.autremel.fearsome.ui.survivor_list;
 
+import io.wispforest.owo.ui.component.LabelComponent;
 import io.wispforest.owo.ui.component.UIComponents;
 import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.container.StackLayout;
-import io.wispforest.owo.ui.core.Insets;
-import io.wispforest.owo.ui.core.Sizing;
+import io.wispforest.owo.ui.container.UIContainers;
+import io.wispforest.owo.ui.core.*;
 import lombok.Getter;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import one.autremel.fearsome.FearsomeMod;
-import one.autremel.fearsome.ui.ColorableTextureComponent;
-import one.autremel.fearsome.ui.LinearBar;
-import one.autremel.fearsome.ui.TiledTextureComponent;
-import one.autremel.fearsome.ui.OverlayScreen;
+import one.autremel.fearsome.ui.*;
 
 import java.util.*;
 
 public class SurvivorList extends OverlayScreen {
-    public static final Identifier ID = FearsomeMod.uiIdentifier("survivor_list");
-    private static final Identifier SHEET_ID = FearsomeMod.textureIdentifier("ui/survivor_list");
+    public static final String NAME = "survivor_list";
+    public static final String ENTRY_TEMPLATE_ID = "survivor_entry@fearsome:"+NAME;
+    public static final Identifier ID = FearsomeMod.uiIdentifier(NAME);
 
+    private static final Identifier SHEET_ID = FearsomeMod.textureIdentifier("ui/survivor_list");
     private static final int HEALTH_TEXTURE_SIZE = 12;
     private static final int ICON_SIZE = 18;
 
@@ -32,7 +33,7 @@ public class SurvivorList extends OverlayScreen {
     private boolean isCollapsed;
 
     public SurvivorList(TextEntry[] textEntries) {
-        super("survivor_list");
+        super(NAME);
         this.textEntries = textEntries;
 
         entries = new Entry[textEntries.length];
@@ -79,11 +80,12 @@ public class SurvivorList extends OverlayScreen {
     private Entry addSurvivorEntry(TextEntry entry) {
         var baseElement = this.model.expandTemplate(
                 FlowLayout.class,
-                "survivor_entry@fearsome:survivor_list",
+                ENTRY_TEMPLATE_ID,
                 Map.of("display_name", entry.name())
         );
 
         baseElement.verticalSizing(Sizing.fixed(ICON_SIZE + baseElement.padding().get().vertical()));
+        var surface = DefaultBlurredSurface.setAsSurfaceFor(baseElement, true);
 
         var texture = FearsomeMod.skinsIdentifier("survivors/"+entry.survivorKey());
         var skinIconContainer = prepareSkinIconContainer(baseElement);
@@ -93,12 +95,18 @@ public class SurvivorList extends OverlayScreen {
         var healthBarProgress = createHealthBar(skinIconContainer);
         var deadMarkTexture = addDeadMarkTexture(skinIconContainer);
 
-        var textBlock = baseElement.childById(FlowLayout.class, "text_block");
-
-        var deathTimerBar = createDeathTimerBar(baseElement);
-
         this.uiAdapter.rootComponent.childById(FlowLayout.class, "root").child(baseElement);
-        return new Entry(entry.name(), baseElement, healthBarProgress, deadMarkTexture, textBlock, deathTimerBar);
+        return new Entry(
+                entry.name(),
+                baseElement,
+                healthBarProgress,
+                deadMarkTexture,
+                baseElement.childById(FlowLayout.class, "text_block"),
+                createDeathTimerBar(baseElement),
+                baseElement.childById(LabelComponent.class, "effects_line"),
+                surface,
+                createNotificationsContainer(baseElement)
+        );
     }
 
     private StackLayout prepareSkinIconContainer(FlowLayout baseElement) {
@@ -158,6 +166,13 @@ public class SurvivorList extends OverlayScreen {
         return bar;
     }
 
+    private NotificationsContainer createNotificationsContainer(FlowLayout baseElement) {
+        var result = new NotificationsContainer();
+        result.positioning(Positioning.relative(0, 50));
+
+        baseElement.child(result);
+        return result;
+    }
 
     private static int avatarMargin() {
         return Math.ceilDiv(2 * ICON_SIZE, HEALTH_TEXTURE_SIZE);

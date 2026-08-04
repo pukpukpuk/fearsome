@@ -97,6 +97,28 @@
                             </children>
                             <gap>6</gap>
                         </flow-layout>
+
+
+<!--                        effects table-->
+                        <grid-layout rows="1" columns="2">
+                            <children>
+                                <flow-layout direction="vertical" row="0" column="0" id="effect_name_column">
+                                    <children/>
+                                </flow-layout>
+                                <flow-layout direction="vertical" row="0" column="1" id="effect_time_column">
+                                    <children/>
+                                    <margins><left>4</left></margins>
+                                    <horizontal-alignment>right</horizontal-alignment>
+                                </flow-layout>
+                            </children>
+                            <surface>
+                                <flat>#55101010</flat>
+                            </surface>
+                            <padding>
+                                <all>2</all>
+                                <bottom>1</bottom>
+                            </padding>
+                        </grid-layout>
                     </children>
                     <gap>1</gap>
                 </flow-layout>

@@ -4,15 +4,11 @@ import com.google.common.base.Preconditions;
 import lombok.Getter;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
+import one.autremel.fearsome.effects.*;
 import one.autremel.fearsome.network.ping.PingPayload;
-import one.autremel.fearsome.timer.TimerDeletePayload;
-import one.autremel.fearsome.timer.TimerUpdatePayload;
-import one.autremel.fearsome.ui.game_state.CreateGameStateScreenPayload;
-import one.autremel.fearsome.ui.game_state.SetGeneratorsCountPayload;
-import one.autremel.fearsome.ui.game_state.SetQuestsCountPayload;
-import one.autremel.fearsome.ui.survivor_list.payloads.CreateSurvivorListPayload;
-import one.autremel.fearsome.ui.survivor_list.payloads.SetSurvivorDeadStatePayload;
-import one.autremel.fearsome.ui.survivor_list.payloads.SetSurvivorHealthAmountPayload;
+import one.autremel.fearsome.timer.*;
+import one.autremel.fearsome.ui.game_state.*;
+import one.autremel.fearsome.ui.survivor_list.payloads.*;
 import org.apache.logging.log4j.util.Lazy;
 
 import java.lang.reflect.Modifier;
@@ -39,7 +35,11 @@ public final class PayloadId<T extends IPayload> {
     public static final PayloadId<SetGeneratorsCountPayload> SET_GENERATORS_COUNT = new PayloadId<>(7, SetGeneratorsCountPayload.CODEC);
     public static final PayloadId<SetQuestsCountPayload> SET_QUESTS_COUNT = new PayloadId<>(8, SetQuestsCountPayload.CODEC);
 
-    public static final PayloadId<RemoveScreensPayload> REMOVE_SCREENS = new PayloadId<>(10, RemoveScreensPayload.CODEC, false);
+    public static final PayloadId<AddDisplayedEffectPayload> ADD_DISPLAYED_EFFECT = new PayloadId<>(9, AddDisplayedEffectPayload.CODEC);
+    public static final PayloadId<RemoveDisplayedEffectPayload> REMOVE_DISPLAYED_EFFECT = new PayloadId<>(10, RemoveDisplayedEffectPayload.CODEC);
+    public static final PayloadId<SetDisplayedEffectNamePayload> SET_DISPLAYED_EFFECT_NAME = new PayloadId<>(11, SetDisplayedEffectNamePayload.CODEC);
+
+    public static final PayloadId<RemoveScreensPayload> REMOVE_SCREENS = new PayloadId<>(12, RemoveScreensPayload.CODEC, false);
 
 
     @Getter

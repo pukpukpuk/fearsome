@@ -6,15 +6,13 @@
                 <flow-layout direction="vertical" id="root">
                     <children/>
 
-                    <surface>
-                        <blur quality="5" size="40"/>
-                    </surface>
-
                     <sizing>
                         <horizontal method="content">0</horizontal>
                         <vertical method="content">0</vertical>
                     </sizing>
                     <positioning type="relative">100,0</positioning>
+
+                    <horizontal-alignment>right</horizontal-alignment>
 
                     <padding><all>2</all></padding>
                     <margins><all>2</all></margins>
@@ -35,8 +33,7 @@
                                     <vertical method="fixed">8</vertical>
                                 </sizing>
                             </label>
-                            <label>
-                                <text>,_, 7-8 .i.</text>
+                            <label id="effects_line">
                                 <color>light-purple</color>
                                 <sizing>
                                     <vertical method="fixed">8</vertical>
@@ -88,9 +85,6 @@
                     <horizontal method="content">0</horizontal>
                     <vertical method="content">0</vertical>
                 </sizing>
-                <surface>
-                    <flat>#90181818</flat>
-                </surface>
             </flow-layout>
         </template>
     </templates>

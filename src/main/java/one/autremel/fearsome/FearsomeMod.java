@@ -5,6 +5,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import one.autremel.fearsome.config.ClientConfig;
 import one.autremel.fearsome.config.GameConfig;
+import one.autremel.fearsome.effects.EffectController;
 import one.autremel.fearsome.input.KeyBindings;
 import one.autremel.fearsome.input.KeyEvents;
 import one.autremel.fearsome.network.NetworkController;
@@ -32,20 +33,20 @@ public class FearsomeMod implements ClientModInitializer {
         NetworkController.initialize();
         ModPingController.initialize(this::onSuccessfulHandshake, this::onDisconnectFromGame);
 
+
         TimerUpdater.initialize();
+        EffectController.initialize();
 
         UiController.initialize();
     }
 
 
     private void onSuccessfulHandshake() {
-        //TODO
-        OverlayScreenRegistrar.create(GameStateScreen.ID, new GameStateScreen());
     }
 
     private void onDisconnectFromGame() {
-        TimeSynchronizer.reset();
         UiController.reset();
+        TimeSynchronizer.reset();
     }
 
 

@@ -2,9 +2,13 @@ package one.autremel.fearsome.ui.game_state;
 
 import io.wispforest.owo.ui.component.LabelComponent;
 import io.wispforest.owo.ui.core.Color;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.text.Text;
+import one.autremel.fearsome.Utils;
 import one.autremel.fearsome.ui.ColorableTextureComponent;
+
+import java.awt.*;
 
 @RequiredArgsConstructor
 class GlobalInfoPart {
@@ -20,16 +24,13 @@ class GlobalInfoPart {
     private final LabelComponent questsCountLabel;
     private final ColorableTextureComponent questsIcon;
 
+    @Getter
+    private final EffectTable effectTable;
+
     private int remainingCount, totalCount;
 
     public void setRemainingTime(int remainingMillis) {
-        var totalSeconds = Math.ceilDiv(remainingMillis, 1000);
-
-        var seconds = totalSeconds % 60;
-        var secondsText = seconds < 10 ? ("0" + seconds) : seconds;
-
-        var str = (totalSeconds / 60) + ":" + secondsText;
-        timerLabel.text(Text.of(str));
+        timerLabel.text(Text.of(Utils.convertTimeToText(remainingMillis)));
     }
 
     public void setGeneratorsRemainingCount(int count) {

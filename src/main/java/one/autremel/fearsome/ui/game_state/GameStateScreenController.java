@@ -1,10 +1,15 @@
 package one.autremel.fearsome.ui.game_state;
 
 import com.google.common.base.Preconditions;
+import lombok.Getter;
+import one.autremel.fearsome.effects.EffectController;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.network.PayloadId;
 import one.autremel.fearsome.network.RemoveScreensPayload;
 import one.autremel.fearsome.ui.OverlayScreenRegistrar;
+import one.autremel.fearsome.ui.UiController;
+import one.autremel.fearsome.ui.survivor_list.SurvivorList;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -12,7 +17,7 @@ import java.util.function.Consumer;
 public class GameStateScreenController {
     private static boolean initialized;
 
-    private static CompletableFuture<GameStateScreen> screenInitTask;
+    private static CompletableFuture<Data> dataInitTask;
 
     public static void initialize() {
         Preconditions.checkState(!initialized);
@@ -21,13 +26,18 @@ public class GameStateScreenController {
         resetScreenInitTask();
 
         NetworkController.register(PayloadId.CREATE_GAME_STATE_SCREEN, GameStateScreenController::handleCreatePayload);
-        NetworkController.register(PayloadId.REMOVE_SCREENS, GameStateScreenController::handleScreensRemove);
+        UiController.registerForScreensRemoval(GameStateScreenController::handleScreensRemove, true);
 
         GlobalInfoPartController.initialize();
     }
 
-    public static void acceptScreen(Consumer<GameStateScreen> consumer) {
-        screenInitTask.thenAccept(consumer);
+    public static void acceptData(Consumer<Data> consumer) {
+        dataInitTask.thenAccept(consumer);
+    }
+
+    @Nullable
+    public static Data getDataNow() {
+        return dataInitTask != null ? dataInitTask.getNow(null) : null;
     }
 
     private static void handleCreatePayload(CreateGameStateScreenPayload payload) {
@@ -36,19 +46,21 @@ public class GameStateScreenController {
 
         GlobalInfoPartController.setTotalGeneratorsCount(payload.generatorsCount());
 
-        screenInitTask.complete(screen);
+        var data = new Data(screen, payload.ownCharacterIndex());
+        dataInitTask.complete(data);
     }
 
-    private static void handleScreensRemove(RemoveScreensPayload payload) {
-        if (!payload.isForGameScreens()) return;
+    private static void handleScreensRemove() {
         OverlayScreenRegistrar.remove(GameStateScreen.ID);
         resetScreenInitTask();
     }
 
     private static void resetScreenInitTask() {
-        if (screenInitTask != null && !screenInitTask.isDone()) {
-            screenInitTask.cancel(true);
+        if (dataInitTask != null && !dataInitTask.isDone()) {
+            dataInitTask.cancel(true);
         }
-        screenInitTask = new CompletableFuture<>();
+        dataInitTask = new CompletableFuture<>();
     }
+
+    public record Data(GameStateScreen screen, int ownCharacterIndex) {}
 }

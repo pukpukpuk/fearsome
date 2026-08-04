@@ -6,8 +6,8 @@ import one.autremel.fearsome.input.KeyBindings;
 import one.autremel.fearsome.input.KeyEvents;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.network.PayloadId;
-import one.autremel.fearsome.network.RemoveScreensPayload;
 import one.autremel.fearsome.ui.OverlayScreenRegistrar;
+import one.autremel.fearsome.ui.UiController;
 import one.autremel.fearsome.ui.survivor_list.payloads.CreateSurvivorListPayload;
 import one.autremel.fearsome.ui.survivor_list.payloads.SetSurvivorDeadStatePayload;
 import one.autremel.fearsome.ui.survivor_list.payloads.SetSurvivorHealthAmountPayload;
@@ -29,11 +29,13 @@ public class SurvivorListController {
         NetworkController.register(PayloadId.SET_SURVIVOR_HEALTH_AMOUNT, SurvivorListController::handleSetSurvivorHealthPayload);
         NetworkController.register(PayloadId.SET_SURVIVOR_DEAD_STATE, SurvivorListController::handleSetSurvivorDeadStatePayload);
 
-        NetworkController.register(PayloadId.REMOVE_SCREENS, SurvivorListController::handleRemoveScreens);
-
-        DeathTimersController.initialize();
+        UiController.registerForScreensRemoval(SurvivorListController::handleScreensRemove, true);
+        resetListInitTask();
 
         KeyEvents.onToggle(KeyBindings.EXPAND_SURVIVOR_LIST, SurvivorListController::onExpandKeyToggle);
+
+        DeathTimersController.initialize();
+        EffectsPartController.initialize();
     }
 
     public static void acceptList(Consumer<SurvivorList> consumer) {
@@ -42,7 +44,7 @@ public class SurvivorListController {
 
     @Nullable
     public static SurvivorList getListNow() {
-        return listInitTask.getNow(null);
+        return listInitTask != null ? listInitTask.getNow(null) : null;
     }
 
 
@@ -67,8 +69,7 @@ public class SurvivorListController {
         });
     }
 
-    private static void handleRemoveScreens(RemoveScreensPayload payload) {
-        if (!payload.isForGameScreens()) return;
+    private static void handleScreensRemove() {
         OverlayScreenRegistrar.remove(SurvivorList.ID);
         resetListInitTask();
     }

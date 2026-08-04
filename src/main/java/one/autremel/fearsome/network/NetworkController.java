@@ -12,24 +12,24 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class NetworkController {
-    private static NetworkController INSTANCE;
+    private static boolean initialized;
 
-    private final List<List<PayloadHandler>> registeredHandlers = createListForHandlers();
+    private static final List<List<PayloadHandler>> registeredHandlers = createListForHandlers();
 
     public static void initialize() {
-        Preconditions.checkState(INSTANCE == null);
-        INSTANCE = new NetworkController();
+        Preconditions.checkState(!initialized);
+        initialized = true;
 
         PayloadTypeRegistry.playC2S().register(PayloadCodecsContainer.ID, PayloadCodecsContainer.MAIN_CODEC);
         PayloadTypeRegistry.playS2C().register(PayloadCodecsContainer.ID, PayloadCodecsContainer.MAIN_CODEC);
 
-        ClientPlayNetworking.registerGlobalReceiver(PayloadCodecsContainer.ID, INSTANCE::handleReceivedPacket);
+        ClientPlayNetworking.registerGlobalReceiver(PayloadCodecsContainer.ID, NetworkController::handleReceivedPacket);
     }
 
     public static <T extends IPayload> void register(PayloadId<T> payloadId, Consumer<T> consumer) {
         var index = payloadId.getIntId();
 
-        var handlers = INSTANCE.registeredHandlers.get(index);
+        var handlers = registeredHandlers.get(index);
         handlers.add(new PayloadHandler<>(consumer));
     }
 
@@ -41,7 +41,7 @@ public class NetworkController {
         var payloadId = payload.getPayloadId();
 
         var index = payloadId.getIntId();
-        var handlers = INSTANCE.registeredHandlers.get(index);
+        var handlers = registeredHandlers.get(index);
         Preconditions.checkState(!handlers.isEmpty(), "There is no handlers for payload " + payloadId.getClass().getName());
 
         for (var handler : handlers) {
@@ -50,7 +50,7 @@ public class NetworkController {
     }
 
 
-    private void handleReceivedPacket(IPayload payload, ClientPlayNetworking.Context context) {
+    private static void handleReceivedPacket(IPayload payload, ClientPlayNetworking.Context context) {
         if (!payload.getPayloadId().isOnlyWhileGameIsActive() || ModPingController.isGameActive()) {
             call(payload);
         }
