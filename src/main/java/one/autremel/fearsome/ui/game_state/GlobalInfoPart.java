@@ -1,12 +1,15 @@
 package one.autremel.fearsome.ui.game_state;
 
 import io.wispforest.owo.ui.component.LabelComponent;
+import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.core.Color;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.text.Text;
+import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.Utils;
 import one.autremel.fearsome.ui.ColorableTextureComponent;
+import one.autremel.fearsome.ui.DefaultBlurredSurface;
 
 import java.awt.*;
 
@@ -28,6 +31,23 @@ class GlobalInfoPart {
     private final EffectTable effectTable;
 
     private int remainingCount, totalCount;
+
+    static GlobalInfoPart initialize(FlowLayout root) {
+        DefaultBlurredSurface.setAsSurfaceFor(root);
+
+        var timerLabel = root.childById(LabelComponent.class, "until_end_timer");
+
+        var generatorsCountLabel = root.childById(LabelComponent.class, "generators_count");
+
+        var questsCountLabel = root.childById(LabelComponent.class, "quests_count");
+        var questsIcon = root.childById(ColorableTextureComponent.class, "quests_icon");
+
+        var nameColumn = root.childById(FlowLayout.class, "effect_name_column");
+        var timeColumn = root.childById(FlowLayout.class, "effect_time_column");
+        var effectTable = new EffectTable(nameColumn, timeColumn);
+
+        return new GlobalInfoPart(timerLabel, generatorsCountLabel, questsCountLabel, questsIcon, effectTable);
+    }
 
     public void setRemainingTime(int remainingMillis) {
         timerLabel.text(Text.of(Utils.convertTimeToText(remainingMillis)));

@@ -3,6 +3,8 @@ package one.autremel.fearsome.ui.survivor_list;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import one.autremel.fearsome.ui.DefaultBlurredSurface;
+import one.autremel.fearsome.ui.OverlayScreenRegistrar;
+import one.autremel.fearsome.ui.game_state.GameStateScreen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +17,7 @@ class EntryPinger {
     private static final HashMap<Entry, Long> animationStartTimeMap = new HashMap<>();
 
     static void initialize() {
-        ClientTickEvents.END_CLIENT_TICK.register(EntryPinger::onTick);
+        OverlayScreenRegistrar.registerBeforeScreenDrawing(SurvivorList.ID, EntryPinger::update);
     }
 
     static void ping(Entry entry) {
@@ -45,7 +47,7 @@ class EntryPinger {
                 (int)(b1 + (b2-b1) * k);
     }
 
-    private static void onTick(MinecraftClient client) {
+    private static void update() {
         List<Entry> withEndedAnimation = null;
 
         var currentTime = System.currentTimeMillis();

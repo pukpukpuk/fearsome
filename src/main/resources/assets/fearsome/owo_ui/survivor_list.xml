@@ -77,10 +77,6 @@
 
                 <vertical-alignment>top</vertical-alignment>
 
-                <padding>
-                    <all>2</all>
-                </padding>
-
                 <sizing>
                     <horizontal method="content">0</horizontal>
                     <vertical method="content">0</vertical>

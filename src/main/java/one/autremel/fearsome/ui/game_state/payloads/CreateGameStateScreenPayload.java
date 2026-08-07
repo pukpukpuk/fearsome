@@ -1,20 +1,16 @@
-package one.autremel.fearsome.ui.game_state;
+package one.autremel.fearsome.ui.game_state.payloads;
 
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import one.autremel.fearsome.effects.AddDisplayedEffectPayload;
 import one.autremel.fearsome.network.IPayload;
 import one.autremel.fearsome.network.PayloadId;
-import one.autremel.fearsome.ui.survivor_list.payloads.CreateSurvivorListPayload;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Optional;
 
 public record CreateGameStateScreenPayload(
         String mapKey,
         int generatorsCount,
-        int ownCharacterIndex
+        int ownCharacterIndex,
+        String ownCharacterKey
 ) implements IPayload {
     public static final PacketCodec<RegistryByteBuf, CreateGameStateScreenPayload> CODEC
             = PacketCodec.ofStatic(CreateGameStateScreenPayload::encode, CreateGameStateScreenPayload::decode);
@@ -29,8 +25,10 @@ public record CreateGameStateScreenPayload(
         var ownCharacterIndexRaw = buf.readByte();
         var ownCharacterIndex = (ownCharacterIndexRaw & 0x1) != 0
                 ? (ownCharacterIndexRaw >> 1) : -1;
+        var ownCharacterKey = buf.readString();
+        if (ownCharacterKey.isEmpty()) ownCharacterKey = null;
 
-        return new CreateGameStateScreenPayload(mapKey, generatorsCount, ownCharacterIndex);
+        return new CreateGameStateScreenPayload(mapKey, generatorsCount, ownCharacterIndex, ownCharacterKey);
     }
 
     @Override

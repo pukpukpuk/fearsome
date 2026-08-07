@@ -19,7 +19,7 @@ class TextBlocksResizer {
         for (var entry : entries) {
             maxWidth = Math.max(maxWidth, entry.textBlock().width());
         }
-//        expandedSizing = Sizing.fixed(maxWidth);
+
         expandedSizing = Sizing.content();
     }
 

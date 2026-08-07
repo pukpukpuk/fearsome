@@ -42,6 +42,7 @@ public class FearsomeMod implements ClientModInitializer {
 
 
     private void onSuccessfulHandshake() {
+        OverlayScreenRegistrar.create(GameStateScreen.ID, new GameStateScreen(CharacterTeam.MURDERERS, "dream"));
     }
 
     private void onDisconnectFromGame() {

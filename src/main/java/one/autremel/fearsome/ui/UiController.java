@@ -1,5 +1,8 @@
 package one.autremel.fearsome.ui;
 
+import io.wispforest.owo.ui.parsing.UIParsing;
+import net.minecraft.text.Text;
+import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.effects.EffectController;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.network.PayloadId;
@@ -12,9 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UiController {
-
     private static final List<Runnable> onGameScreensRemove = new ArrayList<>();
     private static final List<Runnable> onLobbyScreensRemove = new ArrayList<>();
+
+    static {
+        UIParsing.registerFactory(FearsomeMod.identifier("colorable_texture"), ColorableTextureComponent::parse);
+        UIParsing.registerFactory(FearsomeMod.identifier("radial_bar"), element -> new RadialProgressBar());
+        UIParsing.registerFactory(FearsomeMod.identifier("scalable_label"), element -> new ScalableLabelComponent(Text.empty()));
+        UIParsing.registerFactory(FearsomeMod.identifier("hideable_stack_layout"), element -> new HideableStackLayout());
+    }
 
     public static void initialize() {
         NetworkController.register(PayloadId.REMOVE_SCREENS, UiController::handleScreensRemove);

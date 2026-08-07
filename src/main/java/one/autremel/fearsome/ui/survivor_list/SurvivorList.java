@@ -84,8 +84,8 @@ public class SurvivorList extends OverlayScreen {
                 Map.of("display_name", entry.name())
         );
 
-        baseElement.verticalSizing(Sizing.fixed(ICON_SIZE + baseElement.padding().get().vertical()));
         var surface = DefaultBlurredSurface.setAsSurfaceFor(baseElement, true);
+        baseElement.verticalSizing(Sizing.fixed(ICON_SIZE + baseElement.padding().get().vertical()));
 
         var texture = FearsomeMod.skinsIdentifier("survivors/"+entry.survivorKey());
         var skinIconContainer = prepareSkinIconContainer(baseElement);

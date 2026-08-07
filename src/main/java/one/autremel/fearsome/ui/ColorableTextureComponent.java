@@ -5,10 +5,13 @@ import io.wispforest.owo.ui.component.TextureComponent;
 import io.wispforest.owo.ui.core.OwoUIGraphics;
 import io.wispforest.owo.ui.core.OwoUIPipelines;
 import io.wispforest.owo.ui.core.Sizing;
+import io.wispforest.owo.ui.core.UIComponent;
+import io.wispforest.owo.ui.parsing.UIParsing;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.util.Identifier;
+import org.w3c.dom.Element;
 
 @RequiredArgsConstructor
 public class ColorableTextureComponent extends BaseUIComponent {
@@ -29,6 +32,12 @@ public class ColorableTextureComponent extends BaseUIComponent {
         u = v = 0;
         regionWidth = regionHeight = textureWidth = textureHeight = sideLength;
         sizing(Sizing.fixed(sideLength));
+    }
+
+    public static ColorableTextureComponent parse(Element element) {
+        var texture = UIParsing.parseIdentifier(element.getAttributeNode("texture"));
+        var sideLength = UIParsing.parseSignedInt(element.getAttributeNode("side-length"));
+        return new ColorableTextureComponent(texture, sideLength);
     }
 
     @Override
@@ -63,4 +72,6 @@ public class ColorableTextureComponent extends BaseUIComponent {
     protected int getV() {
         return v;
     }
+
+
 }

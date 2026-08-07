@@ -1,12 +1,11 @@
 package one.autremel.fearsome.ui.survivor_list;
 
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import one.autremel.fearsome.effects.DisplayedEffect;
 import one.autremel.fearsome.effects.EffectController;
 import one.autremel.fearsome.effects.EffectVisiblePart;
-import one.autremel.fearsome.input.KeyEvents;
+import one.autremel.fearsome.ui.OverlayScreenRegistrar;
+import one.autremel.fearsome.ui.game_state.GameStateScreen;
 
 class EffectsPartController {
     private static int ADDITION_COLOR = 0xFF98D895;
@@ -18,7 +17,7 @@ class EffectsPartController {
 
         EntryPinger.initialize();
 
-        ClientTickEvents.END_CLIENT_TICK.register(EffectsPartController::onTick);
+        OverlayScreenRegistrar.registerBeforeScreenDrawing(GameStateScreen.ID, EffectsPartController::update);
     }
 
     private static void updateEffectsLine(int characterIndex, Entry entry) {
@@ -49,7 +48,7 @@ class EffectsPartController {
         });
     }
 
-    private static void onTick(MinecraftClient client) {
+    private static void update() {
         var list = SurvivorListController.getListNow();
         if (list == null) return;
 

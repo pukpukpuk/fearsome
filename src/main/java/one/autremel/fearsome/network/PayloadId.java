@@ -7,7 +7,7 @@ import net.minecraft.network.codec.PacketCodec;
 import one.autremel.fearsome.effects.*;
 import one.autremel.fearsome.network.ping.PingPayload;
 import one.autremel.fearsome.timer.*;
-import one.autremel.fearsome.ui.game_state.*;
+import one.autremel.fearsome.ui.game_state.payloads.*;
 import one.autremel.fearsome.ui.survivor_list.payloads.*;
 import org.apache.logging.log4j.util.Lazy;
 
@@ -40,6 +40,9 @@ public final class PayloadId<T extends IPayload> {
     public static final PayloadId<SetDisplayedEffectNamePayload> SET_DISPLAYED_EFFECT_NAME = new PayloadId<>(11, SetDisplayedEffectNamePayload.CODEC);
 
     public static final PayloadId<RemoveScreensPayload> REMOVE_SCREENS = new PayloadId<>(12, RemoveScreensPayload.CODEC, false);
+
+    public static final PayloadId<PlayAbilityProgressAnimationPayload> PLAY_ABILITY_PROGRESS_ANIMATION = new PayloadId<>(13, PlayAbilityProgressAnimationPayload.CODEC, false);
+    public static final PayloadId<SetAbilityCountPayload> SET_ABILITY_COUNT = new PayloadId<>(14, SetAbilityCountPayload.CODEC, false);
 
 
     @Getter

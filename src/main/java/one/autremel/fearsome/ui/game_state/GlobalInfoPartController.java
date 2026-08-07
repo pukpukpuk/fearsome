@@ -1,8 +1,6 @@
 package one.autremel.fearsome.ui.game_state;
 
 import com.google.common.base.Preconditions;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.client.MinecraftClient;
 import one.autremel.fearsome.effects.DisplayedEffect;
 import one.autremel.fearsome.effects.EffectController;
 import one.autremel.fearsome.effects.EffectVisiblePart;
@@ -10,7 +8,9 @@ import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.network.PayloadId;
 import one.autremel.fearsome.timer.TimerSignature;
 import one.autremel.fearsome.timer.TimerUpdater;
-
+import one.autremel.fearsome.ui.OverlayScreenRegistrar;
+import one.autremel.fearsome.ui.game_state.payloads.SetGeneratorsCountPayload;
+import one.autremel.fearsome.ui.game_state.payloads.SetQuestsCountPayload;
 class GlobalInfoPartController {
     public static final TimerSignature GAME_TIMER_SIGNATURE = new TimerSignature("global_game_timer", -1);
     private static final int TIME_UPDATE_PERIOD = 1000;
@@ -24,7 +24,7 @@ class GlobalInfoPartController {
         Preconditions.checkState(!initialized);
         initialized = true;
 
-        ClientTickEvents.END_CLIENT_TICK.register(GlobalInfoPartController::onTick);
+        OverlayScreenRegistrar.registerBeforeScreenDrawing(GameStateScreen.ID, GlobalInfoPartController::update);
 
         NetworkController.register(PayloadId.SET_GENERATORS_COUNT, GlobalInfoPartController::handleSetGeneratorsCount);
         NetworkController.register(PayloadId.SET_QUESTS_COUNT, GlobalInfoPartController::handleSetQuestsCount);
@@ -68,7 +68,7 @@ class GlobalInfoPartController {
         table.updateEffectTimeColumn(effects);
     }
 
-    private static void onTick(MinecraftClient client) {
+    private static void update() {
         var currentTime = System.currentTimeMillis();
         if ((currentTime - lastUpdateTime) < TIME_UPDATE_PERIOD) return;
         lastUpdateTime = currentTime;

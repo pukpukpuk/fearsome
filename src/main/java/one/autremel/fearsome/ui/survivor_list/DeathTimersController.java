@@ -9,6 +9,9 @@ import one.autremel.fearsome.network.RemoveScreensPayload;
 import one.autremel.fearsome.network.ping.TimeSynchronizer;
 import one.autremel.fearsome.timer.TimerSignature;
 import one.autremel.fearsome.timer.TimerUpdater;
+import one.autremel.fearsome.ui.OverlayScreenRegistrar;
+import one.autremel.fearsome.ui.game_state.AbilitiesPartController;
+import one.autremel.fearsome.ui.game_state.GameStateScreen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,10 +24,10 @@ class DeathTimersController {
     private static final List<TimerSignature> cachedSignatures = new ArrayList<>();
 
     static void initialize() {
-        ClientTickEvents.END_CLIENT_TICK.register(DeathTimersController::onTick);
+        OverlayScreenRegistrar.registerBeforeScreenDrawing(SurvivorList.ID, DeathTimersController::update);
     }
 
-    private static void onTick(MinecraftClient client) {
+    private static void update() {
         var survivorList = SurvivorListController.getListNow();
         if (survivorList == null) return;
 

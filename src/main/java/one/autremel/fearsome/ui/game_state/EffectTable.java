@@ -41,11 +41,13 @@ public class EffectTable {
 
         shownTableMargin = table.margins().get();
         hiddenTableMargin = Insets.of(
-                shownTableMargin.top() - ((FlowLayout)table.parent()).gap(),
+                -((FlowLayout)table.parent()).gap(),
                 shownTableMargin.bottom(),
                 shownTableMargin.left(),
                 shownTableMargin.right()
         );
+
+        handleUsedLabelsCountChange();
     }
 
     private static Text getRemainingTimeText(DisplayedEffect effect) {

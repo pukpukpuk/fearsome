@@ -24,10 +24,10 @@
                                 <vertical method="fixed">48</vertical>
                             </sizing>
                         </stack-layout>
-                        <flow-layout direction="vertical" id="personal_info_root">
-                            <children>
-
-                            </children>
+                        <flow-layout direction="horizontal" id="abilities_root">
+                            <children/>
+                            <gap>4</gap>
+                            <allow-overflow>true</allow-overflow>
                         </flow-layout>
                     </children>
                     <gap>2</gap>
@@ -46,7 +46,7 @@
                                 <label id="until_end_timer">
                                     <text>14:88</text>
                                     <sizing>
-                                        <vertical method="fixed">8</vertical>
+                                        <vertical method="fixed">7</vertical>
                                     </sizing>
                                 </label>
                             </children>
@@ -68,7 +68,7 @@
                                         <label id="generators_count">
                                             <text>0/0</text>
                                             <sizing>
-                                                <vertical method="fixed">8</vertical>
+                                                <vertical method="fixed">7</vertical>
                                             </sizing>
                                         </label>
                                     </children>
@@ -78,17 +78,15 @@
 <!--                                quests part-->
                                 <flow-layout direction="horizontal">
                                     <children>
-<!--                                        <texture texture="fearsome:textures/ui/icons/quest.png"-->
-<!--                                                 u="0" v="0"-->
-<!--                                                 region-width="7" region-height="7"-->
-<!--                                                 texture-width="7" texture-height="7"-->
-<!--                                                 id="quests_icon"-->
-<!--                                        >-->
-<!--                                        </texture>-->
+                                        <fearsome.colorable_texture
+                                                texture="fearsome:textures/ui/icons/quest.png"
+                                                side-length="7"
+                                                id="quests_icon">
+                                        </fearsome.colorable_texture>
                                         <label id="quests_count">
                                             <text>2</text>
                                             <sizing>
-                                                <vertical method="fixed">8</vertical>
+                                                <vertical method="fixed">7</vertical>
                                             </sizing>
                                         </label>
                                     </children>
@@ -120,12 +118,47 @@
                             </padding>
                         </grid-layout>
                     </children>
-                    <gap>1</gap>
+                    <gap>2</gap>
                 </flow-layout>
             </children>
 
-            <padding><all>4</all></padding>
+            <padding><all>6</all></padding>
             <gap>2</gap>
         </flow-layout>
     </components>
+    <templates>
+        <template name="ability_card">
+            <stack-layout>
+                <children>
+                    <fearsome.radial_bar id="bar">
+                        <border-width>2</border-width>
+                        <sizing>
+                            <horizontal method="fill">100</horizontal>
+                            <vertical method="fill">100</vertical>
+                        </sizing>
+                    </fearsome.radial_bar>
+                    <fearsome.hideable_stack_layout id="ability_count_root">
+                        <children>
+                            <label id="ability_count">
+                                <text>1</text>
+                                <horizontal-text-alignment>right</horizontal-text-alignment>
+                                <sizing><vertical method="fixed">8</vertical></sizing>
+                            </label>
+                        </children>
+                        <padding>
+                            <all>1</all>
+                            <left>2</left>
+                        </padding>
+                        <horizontal-alignment>right</horizontal-alignment>
+                        <positioning type="relative">100,100</positioning>
+                    </fearsome.hideable_stack_layout>
+                </children>
+                <sizing>
+                    <horizontal method="fixed">34</horizontal>
+                    <vertical method="fixed">34</vertical>
+                </sizing>
+                <allow-overflow>true</allow-overflow>
+            </stack-layout>
+        </template>
+    </templates>
 </owo-ui>

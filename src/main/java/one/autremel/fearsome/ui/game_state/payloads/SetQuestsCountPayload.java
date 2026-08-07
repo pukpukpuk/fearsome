@@ -1,4 +1,4 @@
-package one.autremel.fearsome.ui.game_state;
+package one.autremel.fearsome.ui.game_state.payloads;
 
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;

@@ -24,8 +24,15 @@ public class DefaultBlurredSurface implements Surface {
                 ? new DefaultBlurredSurface(false)
                 : INSTANCE;
 
+
+        var p = component.padding().get();
+        component.padding(Insets.of(
+                p.top() + MARGIN,
+                p.bottom() + MARGIN,
+                p.left() + MARGIN,
+                p.right() + MARGIN
+        ));
         component.surface(surface);
-        component.padding(Insets.of(MARGIN));
 
         return surface;
     }
@@ -33,6 +40,7 @@ public class DefaultBlurredSurface implements Surface {
     public static void setAsSurfaceFor(BaseParentUIComponent component) {
         setAsSurfaceFor(component, false);
     }
+
 
     public void setColor(int color) {
         Preconditions.checkState(!isUnmodifiable);
