@@ -1,0 +1,71 @@
+<owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.20/owo-ui.xsd">
+    <components>
+        <flow-layout direction="vertical">
+            <children>
+                <flow-layout direction="vertical" id="root">
+                    <children>
+                        <fearsome.hideable_flow_layout direction="vertical" id="action_bar_root">
+                            <children>
+                                <label id="action_bar_label">
+                                    <text>Починка генератора</text>
+                                    <horizontal-text-alignment>left</horizontal-text-alignment>
+                                    <sizing>
+                                        <vertical method="fixed">8</vertical>
+                                        <horizontal method="fill">100</horizontal>
+                                    </sizing>
+                                </label>
+                                <fearsome.linear_bar id="action_bar">
+                                    <is-vertical>false</is-vertical>
+                                    <background-color>#FF332727</background-color>
+                                    <progress-color>#839FAF</progress-color>
+
+                                    <sizing>
+                                        <vertical method="fixed">4</vertical>
+                                        <horizontal method="fill">100</horizontal>
+                                    </sizing>
+                                </fearsome.linear_bar>
+                            </children>
+                            <is-visible>false</is-visible>
+
+                            <padding><all>2</all></padding>
+                            <gap>1</gap>
+                            <sizing>
+                                <horizontal method="fill">60</horizontal>
+                            </sizing>
+                        </fearsome.hideable_flow_layout>
+                        <flow-layout direction="ltr-text-flow">
+                            <children>
+                                <label><text>aaaa</text></label>
+                                <label><text>AAAAAAAAA</text></label>
+                                <label><text>A</text></label>
+                                <label><text>b</text></label>
+                                <label><text>bGRRRRRRRRRRRRRRRRRRR</text></label>
+                                <label><text>aaaa</text></label>
+                                <label><text>AAAAAAAAA</text></label>
+                            </children>
+                            <gap>9</gap>
+                            <sizing>
+                                <vertical method="fixed">30</vertical>
+                                <horizontal method="fill">100</horizontal>
+                            </sizing>
+                        </flow-layout>
+                    </children>
+
+                    <gap>4</gap>
+                    <horizontal-alignment>center</horizontal-alignment>
+
+                    <sizing>
+                        <vertical method="content">0</vertical>
+                        <horizontal method="fill">40</horizontal>
+                    </sizing>
+
+                    <positioning type="relative">50,100</positioning>
+                    <margins>
+                        <bottom>10</bottom>
+                    </margins>
+                </flow-layout>
+            </children>
+        </flow-layout>
+    </components>
+</owo-ui>

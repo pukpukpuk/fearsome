@@ -13,7 +13,9 @@
         "title": "Fearsome: Настройки",
         "section.controls": "Управление",
         "option.survivorListExpandBy": "Список выживших раскрывается через: ",
-        "enum.survivorListExpandType.hold": "Зажатие",
-        "enum.survivorListExpandType.toggle": "Переключение"
+        "enum.survivorListExpandType.{}": {
+            "hold": "Зажатие",
+            "toggle": "Переключение",
+        }
     },
 }

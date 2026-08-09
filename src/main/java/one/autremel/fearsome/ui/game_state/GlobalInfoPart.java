@@ -6,12 +6,9 @@ import io.wispforest.owo.ui.core.Color;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.text.Text;
-import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.Utils;
-import one.autremel.fearsome.ui.ColorableTextureComponent;
+import one.autremel.fearsome.ui.components.ColorableTextureComponent;
 import one.autremel.fearsome.ui.DefaultBlurredSurface;
-
-import java.awt.*;
 
 @RequiredArgsConstructor
 class GlobalInfoPart {

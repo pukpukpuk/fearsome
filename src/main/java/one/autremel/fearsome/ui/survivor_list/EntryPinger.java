@@ -1,10 +1,7 @@
 package one.autremel.fearsome.ui.survivor_list;
 
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.client.MinecraftClient;
 import one.autremel.fearsome.ui.DefaultBlurredSurface;
 import one.autremel.fearsome.ui.OverlayScreenRegistrar;
-import one.autremel.fearsome.ui.game_state.GameStateScreen;
 
 import java.util.ArrayList;
 import java.util.HashMap;

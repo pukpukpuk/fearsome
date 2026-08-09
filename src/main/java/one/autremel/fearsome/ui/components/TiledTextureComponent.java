@@ -1,12 +1,6 @@
-package one.autremel.fearsome.ui;
+package one.autremel.fearsome.ui.components;
 
-import io.wispforest.owo.ui.base.BaseUIComponent;
-import io.wispforest.owo.ui.core.OwoUIGraphics;
-import io.wispforest.owo.ui.core.OwoUIPipelines;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.util.Identifier;
 
 public class TiledTextureComponent extends ColorableTextureComponent {

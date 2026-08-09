@@ -1,15 +1,14 @@
 package one.autremel.fearsome.ui.survivor_list;
 
 import com.google.common.base.Preconditions;
-import io.wispforest.owo.braid.widgets.label.Label;
 import io.wispforest.owo.ui.component.LabelComponent;
 import io.wispforest.owo.ui.container.FlowLayout;
 import lombok.*;
 import lombok.experimental.Accessors;
-import one.autremel.fearsome.ui.ColorableTextureComponent;
+import one.autremel.fearsome.ui.components.ColorableTextureComponent;
 import one.autremel.fearsome.ui.DefaultBlurredSurface;
-import one.autremel.fearsome.ui.LinearBar;
-import one.autremel.fearsome.ui.TiledTextureComponent;
+import one.autremel.fearsome.ui.components.LinearBar;
+import one.autremel.fearsome.ui.components.TiledTextureComponent;
 
 @Accessors(fluent = true)
 @Data

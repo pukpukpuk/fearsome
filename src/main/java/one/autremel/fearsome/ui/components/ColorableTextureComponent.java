@@ -1,11 +1,9 @@
-package one.autremel.fearsome.ui;
+package one.autremel.fearsome.ui.components;
 
 import io.wispforest.owo.ui.base.BaseUIComponent;
-import io.wispforest.owo.ui.component.TextureComponent;
 import io.wispforest.owo.ui.core.OwoUIGraphics;
 import io.wispforest.owo.ui.core.OwoUIPipelines;
 import io.wispforest.owo.ui.core.Sizing;
-import io.wispforest.owo.ui.core.UIComponent;
 import io.wispforest.owo.ui.parsing.UIParsing;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

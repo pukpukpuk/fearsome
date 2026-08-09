@@ -15,6 +15,7 @@ import one.autremel.fearsome.timer.TimerUpdater;
 import one.autremel.fearsome.ui.OverlayScreenRegistrar;
 import one.autremel.fearsome.ui.UiController;
 import one.autremel.fearsome.ui.game_state.GameStateScreen;
+import one.autremel.fearsome.ui.hints.HintsScreen;
 
 public class FearsomeMod implements ClientModInitializer {
     public static final String NAMESPACE = "fearsome";
@@ -42,7 +43,8 @@ public class FearsomeMod implements ClientModInitializer {
 
 
     private void onSuccessfulHandshake() {
-        OverlayScreenRegistrar.create(GameStateScreen.ID, new GameStateScreen(CharacterTeam.MURDERERS, "dream"));
+//        OverlayScreenRegistrar.create(GameStateScreen.ID, new GameStateScreen(CharacterTeam.MURDERERS, "dream"));
+        OverlayScreenRegistrar.create(HintsScreen.ID, new HintsScreen());
     }
 
     private void onDisconnectFromGame() {

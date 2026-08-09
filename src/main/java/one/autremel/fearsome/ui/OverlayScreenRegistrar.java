@@ -5,8 +5,6 @@ import lombok.RequiredArgsConstructor;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.hud.DebugHud;
-import net.minecraft.client.gui.hud.debug.chart.DebugChart;
 import net.minecraft.util.Identifier;
 import one.autremel.fearsome.FearsomeMod;
 

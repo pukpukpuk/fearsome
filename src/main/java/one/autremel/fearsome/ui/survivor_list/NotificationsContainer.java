@@ -1,6 +1,5 @@
 package one.autremel.fearsome.ui.survivor_list;
 
-import com.google.common.collect.Comparators;
 import io.wispforest.owo.ui.base.BaseUIComponent;
 import io.wispforest.owo.ui.core.OwoUIGraphics;
 import io.wispforest.owo.ui.core.Sizing;

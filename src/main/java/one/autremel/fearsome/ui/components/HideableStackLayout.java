@@ -1,4 +1,4 @@
-package one.autremel.fearsome.ui;
+package one.autremel.fearsome.ui.components;
 
 import io.wispforest.owo.ui.container.StackLayout;
 import io.wispforest.owo.ui.core.OwoUIGraphics;
@@ -10,7 +10,7 @@ public class HideableStackLayout extends StackLayout {
     @Setter
     private boolean isVisible;
 
-    protected HideableStackLayout() {
+    public HideableStackLayout() {
         super(Sizing.content(), Sizing.content());
     }
 

@@ -3,12 +3,12 @@ package one.autremel.fearsome.ui;
 import io.wispforest.owo.ui.parsing.UIParsing;
 import net.minecraft.text.Text;
 import one.autremel.fearsome.FearsomeMod;
-import one.autremel.fearsome.effects.EffectController;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.network.PayloadId;
 import one.autremel.fearsome.network.RemoveScreensPayload;
+import one.autremel.fearsome.ui.components.*;
 import one.autremel.fearsome.ui.game_state.GameStateScreenController;
-import one.autremel.fearsome.ui.survivor_list.SurvivorList;
+import one.autremel.fearsome.ui.hints.HintsScreenController;
 import one.autremel.fearsome.ui.survivor_list.SurvivorListController;
 
 import java.util.ArrayList;
@@ -22,7 +22,10 @@ public class UiController {
         UIParsing.registerFactory(FearsomeMod.identifier("colorable_texture"), ColorableTextureComponent::parse);
         UIParsing.registerFactory(FearsomeMod.identifier("radial_bar"), element -> new RadialProgressBar());
         UIParsing.registerFactory(FearsomeMod.identifier("scalable_label"), element -> new ScalableLabelComponent(Text.empty()));
+        UIParsing.registerFactory(FearsomeMod.identifier("linear_bar"), element -> new LinearBar());
+
         UIParsing.registerFactory(FearsomeMod.identifier("hideable_stack_layout"), element -> new HideableStackLayout());
+        UIParsing.registerFactory(FearsomeMod.identifier("hideable_flow_layout"), HideableFlowLayout::parse);
     }
 
     public static void initialize() {
@@ -30,6 +33,7 @@ public class UiController {
 
         SurvivorListController.initialize();
         GameStateScreenController.initialize();
+        HintsScreenController.initialize();
     }
 
     public static void reset() {

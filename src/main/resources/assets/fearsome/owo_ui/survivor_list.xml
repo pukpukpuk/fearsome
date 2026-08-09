@@ -62,17 +62,17 @@
                             </texture>
                         </children>
                     </stack-layout>
-                    <stack-layout id="death_timer_container">
-                        <children/>
+                    <fearsome.linear_bar is-vertical="true" id="death_timer">
+                        <is-vertical>true</is-vertical>
+                        <background-color>#FF3C3C3C</background-color>
+
                         <sizing>
                             <horizontal method="fixed">2</horizontal>
                             <vertical method="fill">100</vertical>
                         </sizing>
 
-                        <margins>
-                            <left>2</left>
-                        </margins>
-                    </stack-layout>
+                        <margins><left>2</left></margins>
+                    </fearsome.linear_bar>
                 </children>
 
                 <vertical-alignment>top</vertical-alignment>

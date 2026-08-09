@@ -13,7 +13,9 @@
         "title": "Fearsome: Settings",
         "section.controls": "Controls",
         "option.survivorListExpandBy": "Survivor list is expanded by: ",
-        "enum.survivorListExpandType.hold": "Hold",
-        "enum.survivorListExpandType.toggle": "Toggle"
+        "enum.survivorListExpandType.{}": {
+            "hold": "Hold",
+            "toggle": "Toggle",
+        }
     },
 }

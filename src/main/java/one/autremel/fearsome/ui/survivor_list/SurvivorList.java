@@ -4,13 +4,15 @@ import io.wispforest.owo.ui.component.LabelComponent;
 import io.wispforest.owo.ui.component.UIComponents;
 import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.container.StackLayout;
-import io.wispforest.owo.ui.container.UIContainers;
 import io.wispforest.owo.ui.core.*;
 import lombok.Getter;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.ui.*;
+import one.autremel.fearsome.ui.components.ColorableTextureComponent;
+import one.autremel.fearsome.ui.DefaultBlurredSurface;
+import one.autremel.fearsome.ui.components.LinearBar;
+import one.autremel.fearsome.ui.components.TiledTextureComponent;
 
 import java.util.*;
 
@@ -102,7 +104,7 @@ public class SurvivorList extends OverlayScreen {
                 healthBarProgress,
                 deadMarkTexture,
                 baseElement.childById(FlowLayout.class, "text_block"),
-                createDeathTimerBar(baseElement),
+                baseElement.childById(LinearBar.class, "death_timer"),
                 baseElement.childById(LabelComponent.class, "effects_line"),
                 surface,
                 createNotificationsContainer(baseElement)
@@ -156,14 +158,6 @@ public class SurvivorList extends OverlayScreen {
 
         skinIconContainer.child(progressComponent);
         return progressComponent;
-    }
-
-    private LinearBar createDeathTimerBar(FlowLayout baseElement) {
-        var bar = new LinearBar(0xFF3C3C3C, true);
-
-        var container = baseElement.childById(StackLayout.class, "death_timer_container");
-        container.child(bar);
-        return bar;
     }
 
     private NotificationsContainer createNotificationsContainer(FlowLayout baseElement) {

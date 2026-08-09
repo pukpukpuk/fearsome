@@ -1,8 +1,7 @@
-package one.autremel.fearsome.ui;
+package one.autremel.fearsome.ui.components;
 
 import io.wispforest.owo.ui.component.LabelComponent;
 import io.wispforest.owo.ui.core.OwoUIGraphics;
-import io.wispforest.owo.ui.core.Sizing;
 import io.wispforest.owo.ui.parsing.UIModel;
 import io.wispforest.owo.ui.parsing.UIParsing;
 import lombok.Setter;
@@ -15,7 +14,7 @@ public class ScalableLabelComponent extends LabelComponent {
     @Setter
     private float scale;
 
-    protected ScalableLabelComponent(Text text) {
+    public ScalableLabelComponent(Text text) {
         super(text);
     }
 

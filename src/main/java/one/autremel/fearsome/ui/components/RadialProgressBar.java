@@ -1,11 +1,8 @@
-package one.autremel.fearsome.ui;
+package one.autremel.fearsome.ui.components;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import io.wispforest.owo.ui.base.BaseUIComponent;
-import io.wispforest.owo.ui.core.Insets;
 import io.wispforest.owo.ui.core.OwoUIGraphics;
-import io.wispforest.owo.ui.core.OwoUIPipelines;
-import io.wispforest.owo.ui.core.UIComponent;
 import io.wispforest.owo.ui.parsing.UIModel;
 import io.wispforest.owo.ui.parsing.UIParsing;
 import lombok.Getter;

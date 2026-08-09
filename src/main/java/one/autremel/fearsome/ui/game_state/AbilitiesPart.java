@@ -13,9 +13,8 @@ import net.minecraft.util.Identifier;
 import one.autremel.fearsome.CharacterTeam;
 import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.ui.DefaultBlurredSurface;
-import one.autremel.fearsome.ui.HideableStackLayout;
-import one.autremel.fearsome.ui.OverlayScreenRegistrar;
-import one.autremel.fearsome.ui.RadialProgressBar;
+import one.autremel.fearsome.ui.components.HideableStackLayout;
+import one.autremel.fearsome.ui.components.RadialProgressBar;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
