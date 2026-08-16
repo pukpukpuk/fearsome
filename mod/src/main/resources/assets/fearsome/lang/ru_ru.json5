@@ -1,0 +1,57 @@
+{
+    "modmenu.descriptionTranslation.fearsome": "Необходимый клиентский мод для игры в Fear: GOTY Edition",
+    "gui.{}": {
+        "go_to_mod_github": "Скачать актуальную версию",
+        "mod_version_mismatch": "Несоответствие версии мода с версией сервера!\nНа сервере: %1$s, клиент: %2$s"
+    },
+
+    "key.category.fearsome.{}": {
+        "general": "Fearsome: Общие",
+        "ui": "Fearsome: UI",
+    },
+    "fearsome.key.{}": {
+        /// General
+        "attack": "Атака",
+        "first_ability": "Первая способность",
+        "interaction": "Взаимодействие",
+        "second_ability": "Вторая способность",
+        "smart_interaction": "Умное взаимодействие",
+
+        /// UI
+        "expand_survivor_list": "Раскрыть список выживших"
+    },
+
+
+    "text.config.fearsome-client-config.{}": {
+        "title": "Fearsome: Настройки",
+        "section.controls": "Управление",
+        "option.survivorListExpandBy": "Список выживших раскрывается через: ",
+        "enum.survivorListExpandType.{}": {
+            "hold": "Зажатие",
+            "toggle": "Переключение",
+        }
+    },
+
+
+    "fearsome.game.{}": {
+        "action.{}": {
+            "progress.{}": {
+                "generator_fixing": "Починка",
+                "healing": "Лечение",
+
+                "ghost.manifestation": "Воплощение",
+                "mercenary.reload": "Перезарядка",
+                "artist.charging": "Зарядка",
+                "dream.activation": "Активация"
+            },
+            "control.{}": {
+                "attack": "Атака",
+
+                "ghost.{}": {
+                    "cloak": "Скрыться",
+                    "materialize": "Воплотиться"
+                },
+            }
+        },
+    }
+}

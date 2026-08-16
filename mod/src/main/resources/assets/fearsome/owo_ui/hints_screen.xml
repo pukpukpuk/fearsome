@@ -1,0 +1,82 @@
+<owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.20/owo-ui.xsd">
+    <components>
+        <flow-layout direction="vertical">
+            <children>
+                <flow-layout direction="vertical" id="root">
+                    <children>
+                        <fearsome.hideable_flow_layout direction="vertical" id="action_bar_root">
+                            <children>
+                                <label id="action_bar_label">
+                                    <text>Починка генератора</text>
+                                    <horizontal-text-alignment>left</horizontal-text-alignment>
+                                    <sizing>
+                                        <vertical method="fixed">8</vertical>
+                                        <horizontal method="fill">100</horizontal>
+                                    </sizing>
+                                </label>
+                                <fearsome.linear_bar id="action_bar">
+                                    <is-vertical>false</is-vertical>
+                                    <background-color>#FF332727</background-color>
+                                    <progress-color>#839FAF</progress-color>
+
+                                    <sizing>
+                                        <vertical method="fixed">4</vertical>
+                                        <horizontal method="fill">100</horizontal>
+                                    </sizing>
+                                </fearsome.linear_bar>
+                            </children>
+                            <is-visible>false</is-visible>
+
+                            <padding><all>2</all></padding>
+                            <gap>1</gap>
+                            <sizing>
+                                <horizontal method="fill">60</horizontal>
+                            </sizing>
+                        </fearsome.hideable_flow_layout>
+                        <flow-layout direction="ltr-text-flow" id="action_controls">
+                            <children/>
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <gap>9</gap>
+                            <sizing>
+                                <vertical method="fixed">42</vertical>
+                                <horizontal method="fill">100</horizontal>
+                            </sizing>
+                        </flow-layout>
+                    </children>
+
+                    <gap>4</gap>
+                    <horizontal-alignment>center</horizontal-alignment>
+
+                    <sizing>
+                        <vertical method="content">0</vertical>
+                        <horizontal method="fill">40</horizontal>
+                    </sizing>
+
+                    <positioning type="relative">50,100</positioning>
+                    <margins>
+                        <bottom>10</bottom>
+                    </margins>
+                </flow-layout>
+            </children>
+        </flow-layout>
+    </components>
+    <templates>
+        <template name="control_card">
+            <flow-layout direction="horizontal">
+                <children>
+                    <fearsome.key_bind_label id="key_bind_label">
+                    </fearsome.key_bind_label>
+                    <label>
+                        <text translate="true">{{action_name}}</text>
+                        <shadow>true</shadow>
+                    </label>
+                </children>
+                <gap>2</gap>
+                <vertical-alignment>center</vertical-alignment>
+
+                <margins><bottom>3</bottom></margins>
+            </flow-layout>
+        </template>
+    </templates>
+</owo-ui>

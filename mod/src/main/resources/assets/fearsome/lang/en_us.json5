@@ -1,0 +1,57 @@
+{
+    "modmenu.descriptionTranslation.fearsome": "A required client-side mod for Fear: GOTY Edition",
+    "gui.{}": {
+        "go_to_mod_github": "Download actual version",
+        "mod_version_mismatch": "The mod version does not match the server version!\nOn server: %1$s, on client: %2$s"
+    },
+
+    "key.category.fearsome.{}": {
+        "general": "Fearsome: General",
+        "ui": "Fearsome: UI",
+    },
+    "fearsome.key.{}": {
+        /// General
+        "attack": "Attack",
+        "first_ability": "First Ability",
+        "interaction": "Interaction",
+        "second_ability": "Second Ability",
+        "smart_interaction": "Smart Interaction",
+
+        /// UI
+        "expand_survivor_list": "Expand Survivor List"
+    },
+
+
+    "text.config.fearsome-client-config.{}": {
+        "title": "Fearsome: Settings",
+        "section.controls": "Controls",
+        "option.survivorListExpandBy": "Survivor list is expanded by: ",
+        "enum.survivorListExpandType.{}": {
+            "hold": "Hold",
+            "toggle": "Toggle",
+        }
+    },
+
+
+    "fearsome.game.{}": {
+        "action.{}": {
+            "progress.{}": {
+                "generator_fixing": "Fixing",
+                "healing": "Healing",
+
+                "ghost.manifestation": "Manifestation",
+                "mercenary.reload": "Reload",
+                "artist.charging": "Charging",
+                "dream.activation": "Activation"
+            },
+            "control.{}": {
+                "attack": "Attack",
+
+                "ghost.{}": {
+                    "cloak": "Cloak",
+                    "materialize": "Materialize"
+                },
+            }
+        },
+    }
+}
