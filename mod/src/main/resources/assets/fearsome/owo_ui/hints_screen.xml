@@ -8,7 +8,7 @@
                         <fearsome.hideable_flow_layout direction="vertical" id="action_bar_root">
                             <children>
                                 <label id="action_bar_label">
-                                    <text>Починка генератора</text>
+                                    <text>Починка генератора замени потом</text>
                                     <horizontal-text-alignment>left</horizontal-text-alignment>
                                     <sizing>
                                         <vertical method="fixed">8</vertical>
@@ -61,22 +61,4 @@
             </children>
         </flow-layout>
     </components>
-    <templates>
-        <template name="control_card">
-            <flow-layout direction="horizontal">
-                <children>
-                    <fearsome.key_bind_label id="key_bind_label">
-                    </fearsome.key_bind_label>
-                    <label>
-                        <text translate="true">{{action_name}}</text>
-                        <shadow>true</shadow>
-                    </label>
-                </children>
-                <gap>2</gap>
-                <vertical-alignment>center</vertical-alignment>
-
-                <margins><bottom>3</bottom></margins>
-            </flow-layout>
-        </template>
-    </templates>
 </owo-ui>

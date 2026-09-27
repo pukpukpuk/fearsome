@@ -17,7 +17,7 @@ public record SetAbilityCountPayload(
 
     private static SetAbilityCountPayload decode(PacketByteBuf buf) {
         byte data = buf.readByte();
-        var progress = data >> 2;
+        var progress = (data >> 2) & 63;
         var index = data & 0b11;
 
         return new SetAbilityCountPayload(progress, index);

@@ -22,7 +22,10 @@ public class UiController {
         UIParsing.registerFactory(FearsomeMod.identifier("radial_bar"), element -> new RadialProgressBar());
         UIParsing.registerFactory(FearsomeMod.identifier("scalable_label"), element -> new ScalableLabelComponent(Text.empty()));
         UIParsing.registerFactory(FearsomeMod.identifier("linear_bar"), element -> new LinearBar());
-        UIParsing.registerFactory(FearsomeMod.identifier("key_bind_label"), element -> new KeyBindLabel());
+        UIParsing.registerFactory(
+                FearsomeMod.identifier("action_control_icon"),
+                element -> new ActionControlLabel()
+        );
 
         UIParsing.registerFactory(FearsomeMod.identifier("hideable_stack_layout"), element -> new HideableStackLayout());
         UIParsing.registerFactory(FearsomeMod.identifier("hideable_flow_layout"), HideableFlowLayout::parse);

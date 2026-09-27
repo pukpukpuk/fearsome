@@ -14,6 +14,7 @@ public record PongPayload(
 ) implements IServerPayload<PongPayload> {
     public static final ServerPayloadId<PongPayload> ID = new ServerPayloadId<>(
             PongPayload.class,
+            false,
             PacketCodec.tuple(
                     PacketCodecs.STRING, PongPayload::version,
                     PacketCodecs.LONG, PongPayload::senderTimestamp,

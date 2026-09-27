@@ -7,6 +7,7 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.network.NetworkController;
+import one.autremel.fearsome.network.ping.ModPingController;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.HashMap;
@@ -15,38 +16,47 @@ public class KeyBindings {
     static final KeyBinding.Category GENERAL = KeyBinding.Category.create(FearsomeMod.identifier("general"));
     static final KeyBinding.Category UI = KeyBinding.Category.create(FearsomeMod.identifier("ui"));
 
-    private static final HashMap<BindingId, BindingData> bindingDataMap = new HashMap<>();
-
     private static boolean initialized;
+
+    private static final HashMap<BindingId, BindingData> bindingDataMap = new HashMap<>();
 
     public static void initialize() {
         Preconditions.checkState(!initialized);
         initialized = true;
 
-        createKeyboardBinding(BindingId.EXPAND_SURVIVOR_LIST, GLFW.GLFW_KEY_LEFT_ALT, UI);
+        createBindings();
 
-        createMouseBinding(BindingId.ATTACK, GLFW.GLFW_MOUSE_BUTTON_LEFT, GENERAL);
-        createMouseBinding(BindingId.INTERACTION, GLFW.GLFW_MOUSE_BUTTON_RIGHT, GENERAL);
-        createKeyboardBinding(BindingId.FIRST_ABILITY, GLFW.GLFW_KEY_Q, GENERAL);
-        createKeyboardBinding(BindingId.SECOND_ABILITY, GLFW.GLFW_KEY_E, GENERAL);
-        createKeyboardBinding(BindingId.SMART_INTERACTION, GLFW.GLFW_KEY_F, GENERAL);
-
-        ClientLifecycleEvents.CLIENT_STARTED.register((client) -> {
-            createBinding(BindingId.HEALING, client.options.sneakKey);
-        });
+        VanillaActionsSuppressor.initialize();
     }
 
     public static BindingData getData(BindingId id) {
         return bindingDataMap.get(id);
     }
 
+    private static void createBindings() {
+        createKeyboardBinding(BindingId.EXPAND_SURVIVOR_LIST, GLFW.GLFW_KEY_LEFT_ALT, UI);
+
+        createMouseBinding(BindingId.ATTACK, GLFW.GLFW_MOUSE_BUTTON_LEFT, GENERAL);
+        createMouseBinding(BindingId.FIRST_ABILITY, GLFW.GLFW_MOUSE_BUTTON_RIGHT, GENERAL);
+
+        createKeyboardBinding(BindingId.SECOND_ABILITY, GLFW.GLFW_KEY_Q, GENERAL);
+        createKeyboardBinding(BindingId.INTERACTION, GLFW.GLFW_KEY_E, GENERAL);
+
+        ClientLifecycleEvents.CLIENT_STARTED.register((client) -> {
+            createBinding(BindingId.HEALING, client.options.sneakKey);
+        });
+    }
 
     private static void createBinding(BindingId id, KeyBinding keyBinding) {
         var data = new BindingData(id, keyBinding);
         bindingDataMap.put(id, data);
 
         if (id.getByteId() != -1) {
-            KeyEvents.onToggle(id, isPressed -> NetworkController.send(new InputPayload(id, isPressed)));
+            KeyEvents.onToggle(id, isPressed -> {
+                if (ModPingController.isOnFearServer()) {
+                    NetworkController.send(new InputPayload(id, isPressed));
+                }
+            });
         }
     }
 

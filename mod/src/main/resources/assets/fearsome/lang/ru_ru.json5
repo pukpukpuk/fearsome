@@ -10,14 +10,13 @@
         "ui": "Fearsome: UI",
     },
     "fearsome.key.{}": {
-        /// General
+        // General
         "attack": "Атака",
         "first_ability": "Первая способность",
         "interaction": "Взаимодействие",
         "second_ability": "Вторая способность",
-        "smart_interaction": "Умное взаимодействие",
 
-        /// UI
+        // UI
         "expand_survivor_list": "Раскрыть список выживших"
     },
 
@@ -33,25 +32,76 @@
     },
 
 
-    "fearsome.game.{}": {
+    "fearsome.{}": {
         "action.{}": {
-            "progress.{}": {
-                "generator_fixing": "Починка",
-                "healing": "Лечение",
-
-                "ghost.manifestation": "Воплощение",
-                "mercenary.reload": "Перезарядка",
-                "artist.charging": "Зарядка",
-                "dream.activation": "Активация"
-            },
             "control.{}": {
-                "attack": "Атака",
+                "lobby.{}": {
+                    "join_queue": "Войти в очередь",
+                    "exit_queue": "Покинуть очередь",
+                    "spectate": "Наблюдать",
+                    "choice_menu": "Открыть меню выбора"
+                },
 
-                "ghost.{}": {
-                    "cloak": "Скрыться",
-                    "materialize": "Воплотиться"
+                "game.{}": {
+                    "attack": "Атака",
+                    "generator.{}": {
+                        "fix": "Чинить",
+                        "use_quest": "Использовать квест",
+                        "kick": "Пнуть"
+                    },
+                    "pallet.{}": {
+                        "toggle": "Переключить",
+                        "break": "Сломать"
+                    },
+                    use_elevator: "Использовать лифт",
+
+
+                    "ghost.{}": {
+                        "cloak": "Скрыться",
+                        "materialize": "Воплотиться"
+                    },
+                    "mercenary.{}": {
+                        "throw": "Кинуть",
+                        "reload": "Подзарядиться"
+                    },
+                    "dream.{}": {
+                        "peek": "Подглянуть",
+                        "emerge": "Появиться"
+                    },
+                    "artist.{}": {
+                        "link": "Связаться",
+                        "swap": "Поменяться"
+                    },
+
+
+                    "mechanic.use_wrench": "Использовать ключ",
+                    "nun.teleport": "Телепортироваться",
+                    "addict.shoot_up": "Ширнуться",
+                    "nurse.{}": {
+                        "heal_self": "Лечить себя",
+                        "heal_others": "Лечить других"
+                    },
+                    "buterenko.{}": {
+                        "record": "Записать",
+                        "cancel": "Отмена"
+                    },
+                },
+                "spectators.{}": {
+                    "previous": "Предыдущий",
+                    "next": "Следующий"
+                }
+            },
+            "progress.{}": {
+                "game.{}": {
+                    "generator_fixing": "Починка",
+                    "healing": "Лечение",
+
+                    "ghost.manifestation": "Воплощение",
+                    "mercenary.reloading": "Перезарядка",
+                    "artist.searching": "Поиск",
+                    "dream.activation": "Активация"
                 },
             }
         },
-    }
+    },
 }

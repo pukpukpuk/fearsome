@@ -27,6 +27,10 @@ public class HintsScreenController {
         ActionControlsListController.initialize();
     }
 
+    public static void reset() {
+        ActionControlsListController.resetControls();
+    }
+
 
     public static void acceptData(Consumer<Data> consumer) {
         dataInitTask.thenAccept(consumer);

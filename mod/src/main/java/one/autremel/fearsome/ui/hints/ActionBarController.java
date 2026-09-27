@@ -16,14 +16,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 class ActionBarController {
-    private static final String KEY_PREFIX = "fearsome.game.action.progress.";
+    private static final String KEY_PREFIX = "fearsome.action.progress.";
 
     private static boolean initialized;
 
     private static final HashMap<Integer, ActionData> registeredActions = new HashMap<>();
     private static final HashSet<ActionData> visibleActions = new HashSet<>();
     @Nullable
-    private static ActionData currentlyShowedAction;
+    private static ActionData currentlyShownAction;
 
     static void initialize() {
         Preconditions.checkState(!initialized);
@@ -37,18 +37,18 @@ class ActionBarController {
         OverlayScreenRegistrar.registerBeforeScreenDrawing(HintsScreen.ID, ActionBarController::update);
     }
 
-    private static void updateCurrentlyShowedAction() {
+    private static void updateCurrentlyShownAction() {
         if (visibleActions.isEmpty()) {
-            currentlyShowedAction = null;
+            currentlyShownAction = null;
             return;
         }
 
         if (visibleActions.size() == 1) {
-            currentlyShowedAction = visibleActions.iterator().next();
+            currentlyShownAction = visibleActions.iterator().next();
             return;
         }
 
-        currentlyShowedAction = visibleActions.stream().max(Comparator.comparingInt(ActionData::getPriority)).orElseThrow();
+        currentlyShownAction = visibleActions.stream().max(Comparator.comparingInt(ActionData::getPriority)).orElseThrow();
     }
 
     private static void handleRegister(RegisterActionPayload payload) {
@@ -90,13 +90,13 @@ class ActionBarController {
         if (actionData.isVisible()) visibleActions.add(actionData);
         else visibleActions.remove(actionData);
 
-        updateCurrentlyShowedAction();
+        updateCurrentlyShownAction();
     }
 
     private static void handleScreensRemove() {
         registeredActions.clear();
         visibleActions.clear();
-        currentlyShowedAction = null;
+        currentlyShownAction = null;
     }
 
     private static void update() {
@@ -105,13 +105,13 @@ class ActionBarController {
 
         var screen = data.screen();
 
-        var isVisible = currentlyShowedAction != null;
+        var isVisible = currentlyShownAction != null;
         screen.setProgressBarVisible(isVisible);
         if (!isVisible) return;
 
-        screen.setProgressBarText(currentlyShowedAction.getText());
+        screen.setProgressBarText(currentlyShownAction.getText());
 
-        currentlyShowedAction.updateAnimation();
-        screen.setActionProgressAmount(currentlyShowedAction.getCurrentProgress());
+        currentlyShownAction.updateAnimation();
+        screen.setActionProgressAmount(currentlyShownAction.getCurrentProgress());
     }
 }

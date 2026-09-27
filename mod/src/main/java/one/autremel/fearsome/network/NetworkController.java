@@ -41,7 +41,7 @@ public class NetworkController {
 
         var list = getSubscribersList(payloadId);
         ClientPlayNetworking.registerGlobalReceiver(payloadId.getId(), (payload, context) -> {
-            if (payloadId.isOnlyWhileGameActive() && !ModPingController.isGameActive()) return;
+            if (payloadId.isOnlyWhileGameActive() && !ModPingController.isOnFearServer()) return;
 
             list.forEach(consumer -> ((Consumer<T>)consumer).accept(payload));
         });

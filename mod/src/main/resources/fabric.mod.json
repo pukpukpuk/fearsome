@@ -4,13 +4,13 @@
     "version": "${version}",
     "environment": "client",
     "entrypoints": {
-        "fabric-datagen": [
-            "one.autremel.fearsome.FearsomeDataGenerator"
-        ],
         "client": [
             "one.autremel.fearsome.FearsomeMod"
         ]
     },
+    "mixins": [
+        "fearsome.mixins.json"
+    ],
     "depends": {
         "fabricloader": ">=${loader_version}",
         "fabric-api": "*",

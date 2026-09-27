@@ -6,8 +6,10 @@ import io.wispforest.owo.ui.core.OwoUIGraphics;
 import io.wispforest.owo.ui.core.Sizing;
 import io.wispforest.owo.ui.parsing.UIModel;
 import io.wispforest.owo.ui.parsing.UIParsing;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -19,25 +21,36 @@ import org.w3c.dom.Node;
 import java.util.HashMap;
 import java.util.Map;
 
-public class KeyBindLabel extends BaseUIComponent {
+public class ActionControlLabel extends BaseUIComponent {
     private static final int BASE_HEIGHT = 11;
+    private static final int GAP = 2;
+    private static final int BOTTOM_MARGIN = 3;
+
     private static final String KEYBOARD_KEY_PREFIX = "key.keyboard.";
     private static final String MOUSE_KEY_PREFIX = "key.mouse.";
+    private static final BindingDrawer LEFT_MOUSE_DRAWER = new MouseBindingDrawer(FearsomeMod.textureIdentifier("ui/icons/left_mouse"));
     private static final Map<String, BindingDrawer> CACHED_DRAWERS = new HashMap<>(Map.of(
-            "key.mouse.left",   new MouseBindingDrawer(FearsomeMod.textureIdentifier("ui/icons/left_mouse")),
+            "key.mouse.left",   LEFT_MOUSE_DRAWER,
             "key.mouse.right",  new MouseBindingDrawer(FearsomeMod.textureIdentifier("ui/icons/right_mouse")),
             "key.mouse.middle", new MouseBindingDrawer(FearsomeMod.textureIdentifier("ui/icons/middle_mouse"))
     ));
 
-    private BindingDrawer bindingDrawer;
+    private final TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+
+    private BindingDrawer bindingDrawer = LEFT_MOUSE_DRAWER;
+    private Text labelText = Text.empty();
     private boolean isVisible = true;
 
-    public KeyBindLabel() {
-        verticalSizing(Sizing.fixed(BASE_HEIGHT));
+    public ActionControlLabel() {
+        verticalSizing(Sizing.fixed(BASE_HEIGHT + BOTTOM_MARGIN));
     }
 
     public void setBindingKey(String bindingKey) {
         bindingDrawer = CACHED_DRAWERS.computeIfAbsent(bindingKey, KeyboardBindingDrawer::new);
+    }
+
+    public void setText(Text text) {
+        labelText = text;
     }
 
     public void setVisible(boolean isVisible) {
@@ -52,11 +65,19 @@ public class KeyBindLabel extends BaseUIComponent {
     public void draw(OwoUIGraphics graphics, int mouseX, int mouseY, float partialTicks, float delta) {
         if (!isVisible) return;
         bindingDrawer.draw(graphics, x, y);
+        graphics.drawText(
+                textRenderer,
+                labelText,
+                x + bindingDrawer.determineHorizontalSize() + GAP,
+                y + (BASE_HEIGHT - textRenderer.fontHeight) / 2 + 1,
+                0xFFFFFFFF,
+                true
+        );
     }
 
     @Override
     protected int determineHorizontalContentSize(Sizing sizing) {
-        return bindingDrawer.determineHorizontalSize();
+        return bindingDrawer.determineHorizontalSize() + GAP + textRenderer.getWidth(labelText);
     }
 
     @Override
@@ -72,18 +93,20 @@ public class KeyBindLabel extends BaseUIComponent {
         abstract int determineHorizontalSize();
     }
 
-    private class KeyboardBindingDrawer extends BindingDrawer {
+    private static class KeyboardBindingDrawer extends BindingDrawer {
         private static final int BACKGROUND_COLOR = 0xFF252A30;
         private static final int OUTLINE_COLOR = 0xFF41424F;
         private static final int TEXT_COLOR = 0xFFFFFFFF;
         private static final int PADDING = 1;
 
+        private final TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
         private final Text text;
+        @Getter
         private final int width;
 
         private KeyboardBindingDrawer(String bindingKey) {
             text = Text.of(tinifyBindingKey(bindingKey));
-            width = MinecraftClient.getInstance().textRenderer.getWidth(text) + 1 + PADDING*2;
+            width = textRenderer.getWidth(text) + 1 + PADDING*2;
         }
 
         private static String tinifyBindingKey(String bindingKey) {
@@ -147,15 +170,16 @@ public class KeyBindLabel extends BaseUIComponent {
 
         @Override
         void draw(OwoUIGraphics graphics, int x, int y) {
-            graphics.fill(x, y, x+width, y+height, BACKGROUND_COLOR);
-            graphics.drawRectOutline(x, y, width, height, OUTLINE_COLOR);
+            graphics.fill(x, y, x+width, y+BASE_HEIGHT, BACKGROUND_COLOR);
+            graphics.drawRectOutline(x, y, width, BASE_HEIGHT, OUTLINE_COLOR);
 
             graphics.drawText(
+                    textRenderer,
                     text,
                     x + 1 + PADDING,
                     y + 1 + PADDING,
-                    1,
-                    TEXT_COLOR
+                    TEXT_COLOR,
+                    false
             );
         }
 
