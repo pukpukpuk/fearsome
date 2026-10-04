@@ -26,8 +26,8 @@ public record PlayAbilityProgressAnimationPayload(
         var isStartPredefined = ((data >> 1) & 0b1) == 1;
         var isLinear = (data & 0b1) == 1;
 
-        var start = isStartPredefined ? IPayload.readFloatFromShort(buf) : null;
-        var target = IPayload.readFloatFromShort(buf);
+        var start = isStartPredefined ? IPayload.read01FloatFromShort(buf) : null;
+        var target = IPayload.read01FloatFromShort(buf);
         var duration = buf.readVarInt();
 
         return new PlayAbilityProgressAnimationPayload(index, start, target, duration, isLinear);

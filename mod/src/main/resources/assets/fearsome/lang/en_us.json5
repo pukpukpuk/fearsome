@@ -1,25 +1,10 @@
 {
+    /// Mod Menu
     "modmenu.descriptionTranslation.fearsome": "A required client-side mod for Fear: GOTY Edition",
     "gui.{}": {
         "go_to_mod_github": "Download actual version",
         "mod_version_mismatch": "The mod version does not match the server version!\nOn server: %1$s, on client: %2$s"
     },
-
-    "key.category.fearsome.{}": {
-        "general": "Fearsome: General",
-        "ui": "Fearsome: UI",
-    },
-    "fearsome.key.{}": {
-        // General
-        "attack": "Attack",
-        "first_ability": "First Ability",
-        "interaction": "Interaction",
-        "second_ability": "Second Ability",
-
-        // UI
-        "expand_survivor_list": "Expand Survivor List"
-    },
-
 
     "text.config.fearsome-client-config.{}": {
         "title": "Fearsome: Settings",
@@ -30,6 +15,75 @@
             "toggle": "Toggle",
         }
     },
+    ///
+
+    /// Key Bindings
+    "key.category.fearsome.{}": {
+        "general": "Fearsome: General",
+        "ui": "Fearsome: UI",
+    },
+    "fearsome.binding.{}": {
+        // General
+        "attack": "Attack",
+        "first_ability": "First Ability",
+        "interaction": "Interaction",
+        "second_ability": "Second Ability",
+
+        // UI
+        "expand_survivor_list": "Expand Survivor List"
+    },
+    "short_key.{}": { // <-- not supposed to be translated
+        "keyboard.{}": {
+            "caps.lock": "CAPS",
+            "delete": "DEL",
+            "down": "↓",
+            "escape": "ESC",
+            "insert": "INSRT",
+            "keypad.{}": {
+                "0": "NUM0",
+                "1": "NUM1",
+                "2": "NUM2",
+                "3": "NUM3",
+                "4": "NUM4",
+                "5": "NUM5",
+                "6": "NUM6",
+                "7": "NUM7",
+                "8": "NUM8",
+                "9": "NUM9",
+                "add": "NUM+",
+                "decimal": "NUM.",
+                "divide": "NUM/",
+                "enter": "NUMENTER",
+                "equal": "NUM=",
+                "multiply": "NUM*",
+                "subtract": "NUM-"
+            },
+            "left.{}": {
+                "": "←",
+                "alt": "ALT",
+                "control": "CTRL",
+                "shift": "SHIFT",
+                "win": "WIN"
+            },
+            "num.lock": "NUMLCK",
+            "page.{}": {
+                "down": "PG↓",
+                "up": "PG↑"
+            },
+            "print.screen": "PRTSCR",
+            "right.{}": {
+                "": "→",
+                "alt": "RALT",
+                "control": "RCTRL",
+                "shift": "RSHIFT",
+                "win": "RWIN"
+            },
+            "scroll.lock": "SCLOCK",
+            "up": "↑",
+        },
+        "mouse": "M%1$s",
+    },
+    ///
 
 
     "fearsome.{}": {
@@ -47,7 +101,8 @@
                     "generator.{}": {
                         "fix": "Fix Generator",
                         "use_quest": "Use Quest",
-                        "kick": "Kick Generator",
+                        "damage": "Damage Generator",
+                        "regress_stop": "Stop Regress"
                     },
                     "pallet.{}": {
                         "toggle": "Toggle",
@@ -66,7 +121,8 @@
                     },
                     "dream.{}": {
                         "peek": "Peek",
-                        "emerge": "Emerge"
+                        "emerge": "Emerge",
+                        "cancel_viewing": "Cancel"
                     },
                     "artist.{}": {
                         "link": "Link",
@@ -78,8 +134,8 @@
                     "nun.teleport": "Teleport",
                     "addict.shoot_up": "Shoot Up",
                     "nurse.{}": {
-                        "heal_self": "Heal Self",
-                        "heal_others": "Heal Others"
+                        "heal_self": "Medkit (Self)",
+                        "heal_others": "Medkit (Others)",
                     },
                     "buterenko.{}": {
                         "record": "Record",
@@ -93,13 +149,18 @@
             },
             "progress.{}": {
                 "game.{}": {
-                    "generator_fixing": "Fixing",
+                    "generator_fixing.{}": {
+                        "": "Fixing",
+                        "disabled": "Broken"
+                    },
                     "healing": "Healing",
 
                     "ghost.manifestation": "Manifestation",
                     "mercenary.reloading": "Reloading",
                     "artist.searching": "Searching",
-                    "dream.activation": "Activation"
+                    "dream.activation": "Activation",
+
+                    "nun.teleporting": "Teleporting"
                 },
             }
         },

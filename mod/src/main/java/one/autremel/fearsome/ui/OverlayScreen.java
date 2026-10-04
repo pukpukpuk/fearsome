@@ -18,4 +18,14 @@ public abstract class OverlayScreen extends BaseUIModelScreen<FlowLayout> {
     public final OwoUIAdapter<FlowLayout> getAdapter() {
         return (OwoUIAdapter<FlowLayout>)getFocused();
     }
+
+    @Override
+    protected final void build(FlowLayout rootComponent) {
+        super.init();
+        if (this.uiAdapter == null) return;
+
+        buildInternal(rootComponent);
+    }
+
+    protected abstract void buildInternal(FlowLayout rootComponent);
 }

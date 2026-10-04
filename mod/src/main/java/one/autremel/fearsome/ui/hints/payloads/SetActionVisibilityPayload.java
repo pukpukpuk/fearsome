@@ -15,7 +15,7 @@ public record SetActionVisibilityPayload(
     public static final ServerPayloadId<SetActionVisibilityPayload> ID = new ServerPayloadId<>(
             SetActionVisibilityPayload.class,
             PacketCodec.tuple(
-                    PacketCodecs.INTEGER, SetActionVisibilityPayload::actionId,
+                    PacketCodecs.VAR_INT, SetActionVisibilityPayload::actionId,
                     PacketCodecs.BOOLEAN, SetActionVisibilityPayload::isVisible,
                     SetActionVisibilityPayload::new
             )

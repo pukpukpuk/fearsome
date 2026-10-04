@@ -17,7 +17,7 @@ public class MinecraftClientMixin {
             cancellable = true
     )
     private void onSetScreen(Screen screen, CallbackInfo ci) {
-        if (!ModPingController.isOnFearServer()) return;
+        if (!VanillaActionsSuppressor.isVanillaThingsMustBeSuppressed()) return;
 
         if (screen != null && VanillaActionsSuppressor.DISALLOWED_SCREEN_TYPES.contains(screen.getClass())) {
             ci.cancel();

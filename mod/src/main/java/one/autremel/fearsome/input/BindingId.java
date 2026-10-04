@@ -5,18 +5,17 @@ import io.netty.buffer.ByteBuf;
 import lombok.Getter;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.encoding.VarInts;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public enum BindingId {
     EXPAND_SURVIVOR_LIST("expand_survivor_list"),
 
-    // Sent to the server
     ATTACK(0, "attack"),
     FIRST_ABILITY(1, "first_ability"),
     INTERACTION(2, "interaction"),
     SECOND_ABILITY(3, "second_ability"),
-
-    HEALING("healing"),
+    SNEAK_KEY(4, "sneak_key"),
     ;
 
     public static final PacketCodec<? super ByteBuf, BindingId> CODEC = new PacketCodec<>() {
@@ -35,7 +34,7 @@ public enum BindingId {
 
     @Getter
     private final byte byteId;
-    @Getter
+    @Getter @NotNull
     private final String id;
 
     static {
@@ -48,12 +47,12 @@ public enum BindingId {
         }
     }
 
-    BindingId(String id) {
+    BindingId(@NotNull String id) {
         this.byteId = -1;
         this.id = id;
     }
 
-    BindingId(int byteId, String id) {
+    BindingId(int byteId, @NotNull String id) {
         Preconditions.checkArgument(byteId >= 0 && byteId < BINDINGS_COUNT);
         this.byteId = (byte)byteId;
         this.id = id;

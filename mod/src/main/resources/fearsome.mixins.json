@@ -6,7 +6,10 @@
     "client": [
         "ClientPlayerEntityMixin",
         "InGameHudMixin",
+        "LivingEntityMixin",
+        "MannequinMixin",
         "MinecraftClientMixin",
+        "PlayerEquipmentMixin",
         "ScreenHandlerMixin"
     ],
     "injectors": {
@@ -14,5 +17,8 @@
     },
     "overwrites": {
         "requireAnnotations": true
-  }
+    },
+    "mixins": [
+        "ClientPlayerInteractionManagerMixin"
+    ]
 }

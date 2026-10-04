@@ -43,7 +43,7 @@ public class KeyBindings {
         createKeyboardBinding(BindingId.INTERACTION, GLFW.GLFW_KEY_E, GENERAL);
 
         ClientLifecycleEvents.CLIENT_STARTED.register((client) -> {
-            createBinding(BindingId.HEALING, client.options.sneakKey);
+            createBinding(BindingId.SNEAK_KEY, client.options.sneakKey);
         });
     }
 
@@ -53,7 +53,7 @@ public class KeyBindings {
 
         if (id.getByteId() != -1) {
             KeyEvents.onToggle(id, isPressed -> {
-                if (ModPingController.isOnFearServer()) {
+                if (VanillaActionsSuppressor.isVanillaThingsMustBeSuppressed()) {
                     NetworkController.send(new InputPayload(id, isPressed));
                 }
             });
@@ -61,7 +61,10 @@ public class KeyBindings {
     }
 
     private static void createBinding(BindingId id, InputUtil.Type type, int code, KeyBinding.Category category) {
-        var keyBinding = new KeyBinding(FearsomeMod.keyTextIdentifier(id.getId()), type, code, category);
+        var textId = id.getId();
+        Preconditions.checkNotNull(textId);
+
+        var keyBinding = new KeyBinding(FearsomeMod.bindingTextIdentifier(textId), type, code, category);
         KeyBindingHelper.registerKeyBinding(keyBinding);
 
         createBinding(id, keyBinding);

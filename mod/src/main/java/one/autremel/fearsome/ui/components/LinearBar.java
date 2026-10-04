@@ -24,9 +24,11 @@ import java.util.Map;
 
 @Setter
 public class LinearBar extends BaseUIComponent {
+    public static final int DEFAULT_PROGRESS_COLOR = 0xFF839FAF;
+
     private boolean isVertical;
     private int backgroundColor;
-    private int progressColor = 0xFFFFFFFF;
+    private int progressColor = DEFAULT_PROGRESS_COLOR;
     private float progress;
 
     public LinearBar() {

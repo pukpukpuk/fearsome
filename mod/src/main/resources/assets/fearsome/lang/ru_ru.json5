@@ -1,25 +1,10 @@
 {
+    /// Mod Menu
     "modmenu.descriptionTranslation.fearsome": "Необходимый клиентский мод для игры в Fear: GOTY Edition",
     "gui.{}": {
         "go_to_mod_github": "Скачать актуальную версию",
         "mod_version_mismatch": "Несоответствие версии мода с версией сервера!\nНа сервере: %1$s, клиент: %2$s"
     },
-
-    "key.category.fearsome.{}": {
-        "general": "Fearsome: Общие",
-        "ui": "Fearsome: UI",
-    },
-    "fearsome.key.{}": {
-        // General
-        "attack": "Атака",
-        "first_ability": "Первая способность",
-        "interaction": "Взаимодействие",
-        "second_ability": "Вторая способность",
-
-        // UI
-        "expand_survivor_list": "Раскрыть список выживших"
-    },
-
 
     "text.config.fearsome-client-config.{}": {
         "title": "Fearsome: Настройки",
@@ -30,6 +15,24 @@
             "toggle": "Переключение",
         }
     },
+    ///
+
+    /// Key Bindings
+    "key.category.fearsome.{}": {
+        "general": "Fearsome: Общие",
+        "ui": "Fearsome: UI",
+    },
+    "fearsome.binding.{}": {
+        // General
+        "attack": "Атака",
+        "first_ability": "Первая способность",
+        "interaction": "Взаимодействие",
+        "second_ability": "Вторая способность",
+
+        // UI
+        "expand_survivor_list": "Раскрыть список выживших"
+    },
+    ///
 
 
     "fearsome.{}": {
@@ -47,7 +50,8 @@
                     "generator.{}": {
                         "fix": "Чинить",
                         "use_quest": "Использовать квест",
-                        "kick": "Пнуть"
+                        "damage": "Сломать",
+                        "regress_stop": "Убрать регресс"
                     },
                     "pallet.{}": {
                         "toggle": "Переключить",
@@ -66,7 +70,8 @@
                     },
                     "dream.{}": {
                         "peek": "Подглянуть",
-                        "emerge": "Появиться"
+                        "emerge": "Появиться",
+                        "cancel_viewing": "Отменить"
                     },
                     "artist.{}": {
                         "link": "Связаться",
@@ -76,10 +81,10 @@
 
                     "mechanic.use_wrench": "Использовать ключ",
                     "nun.teleport": "Телепортироваться",
-                    "addict.shoot_up": "Ширнуться",
+                    "addict.shoot_up": "Уколоться",
                     "nurse.{}": {
-                        "heal_self": "Лечить себя",
-                        "heal_others": "Лечить других"
+                        "heal_self": "Лечиться аптечкой",
+                        "heal_others": "Лечить аптечкой"
                     },
                     "buterenko.{}": {
                         "record": "Записать",
@@ -93,13 +98,18 @@
             },
             "progress.{}": {
                 "game.{}": {
-                    "generator_fixing": "Починка",
+                    "generator_fixing.{}": {
+                        "": "Починка",
+                        "disabled": "Cломано"
+                    },
                     "healing": "Лечение",
 
                     "ghost.manifestation": "Воплощение",
                     "mercenary.reloading": "Перезарядка",
                     "artist.searching": "Поиск",
-                    "dream.activation": "Активация"
+                    "dream.activation": "Активация",
+
+                    "nun.teleporting": "Телепортация"
                 },
             }
         },

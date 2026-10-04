@@ -5,10 +5,11 @@ import one.autremel.fearsome.network.IServerPayload;
 import one.autremel.fearsome.network.Payload;
 import one.autremel.fearsome.network.ServerPayloadId;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Payload
 public record SetAbilityCountPayload(
-        int count, int index
+        int index, @Nullable Integer count
 ) implements IServerPayload<SetAbilityCountPayload> {
     public static final ServerPayloadId<SetAbilityCountPayload> ID = new ServerPayloadId<>(
             SetAbilityCountPayload.class,
@@ -16,11 +17,13 @@ public record SetAbilityCountPayload(
     );
 
     private static SetAbilityCountPayload decode(PacketByteBuf buf) {
-        byte data = buf.readByte();
-        var progress = (data >> 2) & 63;
-        var index = data & 0b11;
+        byte b1 = buf.readByte();
+        var index = b1 & 0b111;
 
-        return new SetAbilityCountPayload(progress, index);
+        var isCountPresent = ((b1 >> 3) & 1) == 1;
+        var count = isCountPresent ? Byte.toUnsignedInt(buf.readByte()) : null;
+
+        return new SetAbilityCountPayload(index, count);
     }
 
     @Override

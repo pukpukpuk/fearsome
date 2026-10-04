@@ -6,12 +6,12 @@ import org.jetbrains.annotations.NotNull;
 
 public interface IPayload<T extends IPayload<T>> extends CustomPayload {
 
-    static float readFloatFromShort(PacketByteBuf buf) {
+    static float read01FloatFromShort(PacketByteBuf buf) {
         var s = buf.readShort() & 0xFFFF;
         return (float) s / ((1 << 16) - 1);
     }
 
-    static Float readOptionalFloatFromShort(PacketByteBuf buf) {
+    static Float readOptional01FloatFromShort(PacketByteBuf buf) {
         var s = buf.readShort() & 0xFFFF;
         if ((s & 0b1) == 0) return null;
 

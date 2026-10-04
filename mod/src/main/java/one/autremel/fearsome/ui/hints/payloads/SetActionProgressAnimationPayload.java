@@ -21,9 +21,9 @@ public record SetActionProgressAnimationPayload(
 
     public static SetActionProgressAnimationPayload decode(PacketByteBuf buf) {
         return new SetActionProgressAnimationPayload(
-                buf.readInt(),
-                IPayload.readOptionalFloatFromShort(buf),
-                IPayload.readFloatFromShort(buf),
+                buf.readVarInt(),
+                IPayload.readOptional01FloatFromShort(buf),
+                IPayload.read01FloatFromShort(buf),
                 buf.readVarInt()
         );
     }

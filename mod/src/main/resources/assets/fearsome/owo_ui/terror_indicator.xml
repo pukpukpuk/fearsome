@@ -1,0 +1,21 @@
+<owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.20/owo-ui.xsd">
+    <components>
+        <flow-layout direction="vertical">
+            <children>
+                <stack-layout>
+                    <children>
+                        <label id="heart_label">
+                            <shadow>true</shadow>
+                        </label>
+                    </children>
+                </stack-layout>
+            </children>
+
+            <horizontal-alignment>center</horizontal-alignment>
+            <vertical-alignment>top</vertical-alignment>
+            <padding><all>6</all></padding>
+            <gap>2</gap>
+        </flow-layout>
+    </components>
+</owo-ui>

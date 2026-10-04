@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 import one.autremel.fearsome.FearsomeMod;
+import one.autremel.fearsome.input.VanillaActionsSuppressor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,6 +56,8 @@ public class OverlayScreenRegistrar {
         });
 
         HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, ID, (context, tickCounter) -> {
+            if (!VanillaActionsSuppressor.isVanillaThingsMustBeSuppressed()) return;
+
             for (var data : visibleMap.values()) {
                 var screen = data.screen;
                 if (screen == null || !screen.isVisible()) continue;

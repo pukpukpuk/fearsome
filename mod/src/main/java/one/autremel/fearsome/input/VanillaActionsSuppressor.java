@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.advancement.AdvancementsScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.entity.Entity;
@@ -15,6 +16,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import one.autremel.fearsome.network.ping.ModPingController;
 import org.jspecify.annotations.Nullable;
@@ -22,12 +24,6 @@ import org.jspecify.annotations.Nullable;
 import java.util.Set;
 
 public class VanillaActionsSuppressor {
-    private static final Set<String> BLOCKS_ALLOWED_FOR_INTERACTION = Set.of(
-            "minecraft:birch_door",
-            "minecraft:dark_oak_door",
-            "minecraft:pale_oak_trapdoor",
-            "minecraft:oak_door"
-    );
     public static final Set<Class> DISALLOWED_SCREEN_TYPES = Set.of(
             AdvancementsScreen.class,
             InventoryScreen.class
@@ -46,26 +42,30 @@ public class VanillaActionsSuppressor {
         UseEntityCallback.EVENT.register(VanillaActionsSuppressor::onTryingToUseEntity);
     }
 
+    public static boolean isVanillaThingsMustBeSuppressed() {
+        if (!ModPingController.isOnFearServer()) return false;
+
+        var gameMode = MinecraftClient.getInstance().player.getGameMode();
+        return gameMode != GameMode.CREATIVE && gameMode != GameMode.SPECTATOR;
+    }
+
+    private static ActionResult baseFailCondition() {
+        return isVanillaThingsMustBeSuppressed() ? ActionResult.FAIL : ActionResult.PASS;
+    }
+
     private static ActionResult onTryingToBreak(PlayerEntity player, World world, Hand hand, BlockPos blockPos, Direction direction) {
-        if (!ModPingController.isOnFearServer()) return ActionResult.PASS;
-        return ActionResult.FAIL;
+        return baseFailCondition();
     }
 
     private static ActionResult onTryingToAttack(PlayerEntity player, World world, Hand hand, Entity entity, @Nullable EntityHitResult result) {
-        if (!ModPingController.isOnFearServer()) return ActionResult.PASS;
-        return ActionResult.FAIL;
+        return baseFailCondition();
     }
 
     private static ActionResult onTryingToUseBlock(PlayerEntity player, World world, Hand hand, BlockHitResult result) {
-        if (!ModPingController.isOnFearServer()) return ActionResult.PASS;
-
-        var id = world.getBlockState(result.getBlockPos()).getBlock().asItem().toString();
-        return BLOCKS_ALLOWED_FOR_INTERACTION.contains(id) ? ActionResult.PASS : ActionResult.FAIL;
+        return baseFailCondition();
     }
 
     private static ActionResult onTryingToUseEntity(PlayerEntity player, World world, Hand hand, Entity entity, @Nullable EntityHitResult result) {
-        if (!ModPingController.isOnFearServer()) return ActionResult.PASS;
-
-        return ActionResult.FAIL;
+        return baseFailCondition();
     }
 }

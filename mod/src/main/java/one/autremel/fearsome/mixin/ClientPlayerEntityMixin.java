@@ -1,6 +1,7 @@
 package one.autremel.fearsome.mixin;
 
 import net.minecraft.client.network.ClientPlayerEntity;
+import one.autremel.fearsome.input.VanillaActionsSuppressor;
 import one.autremel.fearsome.network.ping.ModPingController;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,7 +16,7 @@ public class ClientPlayerEntityMixin {
             cancellable = true
     )
     public void dropSelectedItem(boolean entireStack, CallbackInfoReturnable<Boolean> cir) {
-        if (ModPingController.isOnFearServer()) {
+        if (VanillaActionsSuppressor.isVanillaThingsMustBeSuppressed()) {
             cir.setReturnValue(false);
         }
     }

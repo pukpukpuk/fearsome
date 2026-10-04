@@ -8,7 +8,6 @@
                         <fearsome.hideable_flow_layout direction="vertical" id="action_bar_root">
                             <children>
                                 <label id="action_bar_label">
-                                    <text>Починка генератора замени потом</text>
                                     <horizontal-text-alignment>left</horizontal-text-alignment>
                                     <sizing>
                                         <vertical method="fixed">8</vertical>
@@ -21,7 +20,7 @@
                                     <progress-color>#839FAF</progress-color>
 
                                     <sizing>
-                                        <vertical method="fixed">4</vertical>
+                                        <vertical method="fixed">0</vertical>
                                         <horizontal method="fill">100</horizontal>
                                     </sizing>
                                 </fearsome.linear_bar>
@@ -50,7 +49,7 @@
 
                     <sizing>
                         <vertical method="content">0</vertical>
-                        <horizontal method="fill">40</horizontal>
+                        <horizontal method="fill">50</horizontal>
                     </sizing>
 
                     <positioning type="relative">50,100</positioning>

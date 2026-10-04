@@ -65,26 +65,26 @@ class ActionControlsListController {
     }
 
     private static void updateShownControls() {
-        HintsScreenController.acceptData(data -> {
-            bindingIdsDrawnStateSet.clear();
+        var screen = HintsScreenController.getScreen();
+        if (screen == null) return;
 
-            var screen = data.screen();
-            screen.prepareForControlListRedraw();
+        bindingIdsDrawnStateSet.clear();
 
-            var index = 0;
-            for (var control : availableControls) {
-                var bindingId = control.bindingId();
-                if (bindingIdsDrawnStateSet.get(bindingId.getByteId())) continue;
-                bindingIdsDrawnStateSet.set(bindingId.getByteId());
+        screen.prepareForControlListRedraw();
 
-                var keyBinding = KeyBindings.getData(bindingId).keyBinding();
-                var label = screen.getLabel(index++);
+        var index = 0;
+        for (var control : availableControls) {
+            var bindingId = control.bindingId();
+            if (bindingIdsDrawnStateSet.get(bindingId.getByteId())) continue;
+            bindingIdsDrawnStateSet.set(bindingId.getByteId());
 
-                label.setBindingKey(keyBinding.getBoundKeyTranslationKey());
-                label.setText(control.text());
-                label.setVisible(true);
-            }
-        });
+            var keyBinding = KeyBindings.getData(bindingId).keyBinding();
+            var label = screen.getLabel(index++);
+
+            label.setBindingKey(keyBinding.getBoundKeyTranslationKey());
+            label.setText(control.text());
+            label.setVisible(true);
+        }
     }
 
     @Nullable

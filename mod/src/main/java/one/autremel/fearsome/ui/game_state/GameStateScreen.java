@@ -31,10 +31,7 @@ public class GameStateScreen extends OverlayScreen {
     }
 
     @Override
-    protected void build(FlowLayout rootComponent) {
-        super.init();
-        if (this.uiAdapter == null) return;
-
+    protected void buildInternal(FlowLayout rootComponent) {
         var minimapRoot = rootComponent.childById(StackLayout.class, "minimap_root");
         DefaultBlurredSurface.setAsSurfaceFor(minimapRoot);
 

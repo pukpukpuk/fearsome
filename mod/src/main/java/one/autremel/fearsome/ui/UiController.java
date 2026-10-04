@@ -9,6 +9,7 @@ import one.autremel.fearsome.ui.components.*;
 import one.autremel.fearsome.ui.game_state.GameStateScreenController;
 import one.autremel.fearsome.ui.hints.HintsScreenController;
 import one.autremel.fearsome.ui.survivor_list.SurvivorListController;
+import one.autremel.fearsome.ui.terror.TerrorIndicatorController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,27 +38,23 @@ public class UiController {
         SurvivorListController.initialize();
         GameStateScreenController.initialize();
         HintsScreenController.initialize();
+        TerrorIndicatorController.initialize();
     }
 
     public static void reset() {
-        invoke(true);
-        invoke(false);
+        onGameScreensRemove.forEach(Runnable::run);
+        onLobbyScreensRemove.forEach(Runnable::run);
     }
 
     public static void registerForScreensRemoval(Runnable runnable, boolean asGameScreen) {
         getList(asGameScreen).add(runnable);
     }
 
-
     private static List<Runnable> getList(boolean isForGameScreens) {
         return isForGameScreens ? onGameScreensRemove : onLobbyScreensRemove;
     }
 
-    private static void invoke(boolean isForGameScreens) {
-        getList(isForGameScreens).forEach(Runnable::run);
-    }
-
     private static void handleScreensRemove(RemoveScreensPayload payload) {
-        invoke(payload.isForGameScreens());
+        getList(payload.isForGameScreens()).forEach(Runnable::run);
     }
 }

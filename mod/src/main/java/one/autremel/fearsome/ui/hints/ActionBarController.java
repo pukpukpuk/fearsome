@@ -1,13 +1,13 @@
 package one.autremel.fearsome.ui.hints;
 
 import com.google.common.base.Preconditions;
-import net.minecraft.text.Text;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.ui.AnimationData;
 import one.autremel.fearsome.ui.OverlayScreenRegistrar;
 import one.autremel.fearsome.ui.UiController;
 import one.autremel.fearsome.ui.hints.payloads.RegisterActionPayload;
 import one.autremel.fearsome.ui.hints.payloads.SetActionProgressAnimationPayload;
+import one.autremel.fearsome.ui.hints.payloads.SetActionProgressParametersPayload;
 import one.autremel.fearsome.ui.hints.payloads.SetActionVisibilityPayload;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,6 +32,7 @@ class ActionBarController {
         NetworkController.register(RegisterActionPayload.ID, ActionBarController::handleRegister);
         NetworkController.register(SetActionProgressAnimationPayload.ID, ActionBarController::handleSetAnimation);
         NetworkController.register(SetActionVisibilityPayload.ID, ActionBarController::handleSetVisibility);
+        NetworkController.register(SetActionProgressParametersPayload.ID, ActionBarController::handleSetParameters);
 
         UiController.registerForScreensRemoval(ActionBarController::handleScreensRemove, true);
         OverlayScreenRegistrar.registerBeforeScreenDrawing(HintsScreen.ID, ActionBarController::update);
@@ -53,11 +54,15 @@ class ActionBarController {
 
     private static void handleRegister(RegisterActionPayload payload) {
         var actionId = payload.actionId();
-        var actionData = new ActionData(
-                actionId,
-                payload.priority(),
-                Text.translatable(KEY_PREFIX+payload.key())
-        );
+        var priority = payload.priority();
+        var text = KEY_PREFIX+payload.key();
+
+        var actionData = switch (payload.type()) {
+            case 0 -> new SimpleActionData(actionId, priority, text);
+            case 1 -> new GeneratorFixActionData(actionId, priority, text);
+            case 2 -> new HiddenBarActionData(actionId, priority, text);
+            default -> throw new IllegalStateException("Unexpected action progress type id: " + payload.type());
+        };
 
         registeredActions.put(actionId, actionData);
     }
@@ -93,6 +98,12 @@ class ActionBarController {
         updateCurrentlyShownAction();
     }
 
+    private static void handleSetParameters(SetActionProgressParametersPayload payload) {
+        if (currentlyShownAction != null) {
+            currentlyShownAction.handle(payload);
+        }
+    }
+
     private static void handleScreensRemove() {
         registeredActions.clear();
         visibleActions.clear();
@@ -100,18 +111,14 @@ class ActionBarController {
     }
 
     private static void update() {
-        var data = HintsScreenController.getDataNow();
-        if (data == null) return;
+        var screen = HintsScreenController.getScreen();
+        if (screen == null) return;
 
-        var screen = data.screen();
-
-        var isVisible = currentlyShownAction != null;
-        screen.setProgressBarVisible(isVisible);
-        if (!isVisible) return;
-
-        screen.setProgressBarText(currentlyShownAction.getText());
-
-        currentlyShownAction.updateAnimation();
-        screen.setActionProgressAmount(currentlyShownAction.getCurrentProgress());
+        if (currentlyShownAction != null) {
+            screen.setProgressVisible(true);
+            currentlyShownAction.update(screen);
+        } else {
+            screen.setProgressVisible(false);
+        }
     }
 }

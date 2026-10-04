@@ -5,21 +5,39 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.minecraft.text.Text;
 import one.autremel.fearsome.ui.AnimationData;
+import one.autremel.fearsome.ui.components.LinearBar;
+import one.autremel.fearsome.ui.hints.payloads.SetActionProgressParametersPayload;
 import org.jetbrains.annotations.Nullable;
 
 @RequiredArgsConstructor
 @Getter @Setter
-public class ActionData {
+public abstract class ActionData {
     private final int actionId;
     private final int priority;
-    private final Text text;
 
     @Nullable
     private AnimationData animation;
     private boolean isVisible;
     private float currentProgress;
 
-    public void updateAnimation() {
+    protected abstract void handle(SetActionProgressParametersPayload payload);
+
+    protected abstract Text getText();
+
+    public void update(HintsScreen screen) {
+        updateAnimation();
+
+        screen.setProgressBarText(getText());
+        screen.setActionProgressAmount(currentProgress);
+        onUpdateInternal(screen);
+    }
+
+    protected void onUpdateInternal(HintsScreen screen) {
+        screen.setProgressBarColor(LinearBar.DEFAULT_PROGRESS_COLOR);
+        screen.setProgressBarVisible(true);
+    }
+
+    private void updateAnimation() {
         if (animation == null) return;
 
         currentProgress = animation.getCurrentValue();

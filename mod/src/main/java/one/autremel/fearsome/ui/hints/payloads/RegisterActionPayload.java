@@ -11,14 +11,16 @@ import org.jetbrains.annotations.NotNull;
 public record RegisterActionPayload(
         int actionId,
         int priority,
-        String key
+        String key,
+        byte type
 ) implements IServerPayload<RegisterActionPayload> {
     public static final ServerPayloadId<RegisterActionPayload> ID = new ServerPayloadId<>(
             RegisterActionPayload.class,
             PacketCodec.tuple(
-                    PacketCodecs.INTEGER, RegisterActionPayload::actionId,
+                    PacketCodecs.VAR_INT, RegisterActionPayload::actionId,
                     PacketCodecs.INTEGER, RegisterActionPayload::priority,
                     PacketCodecs.STRING, RegisterActionPayload::key,
+                    PacketCodecs.BYTE, RegisterActionPayload::type,
                     RegisterActionPayload::new
             )
     );

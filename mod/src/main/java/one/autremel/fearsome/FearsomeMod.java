@@ -6,16 +6,19 @@ import net.minecraft.util.Identifier;
 import one.autremel.fearsome.config.ClientConfig;
 import one.autremel.fearsome.config.GameConfig;
 import one.autremel.fearsome.effects.EffectController;
+import one.autremel.fearsome.illusions.SelectedItemDisplayer;
 import one.autremel.fearsome.input.KeyBindings;
 import one.autremel.fearsome.input.KeyEvents;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.network.ping.ModPingController;
 import one.autremel.fearsome.network.ping.TimeSynchronizer;
 import one.autremel.fearsome.timer.TimerUpdater;
+import one.autremel.fearsome.ui.OverlayScreen;
 import one.autremel.fearsome.ui.OverlayScreenRegistrar;
 import one.autremel.fearsome.ui.UiController;
 import one.autremel.fearsome.ui.hints.HintsScreen;
 import one.autremel.fearsome.ui.hints.HintsScreenController;
+import one.autremel.fearsome.ui.terror.TerrorIndicator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,25 +44,27 @@ public class FearsomeMod implements ClientModInitializer {
 
         TimerUpdater.initialize();
         EffectController.initialize();
+        SelectedItemDisplayer.initialize();
 
         UiController.initialize();
     }
 
 
     private void onSuccessfulHandshake() {
-        OverlayScreenRegistrar.create(HintsScreen.ID, new HintsScreen());
+        HintsScreenController.onSuccessfulHandshake();
     }
 
     private void onDisconnectFromGame() {
         UiController.reset();
         TimeSynchronizer.reset();
         HintsScreenController.reset();
+        SelectedItemDisplayer.reset();
     }
 
 
 
-    public static String keyTextIdentifier(String path) {
-        return NAMESPACE+".key."+path;
+    public static String bindingTextIdentifier(String path) {
+        return NAMESPACE+".binding."+path;
     }
 
     public static Identifier uiIdentifier(String path) {

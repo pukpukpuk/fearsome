@@ -59,14 +59,7 @@ public class SurvivorList extends OverlayScreen {
 
 
     @Override
-    protected void build(FlowLayout rootComponent) {
-    }
-
-    @Override
-    protected void init() {
-        super.init();
-        if (this.uiAdapter == null) return;
-
+    protected void buildInternal(FlowLayout rootComponent) {
         for (int i = 0; i < textEntries.length; i++) {
             var entry = addSurvivorEntry(textEntries[i]);
             entries[i] = entry;

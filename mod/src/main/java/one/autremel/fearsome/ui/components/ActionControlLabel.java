@@ -27,7 +27,6 @@ public class ActionControlLabel extends BaseUIComponent {
     private static final int BOTTOM_MARGIN = 3;
 
     private static final String KEYBOARD_KEY_PREFIX = "key.keyboard.";
-    private static final String MOUSE_KEY_PREFIX = "key.mouse.";
     private static final BindingDrawer LEFT_MOUSE_DRAWER = new MouseBindingDrawer(FearsomeMod.textureIdentifier("ui/icons/left_mouse"));
     private static final Map<String, BindingDrawer> CACHED_DRAWERS = new HashMap<>(Map.of(
             "key.mouse.left",   LEFT_MOUSE_DRAWER,
@@ -105,68 +104,21 @@ public class ActionControlLabel extends BaseUIComponent {
         private final int width;
 
         private KeyboardBindingDrawer(String bindingKey) {
-            text = Text.of(tinifyBindingKey(bindingKey));
+            text = Text.of(tinify(bindingKey));
             width = textRenderer.getWidth(text) + 1 + PADDING*2;
         }
 
-        private static String tinifyBindingKey(String bindingKey) {
-            if (bindingKey.startsWith(MOUSE_KEY_PREFIX)) {
-                return "M" + bindingKey.substring(MOUSE_KEY_PREFIX.length()).toUpperCase();
-            }
-
-            Preconditions.checkState(bindingKey.startsWith(KEYBOARD_KEY_PREFIX));
-            return tinifyKeyboardBindingKey(bindingKey);
-        }
-
-        private static String tinifyKeyboardBindingKey(String bindingKey) {
-            if (bindingKey.length() == KEYBOARD_KEY_PREFIX.length()+1) {
+        private static String tinify(String bindingKey) {
+            if (bindingKey.length() == KEYBOARD_KEY_PREFIX.length() + 1) {
                 return bindingKey.substring(KEYBOARD_KEY_PREFIX.length()).toUpperCase();
             }
 
-            final String translated = Language.getInstance().get(bindingKey);
-            if (translated.length() == 1 || (translated.length() <= 3 && translated.startsWith("F"))) {
-                return translated;
-            }
-            
-            var words = translated.split(" ");
+            var lang = Language.getInstance();
+            var translated = lang.get("short_"+bindingKey, null);
+            if (translated == null) translated = lang.get(bindingKey);
 
-            if (words.length == 2) {
-                if (words[1].equals("Arrow")) {
-                    return switch (words[0]) {
-                        case "Left" -> "←";
-                        case "Right" -> "→";
-                        case "Up" -> "↑";
-                        case "Down" -> "↓";
-                        default -> throw new IllegalStateException("Unexpected value: " + words[0]);
-                    };
-                }
-
-                if (words[0].equals("Keypad")) {
-                    return "NUM " + words[1].toUpperCase();
-                }
-
-                if (words[1].equals("Control")) words[1] = "CTRL";
-                if (words[0].equals("Left")) return words[1].toUpperCase();
-                if (words[0].equals("Right")) return "R" + words[1].toUpperCase();
-
-            }
-            words = null;
-
-            return switch (translated) {
-                case "Caps Lock" -> "CAPS";
-                case "Delete" -> "DEL";
-                case "Escape" -> "ESC";
-                case "Insert" -> "INSRT";
-                case "Page Up" -> "PAGEUP";
-                case "Page Down" -> "PAGEDOWN";
-                case "Num Lock" -> "NUMLOCK";
-                case "Scroll Lock" -> "SCLOCK";
-                case "Print Screen" -> "PRTSCR";
-                default -> translated.toUpperCase();
-            };
+            return translated;
         }
-
-
 
         @Override
         void draw(OwoUIGraphics graphics, int x, int y) {

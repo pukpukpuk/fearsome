@@ -13,6 +13,7 @@ import net.minecraft.util.Identifier;
 import one.autremel.fearsome.CharacterTeam;
 import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.ui.DefaultBlurredSurface;
+import one.autremel.fearsome.ui.components.ColorableTextureComponent;
 import one.autremel.fearsome.ui.components.HideableStackLayout;
 import one.autremel.fearsome.ui.components.RadialProgressBar;
 import org.jetbrains.annotations.Nullable;
@@ -58,7 +59,7 @@ public class AbilitiesPart {
         return result;
     }
 
-    private static AbilityCard createAbilityCard(UIModel model, FlowLayout root, CharacterTeam team, Identifier sprite) {
+    private static AbilityCard createAbilityCard(UIModel model, FlowLayout root, CharacterTeam team, Identifier texture) {
         var cardRoot = model.expandTemplate(
                 StackLayout.class,
                 "ability_card@fearsome:game_state_screen",
@@ -70,11 +71,7 @@ public class AbilitiesPart {
 
         var margin = bar.width() + DefaultBlurredSurface.MARGIN;
         var side = cardRoot.horizontalSizing().get().value - 4*margin;
-        var icon = UIComponents.texture(
-                sprite,
-                0, 0,
-                side, side,
-                side, side);
+        var icon = new ColorableTextureComponent(texture, side);
         icon.sizing(Sizing.fill());
         icon.margins(Insets.of(margin));
         cardRoot.child(1, icon);
@@ -85,7 +82,10 @@ public class AbilitiesPart {
         var countLabel = cardRoot.childById(LabelComponent.class, "ability_count");
 
         root.child(cardRoot);
-        return new AbilityCard(bar, hideableCountRoot, countLabel);
+        var card = new AbilityCard(bar, hideableCountRoot, countLabel, icon);
+        card.setActiveState(true);
+
+        return card;
     }
 
     @Nullable

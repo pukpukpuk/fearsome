@@ -5,6 +5,7 @@ import one.autremel.fearsome.ui.AnimationData;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.ui.OverlayScreenRegistrar;
 import one.autremel.fearsome.ui.UiController;
+import one.autremel.fearsome.ui.game_state.payloads.SetAbilityActiveStatePayload;
 import one.autremel.fearsome.ui.game_state.payloads.SetAbilityCountPayload;
 import one.autremel.fearsome.ui.game_state.payloads.PlayAbilityProgressAnimationPayload;
 import org.jetbrains.annotations.Nullable;
@@ -23,6 +24,7 @@ public class AbilitiesPartController {
 
         NetworkController.register(PlayAbilityProgressAnimationPayload.ID, AbilitiesPartController::handlePlayAnimation);
         NetworkController.register(SetAbilityCountPayload.ID, AbilitiesPartController::handleSetCount);
+        NetworkController.register(SetAbilityActiveStatePayload.ID, AbilitiesPartController::handleActiveStateSet);
 
         OverlayScreenRegistrar.registerBeforeScreenDrawing(GameStateScreen.ID, AbilitiesPartController::update);
         UiController.registerForScreensRemoval(AbilitiesPartController::handleScreenRemoval, true);
@@ -50,7 +52,21 @@ public class AbilitiesPartController {
             var card = abilitiesPart.getCard(payload.index());
             if (card == null) return;
 
-            card.setCount(payload.count());
+            var count = payload.count();
+            if (count != null) card.setCount(count);
+            else card.hideCountLabel();
+        });
+    }
+
+    private static void handleActiveStateSet(SetAbilityActiveStatePayload payload) {
+        GameStateScreenController.acceptData(data -> {
+            var abilitiesPart = data.screen().getAbilitiesPart();
+            if (abilitiesPart == null) return;
+
+            var card = abilitiesPart.getCard(payload.index());
+            if (card == null) return;
+
+            card.setActiveState(payload.isActive());
         });
     }
 
