@@ -1,6 +1,7 @@
 package one.autremel.fearsome.input;
 
 import com.google.common.base.Preconditions;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -8,6 +9,7 @@ import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.advancement.AdvancementsScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
+import net.minecraft.client.gui.screen.multiplayer.SocialInteractionsScreen;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResult;
@@ -26,7 +28,8 @@ import java.util.Set;
 public class VanillaActionsSuppressor {
     public static final Set<Class> DISALLOWED_SCREEN_TYPES = Set.of(
             AdvancementsScreen.class,
-            InventoryScreen.class
+            InventoryScreen.class,
+            SocialInteractionsScreen.class
     );
 
 

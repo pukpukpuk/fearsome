@@ -45,36 +45,38 @@ public class AbilitiesPartController {
     }
 
     private static void handleSetCount(SetAbilityCountPayload payload) {
-        GameStateScreenController.acceptData(data -> {
-            var abilitiesPart = data.screen().getAbilitiesPart();
-            if (abilitiesPart == null) return;
+        var data = GameStateScreenController.getData();
+        if (data == null) return;
 
-            var card = abilitiesPart.getCard(payload.index());
-            if (card == null) return;
+        var abilitiesPart = data.screen().getAbilitiesPart();
+        if (abilitiesPart == null) return;
 
-            var count = payload.count();
-            if (count != null) card.setCount(count);
-            else card.hideCountLabel();
-        });
+        var card = abilitiesPart.getCard(payload.index());
+        if (card == null) return;
+
+        var count = payload.count();
+        if (count != null) card.setCount(count);
+        else card.hideCountLabel();
     }
 
     private static void handleActiveStateSet(SetAbilityActiveStatePayload payload) {
-        GameStateScreenController.acceptData(data -> {
-            var abilitiesPart = data.screen().getAbilitiesPart();
-            if (abilitiesPart == null) return;
+        var data = GameStateScreenController.getData();
+        if (data == null) return;
 
-            var card = abilitiesPart.getCard(payload.index());
-            if (card == null) return;
+        var abilitiesPart = data.screen().getAbilitiesPart();
+        if (abilitiesPart == null) return;
 
-            card.setActiveState(payload.isActive());
-        });
+        var card = abilitiesPart.getCard(payload.index());
+        if (card == null) return;
+
+        card.setActiveState(payload.isActive());
     }
 
     private static void update() {
-        var screenData = GameStateScreenController.getDataNow();
-        if (screenData == null) return;
+        var data = GameStateScreenController.getData();
+        if (data == null) return;
 
-        var abilitiesPart = screenData.screen().getAbilitiesPart();
+        var abilitiesPart = data.screen().getAbilitiesPart();
         if (abilitiesPart == null) return;
 
         for (int i = 0; i < abilityCardData.size(); i++) {

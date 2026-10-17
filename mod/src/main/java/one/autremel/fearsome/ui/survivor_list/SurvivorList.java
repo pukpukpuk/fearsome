@@ -142,7 +142,6 @@ public class SurvivorList extends OverlayScreen {
     private TiledTextureComponent createHealthBar(StackLayout skinIconContainer) {
         var progressComponent = new TiledTextureComponent(
                 SHEET_ID,
-                0, 0,
                 HEALTH_TEXTURE_SIZE, HEALTH_TEXTURE_SIZE,
                 256, 256
         );

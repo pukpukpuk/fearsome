@@ -17,10 +17,19 @@ fabricApi {
     }
 }
 
+loom {
+    runs {
+        client {
+            generateRunConfig = true
+            runDirectory = file("../run")
+        }
+    }
+}
+
 repositories {
     mavenCentral()
-    maven { url 'https://maven.wispforest.io' }
-    maven { url 'https://jitpack.io' }
+    maven { url = 'https://maven.wispforest.io' }
+    maven { url = 'https://jitpack.io' }
 }
 
 dependencies {
@@ -42,16 +51,17 @@ dependencies {
 }
 
 processResources {
-    inputs.property "version", project.version
-    inputs.property "minecraft_version", project.minecraft_version
-    inputs.property "loader_version", project.loader_version
-    filteringCharset "UTF-8"
+    def props = [
+            "version": project.version,
+            "minecraft_version": project.minecraft_version,
+            "loader_version": project.loader_version,
+            "owo_version": project.owo_version
+    ]
+    inputs.properties props
+    filteringCharset = "UTF-8"
 
     filesMatching("fabric.mod.json") {
-        expand "version": project.version,
-                "minecraft_version": project.minecraft_version,
-                "loader_version": project.loader_version,
-                "owo_version": project.owo_version
+        expand props
     }
 }
 

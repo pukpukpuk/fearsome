@@ -2,8 +2,10 @@ package one.autremel.fearsome.ui.survivor_list;
 
 import com.google.common.base.Preconditions;
 import one.autremel.fearsome.FearsomeMod;
+import one.autremel.fearsome.config.ClientConfigModel;
+import one.autremel.fearsome.config.ViewMethodType;
 import one.autremel.fearsome.input.BindingId;
-import one.autremel.fearsome.input.KeyEvents;
+import one.autremel.fearsome.input.BindingEvents;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.ui.OverlayScreenRegistrar;
 import one.autremel.fearsome.ui.UiController;
@@ -31,7 +33,7 @@ public class SurvivorListController {
         UiController.registerForScreensRemoval(SurvivorListController::handleScreensRemove, true);
         resetListInitTask();
 
-        KeyEvents.onToggle(BindingId.EXPAND_SURVIVOR_LIST, SurvivorListController::onExpandKeyToggle);
+        BindingEvents.onToggle(BindingId.EXPAND_SURVIVOR_LIST, SurvivorListController::onExpandKeyToggle);
 
         DeathTimersController.initialize();
         EffectsPartController.initialize();
@@ -77,9 +79,9 @@ public class SurvivorListController {
         var survivorList = getListNow();
         if (survivorList == null) return;
 
-        switch (FearsomeMod.CONFIG.survivorListExpandBy()) {
-            case HOLD -> survivorList.setCollapsed(currentState);
-            case TOGGLE -> {
+        switch (FearsomeMod.CONFIG.survivorListExpandMethod()) {
+            case ViewMethodType.HOLD -> survivorList.setCollapsed(currentState);
+            case ViewMethodType.TOGGLE -> {
                 if (currentState) {
                     survivorList.setCollapsed(!survivorList.isCollapsed());
                 }

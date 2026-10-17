@@ -2,17 +2,16 @@ package one.autremel.fearsome.ui.hints;
 
 import com.google.common.base.Preconditions;
 import io.wispforest.owo.ui.component.LabelComponent;
-import io.wispforest.owo.ui.container.FlowLayout;
-import io.wispforest.owo.ui.core.Sizing;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.input.BindingId;
 import one.autremel.fearsome.ui.DefaultBlurredSurface;
 import one.autremel.fearsome.ui.components.HideableFlowLayout;
-import one.autremel.fearsome.ui.components.ActionControlLabel;
+import one.autremel.fearsome.ui.components.binding.ActionControlLabel;
 import one.autremel.fearsome.ui.components.LinearBar;
 import one.autremel.fearsome.ui.OverlayScreen;
+import one.autremel.fearsome.ui.helpers.CollapseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +20,12 @@ public class HintsScreen extends OverlayScreen {
     public static final String NAME = "hints_screen";
     public static final Identifier ID = FearsomeMod.uiIdentifier(NAME);
 
-    private static final Sizing
-            BAR_SHOWN_SIZING = Sizing.fixed(4),
-            BAR_HIDDEN_SIZING = Sizing.fixed(0);
-
     private HideableFlowLayout actionBarRoot;
     private LabelComponent actionBarLabel;
     private LinearBar actionBar;
-    private FlowLayout actionControlsList;
+    private io.wispforest.owo.ui.container.FlowLayout actionControlsList;
+
+    private CollapseHelper actionBarCollapseHelper;
 
     private final List<ActionControlLabel> actionControlLabels = new ArrayList<>();
 
@@ -55,8 +52,8 @@ public class HintsScreen extends OverlayScreen {
         actionBarRoot.setVisible(isVisible);
     }
 
-    public void setProgressBarVisible(boolean isVisible) {
-        actionBar.verticalSizing(isVisible ? BAR_SHOWN_SIZING : BAR_HIDDEN_SIZING);
+    public void setProgressBarCollapsed(boolean collapsed) {
+        actionBarCollapseHelper.setCollapsed(collapsed);
     }
 
     public void setProgressBarText(Text text) {
@@ -80,14 +77,16 @@ public class HintsScreen extends OverlayScreen {
     }
 
     @Override
-    protected void buildInternal(FlowLayout rootComponent) {
+    protected void buildInternal(io.wispforest.owo.ui.container.FlowLayout rootComponent) {
         actionBarRoot = rootComponent.childById(HideableFlowLayout.class, "action_bar_root");
         DefaultBlurredSurface.setAsSurfaceFor(actionBarRoot);
 
         actionBarLabel = actionBarRoot.childById(LabelComponent.class, "action_bar_label");
         actionBar = actionBarRoot.childById(LinearBar.class, "action_bar");
 
-        actionControlsList = rootComponent.childById(FlowLayout.class, "action_controls");
+        actionControlsList = rootComponent.childById(io.wispforest.owo.ui.container.FlowLayout.class, "action_controls");
+
+        actionBarCollapseHelper = CollapseHelper.of(actionBar, true);
     }
 
 }

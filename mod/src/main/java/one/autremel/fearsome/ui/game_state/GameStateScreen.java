@@ -19,6 +19,8 @@ public class GameStateScreen extends OverlayScreen {
     private AbilitiesPart abilitiesPart;
     @Getter(AccessLevel.PACKAGE)
     private GlobalInfoPart globalInfoPart;
+    @Getter(AccessLevel.PACKAGE)
+    private ToolsPart toolsPart;
 
     private final CharacterTeam team;
     @Nullable
@@ -44,5 +46,8 @@ public class GameStateScreen extends OverlayScreen {
 
         var globalInfoRoot = rootComponent.childById(FlowLayout.class, "global_info_root");
         globalInfoPart = GlobalInfoPart.initialize(globalInfoRoot);
+
+        var gameToolsRoot = rootComponent.childById(FlowLayout.class, "game_tools_root");
+        toolsPart = ToolsPart.initialize(gameToolsRoot);
     }
 }

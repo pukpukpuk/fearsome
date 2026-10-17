@@ -20,7 +20,7 @@
                                     <progress-color>#839FAF</progress-color>
 
                                     <sizing>
-                                        <vertical method="fixed">0</vertical>
+                                        <vertical method="fixed">4</vertical>
                                         <horizontal method="fill">100</horizontal>
                                     </sizing>
                                 </fearsome.linear_bar>

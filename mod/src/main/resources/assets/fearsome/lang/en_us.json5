@@ -8,19 +8,43 @@
 
     "text.config.fearsome-client-config.{}": {
         "title": "Fearsome: Settings",
-        "section.controls": "Controls",
-        "option.survivorListExpandBy": "Survivor list is expanded by: ",
-        "enum.survivorListExpandType.{}": {
+        "section.{}": {
+            "controls": "Controls",
+            "vanilla": "Vanilla (Fear server only)",
+        },
+        "option.{}": {
+            /// controls
+            "survivorListExpandMethod": "Survivor list expand method",
+            "generatorsHighlightMethod": "Generators Highlight method",
+
+            /// vanilla
+            "useChatSizePreset": "Use chat size preset",
+            "allowMessageVerifications": "Message verifications"
+        },
+        "enum.viewMethodType.{}": {
             "hold": "Hold",
             "toggle": "Toggle",
         }
     },
     ///
 
+
+    /// UI
+    "fearsome.ui.{}": {
+        "lobby.{}": {
+            "player_count": "Player count: ",
+            "in_queue_count": "In queue: ",
+            "until_start": "Until start: "
+        },
+    },
+    ///
+
+
     /// Key Bindings
     "key.category.fearsome.{}": {
         "general": "Fearsome: General",
         "ui": "Fearsome: UI",
+        "tools": "Fearsome: Tools",
     },
     "fearsome.binding.{}": {
         // General
@@ -30,7 +54,11 @@
         "second_ability": "Second Ability",
 
         // UI
-        "expand_survivor_list": "Expand Survivor List"
+        "expand_survivor_list": "Expand Survivor List",
+        "open_builds_browser": "Open Builds Browser",
+
+        // Tools
+        "highlight_generators": "Highlight Generators",
     },
     "short_key.{}": { // <-- not supposed to be translated
         "keyboard.{}": {

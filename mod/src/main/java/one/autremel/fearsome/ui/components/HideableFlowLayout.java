@@ -1,6 +1,5 @@
 package one.autremel.fearsome.ui.components;
 
-import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.core.OwoUIGraphics;
 import io.wispforest.owo.ui.core.Sizing;
 import io.wispforest.owo.ui.parsing.UIModel;
@@ -10,8 +9,7 @@ import org.w3c.dom.Element;
 
 import java.util.Map;
 
-public class HideableFlowLayout extends FlowLayout {
-
+public class HideableFlowLayout extends io.wispforest.owo.ui.container.FlowLayout {
     @Setter
     private boolean isVisible = true;
 

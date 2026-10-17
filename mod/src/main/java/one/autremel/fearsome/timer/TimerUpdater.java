@@ -30,9 +30,9 @@ public class TimerUpdater {
         var signature = new TimerSignature(payload.key(), payload.characterIndex());
         var timer = registeredTimerMap.computeIfAbsent(signature, s -> new Timer(payload));
 
+        timer.setCounting(payload.isCounting());
         timer.setEndTime(TimeSynchronizer.toLocalTime(payload.endTime()));
         timer.setPausedAt(TimeSynchronizer.toLocalTime(payload.pausedAt()));
-        timer.setCounting(payload.isCounting());
     }
 
     private static void handleTimerDelete(TimerDeletePayload payload) {

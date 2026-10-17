@@ -5,6 +5,8 @@ import net.minecraft.text.Text;
 import one.autremel.fearsome.ui.hints.payloads.SetActionProgressParametersPayload;
 
 public class SimpleActionData extends ActionData {
+    public static final byte ID = 0;
+
     @Getter
     private final Text text;
 

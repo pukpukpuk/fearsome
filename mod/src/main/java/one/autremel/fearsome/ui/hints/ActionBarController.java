@@ -49,7 +49,7 @@ class ActionBarController {
             return;
         }
 
-        currentlyShownAction = visibleActions.stream().max(Comparator.comparingInt(ActionData::getPriority)).orElseThrow();
+        currentlyShownAction = visibleActions.stream().min(Comparator.comparingInt(ActionData::getPriority)).orElseThrow();
     }
 
     private static void handleRegister(RegisterActionPayload payload) {
@@ -58,9 +58,9 @@ class ActionBarController {
         var text = KEY_PREFIX+payload.key();
 
         var actionData = switch (payload.type()) {
-            case 0 -> new SimpleActionData(actionId, priority, text);
-            case 1 -> new GeneratorFixActionData(actionId, priority, text);
-            case 2 -> new HiddenBarActionData(actionId, priority, text);
+            case SimpleActionData.ID -> new SimpleActionData(actionId, priority, text);
+            case GeneratorFixActionData.ID -> new GeneratorFixActionData(actionId, priority, text);
+            case HiddenBarActionData.ID -> new HiddenBarActionData(actionId, priority, text);
             default -> throw new IllegalStateException("Unexpected action progress type id: " + payload.type());
         };
 

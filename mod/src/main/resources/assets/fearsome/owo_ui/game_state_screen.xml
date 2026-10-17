@@ -29,6 +29,31 @@
                             <gap>4</gap>
                             <allow-overflow>true</allow-overflow>
                         </flow-layout>
+                        <flow-layout direction="vertical" id="game_tools_root">
+                            <children>
+                                <fearsome.with_binding_stack_layout binding_id="open_builds_browser">
+                                    <children>
+                                        <fearsome.colorable_texture
+                                                texture="fearsome:textures/ui/icons/builds_browser.png"
+                                                side_length="16"
+                                                id="builds_browser_icon">
+                                        </fearsome.colorable_texture>
+                                    </children>
+                                </fearsome.with_binding_stack_layout>
+                                <fearsome.with_binding_stack_layout binding_id="highlight_generators" >
+                                    <children>
+                                        <fearsome.tiled_texture
+                                                texture="fearsome:textures/ui/icons/generator_highlighter.png"
+                                                side_length="16"
+                                                texture_width="32" texture_height="16"
+                                                id="generator_highlighter_icon">
+                                        </fearsome.tiled_texture>
+                                    </children>
+                                </fearsome.with_binding_stack_layout>
+                            </children>
+                            <gap>2</gap>
+                            <allow-overflow>true</allow-overflow>
+                        </flow-layout>
                     </children>
                     <gap>2</gap>
                 </flow-layout>
@@ -44,7 +69,7 @@
                                 >
                                 </texture>
                                 <label id="until_end_timer">
-                                    <text>14:88</text>
+                                    <text>00:00</text>
                                     <sizing>
                                         <vertical method="fixed">7</vertical>
                                     </sizing>
@@ -80,11 +105,11 @@
                                     <children>
                                         <fearsome.colorable_texture
                                                 texture="fearsome:textures/ui/icons/quest.png"
-                                                side-length="7"
+                                                side_length="7"
                                                 id="quests_icon">
                                         </fearsome.colorable_texture>
                                         <label id="quests_count">
-                                            <text>2</text>
+                                            <text>0</text>
                                             <sizing>
                                                 <vertical method="fixed">7</vertical>
                                             </sizing>

@@ -15,7 +15,6 @@ class GlobalInfoPartController {
     private static final int TIME_UPDATE_PERIOD = 1000;
 
     private static boolean initialized;
-    private static int totalGeneratorsCount;
 
     private static long lastUpdateTime;
 
@@ -34,23 +33,19 @@ class GlobalInfoPartController {
     }
 
     static void setTotalGeneratorsCount(int count) {
-        totalGeneratorsCount = count;
-        GameStateScreenController.acceptData(data -> {
-            data.screen().getGlobalInfoPart().setGeneratorsTotalCount(totalGeneratorsCount);
-        });
+        var data = GameStateScreenController.getData();
+        if (data != null) data.screen().getGlobalInfoPart().setGeneratorsTotalCount(count);
     }
 
 
     private static void handleSetGeneratorsCount(SetGeneratorsCountPayload payload) {
-        GameStateScreenController.acceptData(data -> {
-            data.screen().getGlobalInfoPart().setGeneratorsRemainingCount(payload.count());
-        });
+        var data = GameStateScreenController.getData();
+        if (data != null) data.screen().getGlobalInfoPart().setGeneratorsRemainingCount(payload.count());
     }
 
     private static void handleSetQuestsCount(SetQuestsCountPayload payload) {
-        GameStateScreenController.acceptData(data -> {
-            data.screen().getGlobalInfoPart().setQuestsCount(payload.count());
-        });
+        var data = GameStateScreenController.getData();
+        if (data != null) data.screen().getGlobalInfoPart().setQuestsCount(payload.count());
     }
 
     private static void updateGameTimerLabel(GameStateScreenController.Data data) {
@@ -72,7 +67,7 @@ class GlobalInfoPartController {
         if ((currentTime - lastUpdateTime) < TIME_UPDATE_PERIOD) return;
         lastUpdateTime = currentTime;
 
-        var data = GameStateScreenController.getDataNow();
+        var data = GameStateScreenController.getData();
         if (data == null) return;
 
         updateGameTimerLabel(data);
@@ -80,27 +75,29 @@ class GlobalInfoPartController {
     }
 
     private static void handleEffectsCollectionChange(DisplayedEffect effect) {
-        GameStateScreenController.acceptData(data -> {
-            var ownIndex = data.ownCharacterIndex();
-            if (ownIndex != effect.getCharacterIndex()) return;
+        var data = GameStateScreenController.getData();
+        if (data == null) return;
 
-            var table = data.screen().getGlobalInfoPart().getEffectTable();
-            var effects = EffectController.getEffects(data.ownCharacterIndex(), EffectVisiblePart.DISPLAY_NAME);
+        var ownIndex = data.ownCharacterIndex();
+        if (ownIndex != effect.getCharacterIndex()) return;
 
-            table.updateEffectNameColumn(effects);
-            table.updateEffectTimeColumn(effects);
-        });
+        var table = data.screen().getGlobalInfoPart().getEffectTable();
+        var effects = EffectController.getEffects(data.ownCharacterIndex(), EffectVisiblePart.DISPLAY_NAME);
+
+        table.updateEffectNameColumn(effects);
+        table.updateEffectTimeColumn(effects);
     }
 
     private static void handleEffectDisplayNameChange(DisplayedEffect effect) {
-        GameStateScreenController.acceptData(data -> {
-            var ownIndex = data.ownCharacterIndex();
-            if (ownIndex != effect.getCharacterIndex()) return;
+        var data = GameStateScreenController.getData();
+        if (data == null) return;
 
-            var table = data.screen().getGlobalInfoPart().getEffectTable();
-            var effects = EffectController.getEffects(data.ownCharacterIndex(), EffectVisiblePart.DISPLAY_NAME);
+        var ownIndex = data.ownCharacterIndex();
+        if (ownIndex != effect.getCharacterIndex()) return;
 
-            table.updateEffectNameColumn(effects);
-        });
+        var table = data.screen().getGlobalInfoPart().getEffectTable();
+        var effects = EffectController.getEffects(data.ownCharacterIndex(), EffectVisiblePart.DISPLAY_NAME);
+
+        table.updateEffectNameColumn(effects);
     }
 }

@@ -34,7 +34,7 @@ public abstract class ActionData {
 
     protected void onUpdateInternal(HintsScreen screen) {
         screen.setProgressBarColor(LinearBar.DEFAULT_PROGRESS_COLOR);
-        screen.setProgressBarVisible(true);
+        screen.setProgressBarCollapsed(false);
     }
 
     private void updateAnimation() {

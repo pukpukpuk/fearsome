@@ -7,7 +7,7 @@ import net.minecraft.client.MinecraftClient;
 
 import java.util.HashMap;
 
-public class KeyEvents {
+public class BindingEvents {
     private static boolean initialized;
 
     private static final HashMap<BindingData, PressingState> stateMap = new HashMap<>();
@@ -16,7 +16,7 @@ public class KeyEvents {
         Preconditions.checkState(!initialized);
         initialized = true;
 
-        ClientTickEvents.END_CLIENT_TICK.register(KeyEvents::onTick);
+        ClientTickEvents.END_CLIENT_TICK.register(BindingEvents::onTick);
     }
 
     public static void onPressing(BindingId id, Runnable runnable) {

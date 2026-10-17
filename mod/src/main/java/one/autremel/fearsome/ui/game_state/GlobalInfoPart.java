@@ -43,7 +43,11 @@ class GlobalInfoPart {
         var timeColumn = root.childById(FlowLayout.class, "effect_time_column");
         var effectTable = new EffectTable(nameColumn, timeColumn);
 
-        return new GlobalInfoPart(timerLabel, generatorsCountLabel, questsCountLabel, questsIcon, effectTable);
+
+        var result = new GlobalInfoPart(timerLabel, generatorsCountLabel, questsCountLabel, questsIcon, effectTable);
+        result.setQuestsCount(0);
+
+        return result;
     }
 
     public void setRemainingTime(int remainingMillis) {
@@ -62,7 +66,7 @@ class GlobalInfoPart {
 
     public void setQuestsCount(int count) {
         if (count < 0) count = 0;
-        questsCountLabel.text(Text.of(count+""));
+        questsCountLabel.text(Text.of(String.valueOf(count)));
 
         if (count == 0) {
             questsIcon.setColor(WITHOUT_QUESTS_COLOR);

@@ -6,19 +6,20 @@ import net.minecraft.util.Identifier;
 import one.autremel.fearsome.config.ClientConfig;
 import one.autremel.fearsome.config.GameConfig;
 import one.autremel.fearsome.effects.EffectController;
+import one.autremel.fearsome.illusions.GlowingBlocks;
+import one.autremel.fearsome.illusions.GlowingEntities;
+import one.autremel.fearsome.illusions.NameDisplayer;
 import one.autremel.fearsome.illusions.SelectedItemDisplayer;
 import one.autremel.fearsome.input.KeyBindings;
-import one.autremel.fearsome.input.KeyEvents;
+import one.autremel.fearsome.input.BindingEvents;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.network.ping.ModPingController;
 import one.autremel.fearsome.network.ping.TimeSynchronizer;
 import one.autremel.fearsome.timer.TimerUpdater;
-import one.autremel.fearsome.ui.OverlayScreen;
 import one.autremel.fearsome.ui.OverlayScreenRegistrar;
 import one.autremel.fearsome.ui.UiController;
-import one.autremel.fearsome.ui.hints.HintsScreen;
+import one.autremel.fearsome.ui.game_state.GameStateScreen;
 import one.autremel.fearsome.ui.hints.HintsScreenController;
-import one.autremel.fearsome.ui.terror.TerrorIndicator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,22 +37,23 @@ public class FearsomeMod implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         KeyBindings.initialize();
-        KeyEvents.initialize();
+        BindingEvents.initialize();
 
         NetworkController.initialize();
         ModPingController.initialize(this::onSuccessfulHandshake, this::onDisconnectFromGame);
 
-
+        WrappedEvents.initialize();
         TimerUpdater.initialize();
         EffectController.initialize();
         SelectedItemDisplayer.initialize();
+        NameDisplayer.initialize();
 
         UiController.initialize();
     }
 
-
     private void onSuccessfulHandshake() {
         HintsScreenController.onSuccessfulHandshake();
+        OverlayScreenRegistrar.create(GameStateScreen.ID, new GameStateScreen(CharacterTeam.MURDERERS, "dream"));//TODO
     }
 
     private void onDisconnectFromGame() {
@@ -59,9 +61,10 @@ public class FearsomeMod implements ClientModInitializer {
         TimeSynchronizer.reset();
         HintsScreenController.reset();
         SelectedItemDisplayer.reset();
+
+        GlowingEntities.reset();
+        GlowingBlocks.reset();
     }
-
-
 
     public static String bindingTextIdentifier(String path) {
         return NAMESPACE+".binding."+path;

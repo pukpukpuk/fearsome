@@ -8,19 +8,43 @@
 
     "text.config.fearsome-client-config.{}": {
         "title": "Fearsome: Настройки",
-        "section.controls": "Управление",
-        "option.survivorListExpandBy": "Список выживших раскрывается через: ",
-        "enum.survivorListExpandType.{}": {
+        "section.{}": {
+            "controls": "Управление",
+            "vanilla": "Ванилла (только сервер Fear)",
+        },
+        "option.{}": {
+            /// controls
+            "survivorListExpandMethod": "Раскрытие списка выживших",
+            "generatorsHighlightMethod": "Подсвечивание генераторов",
+
+            /// vanilla
+            "useChatSizePreset": "Измененный размер чата",
+            "allowMessageVerifications": "Верификация сообщений"
+        },
+        "enum.viewMethodType.{}": {
             "hold": "Зажатие",
             "toggle": "Переключение",
         }
     },
     ///
 
+
+    /// UI
+    "fearsome.ui.{}": {
+        "lobby.{}": {
+            "player_count": "В сети: ",
+            "in_queue_count": "В очереди: ",
+            "until_start": "До начала: "
+        },
+    },
+    ///
+
+
     /// Key Bindings
     "key.category.fearsome.{}": {
         "general": "Fearsome: Общие",
         "ui": "Fearsome: UI",
+        "tools": "Fearsome: Полезности"
     },
     "fearsome.binding.{}": {
         // General
@@ -30,7 +54,11 @@
         "second_ability": "Вторая способность",
 
         // UI
-        "expand_survivor_list": "Раскрыть список выживших"
+        "expand_survivor_list": "Раскрыть список выживших",
+        "open_builds_browser": "Открыть список билдов",
+
+        // Tools
+        "highlight_generators": "Подсветить генераторы",
     },
     ///
 

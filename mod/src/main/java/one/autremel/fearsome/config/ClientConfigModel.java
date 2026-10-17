@@ -9,9 +9,10 @@ import one.autremel.fearsome.FearsomeMod;
 @Config(name = FearsomeMod.NAMESPACE+"-client-config", wrapperName = "ClientConfig")
 public class ClientConfigModel {
     @SectionHeader("controls")
-    public SurvivorListExpandType survivorListExpandBy = SurvivorListExpandType.HOLD;
+    public ViewMethodType survivorListExpandMethod = ViewMethodType.HOLD;
+    public ViewMethodType generatorsHighlightMethod = ViewMethodType.TOGGLE;
 
-    public enum SurvivorListExpandType {
-        HOLD, TOGGLE
-    }
+    @SectionHeader("vanilla")
+    public boolean useChatSizePreset = true;
+    public boolean allowMessageVerifications = false;
 }

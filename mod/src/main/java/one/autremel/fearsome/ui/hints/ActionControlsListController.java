@@ -2,9 +2,16 @@ package one.autremel.fearsome.ui.hints;
 
 import com.google.common.base.Preconditions;
 import lombok.Getter;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.fabricmc.fabric.impl.resource.ResourceLoaderImpl;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.resource.ResourceType;
+import net.minecraft.resource.SynchronousResourceReloader;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableTextContent;
 import one.autremel.fearsome.FearsomeMod;
+import one.autremel.fearsome.WrappedEvents;
 import one.autremel.fearsome.input.BindingId;
 import one.autremel.fearsome.input.KeyBindings;
 import one.autremel.fearsome.network.NetworkController;
@@ -16,6 +23,7 @@ import one.autremel.fearsome.ui.hints.payloads.UnregisterAllActionControlsPayloa
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 class ActionControlsListController {
@@ -43,6 +51,9 @@ class ActionControlsListController {
         NetworkController.register(SetActionControlCooldownPayload.ID, ActionControlsListController::handleCooldownSet);
 
         OverlayScreenRegistrar.registerBeforeScreenDrawing(HintsScreen.ID, ActionControlsListController::beforeScreenDraw);
+
+        WrappedEvents.registerOnResourceReload(ActionControlsListController::updateShownControls);
+        KeyBindings.registerForBoundKeyChange(ActionControlsListController::onBoundKeyChange);
     }
 
     public static void resetControls() {
@@ -53,6 +64,7 @@ class ActionControlsListController {
         }
         availableControls.clear();
         controlsOnCooldown.clear();
+        updateShownControls();
     }
 
     private static void beforeScreenDraw() {
@@ -81,7 +93,7 @@ class ActionControlsListController {
             var keyBinding = KeyBindings.getData(bindingId).keyBinding();
             var label = screen.getLabel(index++);
 
-            label.setBindingKey(keyBinding.getBoundKeyTranslationKey());
+            label.setKeyId(keyBinding);
             label.setText(control.text());
             label.setVisible(true);
         }
@@ -90,15 +102,13 @@ class ActionControlsListController {
     @Nullable
     private static ControlData getDataOrLogError(int controlId) {
         var data = registeredControls[controlId];
-        if (data == null || data.getMeta() == null) {
-            FearsomeMod.LOGGER.error(
-                    "Server tried to address unregistered control with id {}! Ignoring...",
-                    controlId
-            );
-            return null;
-        }
+        if (data != null && data.getMeta() != null) return data;
 
-        return data;
+        FearsomeMod.LOGGER.error(
+                "Server tried to address unregistered control with id {}! Ignoring...",
+                controlId
+        );
+        return null;
     }
 
 
@@ -108,6 +118,12 @@ class ActionControlsListController {
 
         updateShownControls();
     }
+
+    private static void onBoundKeyChange(BindingId bindingId) {
+        var isShown = availableControls.stream().anyMatch(meta -> meta.bindingId() == bindingId);
+        if (isShown) updateShownControls();
+    }
+
 
     private static void handleRegisterControl(RegisterActionControlPayload payload) {
         var controlId = payload.controlId();

@@ -56,6 +56,7 @@ public class TerrorIndicatorController {
         screen = new TerrorIndicator();
         bounds = payload.bounds();
         OverlayScreenRegistrar.create(TerrorIndicator.ID, screen);
+        screen.setVisible(false);
     }
 
     private static void handleScreensRemove() {

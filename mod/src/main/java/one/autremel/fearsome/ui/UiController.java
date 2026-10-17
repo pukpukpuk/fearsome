@@ -6,8 +6,10 @@ import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.network.RemoveScreensPayload;
 import one.autremel.fearsome.ui.components.*;
+import one.autremel.fearsome.ui.components.binding.ActionControlLabel;
 import one.autremel.fearsome.ui.game_state.GameStateScreenController;
 import one.autremel.fearsome.ui.hints.HintsScreenController;
+import one.autremel.fearsome.ui.lobby.LobbyScreenController;
 import one.autremel.fearsome.ui.survivor_list.SurvivorListController;
 import one.autremel.fearsome.ui.terror.TerrorIndicatorController;
 
@@ -20,6 +22,8 @@ public class UiController {
 
     static {
         UIParsing.registerFactory(FearsomeMod.identifier("colorable_texture"), ColorableTextureComponent::parse);
+        UIParsing.registerFactory(FearsomeMod.identifier("tiled_texture"), TiledTextureComponent::parse);
+
         UIParsing.registerFactory(FearsomeMod.identifier("radial_bar"), element -> new RadialProgressBar());
         UIParsing.registerFactory(FearsomeMod.identifier("scalable_label"), element -> new ScalableLabelComponent(Text.empty()));
         UIParsing.registerFactory(FearsomeMod.identifier("linear_bar"), element -> new LinearBar());
@@ -29,7 +33,10 @@ public class UiController {
         );
 
         UIParsing.registerFactory(FearsomeMod.identifier("hideable_stack_layout"), element -> new HideableStackLayout());
+        UIParsing.registerFactory(FearsomeMod.identifier("with_binding_stack_layout"), WithBindingStackLayout::parse);
+
         UIParsing.registerFactory(FearsomeMod.identifier("hideable_flow_layout"), HideableFlowLayout::parse);
+        UIParsing.registerFactory(FearsomeMod.identifier("grid_layout"), GridLayout::parse);
     }
 
     public static void initialize() {
@@ -39,6 +46,8 @@ public class UiController {
         GameStateScreenController.initialize();
         HintsScreenController.initialize();
         TerrorIndicatorController.initialize();
+
+        LobbyScreenController.initialize();
     }
 
     public static void reset() {

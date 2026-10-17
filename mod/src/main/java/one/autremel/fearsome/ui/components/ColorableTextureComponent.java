@@ -34,7 +34,7 @@ public class ColorableTextureComponent extends BaseUIComponent {
 
     public static ColorableTextureComponent parse(Element element) {
         var texture = UIParsing.parseIdentifier(element.getAttributeNode("texture"));
-        var sideLength = UIParsing.parseSignedInt(element.getAttributeNode("side-length"));
+        var sideLength = UIParsing.parseSignedInt(element.getAttributeNode("side_length"));
         return new ColorableTextureComponent(texture, sideLength);
     }
 

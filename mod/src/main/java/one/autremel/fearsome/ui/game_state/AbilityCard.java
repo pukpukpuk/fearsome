@@ -20,7 +20,7 @@ public record AbilityCard(
     }
 
     public void setCount(int count) {
-        countLabel.text(Text.of(count+""));
+        countLabel.text(Text.of(String.valueOf(count)));
         hideableCountRoot.setVisible(count >= 0);
     }
 

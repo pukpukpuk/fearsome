@@ -3,22 +3,33 @@
     "minVersion": "0.8",
     "package": "one.autremel.fearsome.mixin",
     "compatibilityLevel": "JAVA_21",
-    "client": [
-        "ClientPlayerEntityMixin",
-        "InGameHudMixin",
-        "LivingEntityMixin",
-        "MannequinMixin",
-        "MinecraftClientMixin",
-        "PlayerEquipmentMixin",
-        "ScreenHandlerMixin"
-    ],
     "injectors": {
         "defaultRequire": 1
     },
     "overwrites": {
         "requireAnnotations": true
     },
+    "client": [
+        "ChatHudLineVisibleMixin",
+        "ChatHudMixin",
+        "ClientPlayerEntityMixin",
+        "ClientPlayerInteractionManagerMixin",
+        "InGameHudMixin",
+        "KeyBindingMixin",
+        "LabelCommandRendererCommandsAccessor",
+        "LabelCommandRendererCommandsMixin",
+        "LabelCommandRendererMixin",
+        "LivingEntityMixin",
+        "LivingEntityRendererMixin",
+        "MannequinMixin",
+        "MinecraftClientMixin",
+        "MobEntityRendererMixin",
+        "PlayerEntityRendererMixin",
+        "PlayerEquipmentMixin",
+        "ScreenHandlerMixin",
+        "ToastManagerMixin"
+    ],
     "mixins": [
-        "ClientPlayerInteractionManagerMixin"
+        "EntityMixin"
     ]
 }
