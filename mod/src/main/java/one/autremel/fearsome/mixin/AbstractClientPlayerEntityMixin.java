@@ -1,7 +1,10 @@
 package one.autremel.fearsome.mixin;
 
 import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.SkinTextures;
 import net.minecraft.util.math.MathHelper;
+import one.autremel.fearsome.illusions.SkinOverrides;
 import one.autremel.fearsome.input.VanillaActionsSuppressor;
 import one.autremel.fearsome.network.ping.ModPingController;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,5 +29,15 @@ public class AbstractClientPlayerEntityMixin {
         var player = (AbstractClientPlayerEntity) (Object) this;
         var multiplier = player.isSprinting() ? SPRINT_FOV_MULTIPLIER : 1f;
         cir.setReturnValue(MathHelper.lerp(fovEffectScale, 1f, multiplier));
+    }
+
+    @Inject(
+            method = "getSkin",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    public void getSkin(CallbackInfoReturnable<SkinTextures> cir) {
+        var skin = SkinOverrides.get(((Entity) (Object) this).getId());
+        if (skin != null) cir.setReturnValue(skin);
     }
 }

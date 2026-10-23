@@ -14,6 +14,7 @@
         "ChatHudLineVisibleMixin",
         "ChatHudMixin",
         "ClientLoginNetworkHandlerMixin",
+        "ClientMannequinEntityMixin",
         "ClientPlayerEntityMixin",
         "ClientPlayerInteractionManagerMixin",
         "InGameHudMixin",

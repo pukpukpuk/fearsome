@@ -42,10 +42,10 @@ public class LinearBar extends BaseUIComponent {
         var clamped = Math.min(Math.max(progress, 0), 1);
 
         if (isVertical) {
-            var progressEndPoint = y + (int)Math.floor(height * (1-clamped));
+            var progressEndPoint = y + height * (1-clamped);
             fill(graphics, x, progressEndPoint, x+width, y+height, progressColor);
         } else {
-            var progressEndPoint = x + (int)Math.ceil(width * clamped);
+            var progressEndPoint = x + width * clamped;
             fill(graphics, x, y, progressEndPoint, y+height, progressColor);
         }
     }

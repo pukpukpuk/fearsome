@@ -10,6 +10,7 @@ import one.autremel.fearsome.illusions.GlowingBlocks;
 import one.autremel.fearsome.illusions.GlowingEntities;
 import one.autremel.fearsome.illusions.NameDisplayer;
 import one.autremel.fearsome.illusions.SelectedItemDisplayer;
+import one.autremel.fearsome.illusions.SkinOverrides;
 import one.autremel.fearsome.input.KeyBindings;
 import one.autremel.fearsome.input.BindingEvents;
 import one.autremel.fearsome.network.NetworkController;
@@ -48,6 +49,7 @@ public class FearsomeMod implements ClientModInitializer {
         EffectController.initialize();
         SelectedItemDisplayer.initialize();
         NameDisplayer.initialize();
+        SkinOverrides.initialize();
 
         UiController.initialize();
     }
@@ -63,6 +65,7 @@ public class FearsomeMod implements ClientModInitializer {
         HintsScreenController.reset();
         SelectedItemDisplayer.reset();
         NameDisplayer.reset();
+        SkinOverrides.reset();
         TimerUpdater.reset();
 
         ToolsPartController.reset();
