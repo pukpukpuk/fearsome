@@ -6,8 +6,8 @@ import net.minecraft.util.Identifier;
 import one.autremel.fearsome.config.ClientConfig;
 import one.autremel.fearsome.config.GameConfig;
 import one.autremel.fearsome.effects.EffectController;
-import one.autremel.fearsome.illusions.GlowingBlocks;
-import one.autremel.fearsome.illusions.GlowingEntities;
+import one.autremel.fearsome.illusions.glowing.GlowingBlocks;
+import one.autremel.fearsome.illusions.glowing.GlowingEntities;
 import one.autremel.fearsome.illusions.NameDisplayer;
 import one.autremel.fearsome.illusions.SelectedItemDisplayer;
 import one.autremel.fearsome.illusions.SkinOverrides;
@@ -17,9 +17,7 @@ import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.network.ping.ModPingController;
 import one.autremel.fearsome.network.ping.TimeSynchronizer;
 import one.autremel.fearsome.timer.TimerUpdater;
-import one.autremel.fearsome.ui.OverlayScreenRegistrar;
 import one.autremel.fearsome.ui.UiController;
-import one.autremel.fearsome.ui.game_state.GameStateScreen;
 import one.autremel.fearsome.ui.game_state.ToolsPartController;
 import one.autremel.fearsome.ui.hints.HintsScreenController;
 import org.slf4j.Logger;
@@ -50,6 +48,8 @@ public class FearsomeMod implements ClientModInitializer {
         SelectedItemDisplayer.initialize();
         NameDisplayer.initialize();
         SkinOverrides.initialize();
+        GlowingEntities.initialize();
+        GlowingBlocks.initialize();
 
         UiController.initialize();
     }

@@ -4,7 +4,8 @@ import com.google.common.base.Preconditions;
 import net.minecraft.util.math.BlockPos;
 import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.config.ViewMethodType;
-import one.autremel.fearsome.illusions.GlowingBlocks;
+import one.autremel.fearsome.illusions.glowing.GlowingBlocks;
+import one.autremel.fearsome.illusions.glowing.Layer;
 import one.autremel.fearsome.input.BindingEvents;
 import one.autremel.fearsome.input.BindingId;
 import one.autremel.fearsome.network.NetworkController;
@@ -15,6 +16,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 class GeneratorsHighlighter {
+    private static final int GENERATOR_COLOR = 0xFFFFAA00;
+
     private static boolean initialized;
 
     private static boolean isEnabled;
@@ -37,8 +40,8 @@ class GeneratorsHighlighter {
     }
 
     private static void setBlocksGlowingState(boolean mustBeGlowed) {
-        if (mustBeGlowed) shownGenerators.forEach(GlowingBlocks::setGlowingGenerator);
-        else shownGenerators.forEach(GlowingBlocks::removeGlowing);
+        if (mustBeGlowed) shownGenerators.forEach(GeneratorsHighlighter::setGlowingGenerator);
+        else shownGenerators.forEach(GeneratorsHighlighter::removeGeneratorGlowing);
     }
 
     private static void setEnabledState(boolean state) {
@@ -81,6 +84,14 @@ class GeneratorsHighlighter {
     private static void handleUnmarkPayload(UnmarkGeneratorBlockPayload payload) {
         var pos = payload.blockPosition();
         shownGenerators.remove(pos);
-        if (isEnabled) GlowingBlocks.removeGlowing(pos);
+        if (isEnabled) removeGeneratorGlowing(pos);
+    }
+
+    private static void setGlowingGenerator(BlockPos pos) {
+        GlowingBlocks.setGlowing(Layer.LOCAL, pos, GENERATOR_COLOR);
+    }
+
+    private static void removeGeneratorGlowing(BlockPos pos) {
+        GlowingBlocks.removeGlowing(Layer.LOCAL, pos);
     }
 }
