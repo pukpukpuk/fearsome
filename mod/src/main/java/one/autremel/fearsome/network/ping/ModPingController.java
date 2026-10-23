@@ -2,28 +2,44 @@ package one.autremel.fearsome.network.ping;
 
 import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
+import net.fabricmc.fabric.api.client.networking.v1.ClientLoginConnectionEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientLoginNetworking;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.text.Text;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.util.Identifier;
 import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.network.NetworkController;
-import one.autremel.fearsome.ui.WrongVersionDisconnectScreen;
+
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.CompletableFuture;
 
 @RequiredArgsConstructor
 public class ModPingController {
+    private static final Identifier MOD_CHECK_CHANNEL = FearsomeMod.identifier("mod_check");
+
     private static ModPingController INSTANCE;
 
     private final Runnable successfulHandshakeCallback, disconnectFromGameCallback;
 
-    private boolean isOnFearServer;
+    private volatile boolean
+            isModCheckedOnLogin,
+            isOnFearServer;
 
     private boolean isWaitingServerResponse;
 
     public static void initialize(Runnable successfulHandshakeCallback, Runnable disconnectFromGameCallback) {
         Preconditions.checkState(INSTANCE == null);
         INSTANCE = new ModPingController(successfulHandshakeCallback, disconnectFromGameCallback);
+
+        ClientLoginConnectionEvents.INIT.register((handler, client) -> INSTANCE.isModCheckedOnLogin = false);
+        ClientLoginNetworking.registerGlobalReceiver(
+                MOD_CHECK_CHANNEL,
+                (client, handler, buf, callbacksConsumer) -> INSTANCE.onModCheckQuery()
+        );
 
         ClientPlayConnectionEvents.JOIN.register(INSTANCE::onJoin);
         ClientPlayConnectionEvents.DISCONNECT.register(INSTANCE::onDisconnect);
@@ -36,15 +52,22 @@ public class ModPingController {
     }
 
 
+    private CompletableFuture<PacketByteBuf> onModCheckQuery() {
+        isModCheckedOnLogin = true;
+
+        var response = PacketByteBufs.create();
+        response.writeBytes(FearsomeMod.VERSION.getBytes(StandardCharsets.UTF_8));
+        return CompletableFuture.completedFuture(response);
+    }
+
     private void onJoin(ClientPlayNetworkHandler handler, PacketSender sender, MinecraftClient client) {
-        if (client.isIntegratedServerRunning()) {
-            return;
-        }
+        isOnFearServer = isModCheckedOnLogin;
+        isModCheckedOnLogin = false;
+        if (!isOnFearServer) return;
 
         TimeSynchronizer.setT1(System.currentTimeMillis());
 
         NetworkController.send(PingPayload.INSTANCE);
-        isOnFearServer = false;
         isWaitingServerResponse = true;
     }
 
@@ -62,22 +85,8 @@ public class ModPingController {
         if (!isWaitingServerResponse) return;
         isWaitingServerResponse = false;
 
-        var server = payload.version();
-        var own = FearsomeMod.VERSION;
-
-        var client = MinecraftClient.getInstance();
-        if (!own.equals(server)) {
-            var reason = Text.translatable("gui.mod_version_mismatch", server, own);
-
-            client.disconnect(reason);
-            var screen = new WrongVersionDisconnectScreen(reason);
-            client.execute(() -> client.setScreen(screen));
-            return;
-        }
-
         TimeSynchronizer.calculateDelta(payload);
 
-        isOnFearServer = true;
-        client.execute(successfulHandshakeCallback);
+        MinecraftClient.getInstance().execute(successfulHandshakeCallback);
     }
 }

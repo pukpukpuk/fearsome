@@ -16,6 +16,10 @@ public class ToolsPartController {
         GeneratorsHighlighter.initialize();
     }
 
+    public static void reset() {
+        GeneratorsHighlighter.reset();
+    }
+
     private static void onBoundKeyChange(BindingId bindingId) {
         var data = GameStateScreenController.getData();
         if (data == null) return;

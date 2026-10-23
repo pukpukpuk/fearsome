@@ -10,8 +10,10 @@
         "requireAnnotations": true
     },
     "client": [
+        "AbstractClientPlayerEntityMixin",
         "ChatHudLineVisibleMixin",
         "ChatHudMixin",
+        "ClientLoginNetworkHandlerMixin",
         "ClientPlayerEntityMixin",
         "ClientPlayerInteractionManagerMixin",
         "InGameHudMixin",

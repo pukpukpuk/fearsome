@@ -8,6 +8,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Util;
 
 public class WrongVersionDisconnectScreen extends Screen {
+    public static final String REASON_KEY = "gui.mod_version_mismatch";
     private static final Text GO_TO_GITHUB = Text.translatable("gui.go_to_mod_github");
     private static final Text TO_MENU_TEXT = Text.translatable("gui.toMenu");
 

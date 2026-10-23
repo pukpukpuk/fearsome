@@ -20,6 +20,9 @@ public class TimerUpdater {
         NetworkController.register(TimerDeletePayload.ID, TimerUpdater::handleTimerDelete);
     }
 
+    public static void reset() {
+        registeredTimerMap.clear();
+    }
 
     @Nullable
     public static Timer getTimer(TimerSignature signature) {

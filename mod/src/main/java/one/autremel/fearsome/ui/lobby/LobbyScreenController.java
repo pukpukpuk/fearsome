@@ -30,7 +30,7 @@ public class LobbyScreenController {
     }
 
     private static void handleCreatePayload(CreateLobbyScreenPayload payload) {
-        //OverlayScreenRegistrar.create(LobbyScreen.ID, screen = new LobbyScreen()); //TODO
+        OverlayScreenRegistrar.create(LobbyScreen.ID, screen = new LobbyScreen());
     }
 
     private static void handleSetPlayerCount(SetLobbyPlayerCountPayload payload) {

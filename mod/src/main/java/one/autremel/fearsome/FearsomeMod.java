@@ -19,6 +19,7 @@ import one.autremel.fearsome.timer.TimerUpdater;
 import one.autremel.fearsome.ui.OverlayScreenRegistrar;
 import one.autremel.fearsome.ui.UiController;
 import one.autremel.fearsome.ui.game_state.GameStateScreen;
+import one.autremel.fearsome.ui.game_state.ToolsPartController;
 import one.autremel.fearsome.ui.hints.HintsScreenController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +54,7 @@ public class FearsomeMod implements ClientModInitializer {
 
     private void onSuccessfulHandshake() {
         HintsScreenController.onSuccessfulHandshake();
-        OverlayScreenRegistrar.create(GameStateScreen.ID, new GameStateScreen(CharacterTeam.MURDERERS, "dream"));//TODO
+        //OverlayScreenRegistrar.create(GameStateScreen.ID, new GameStateScreen(CharacterTeam.MURDERERS, "dream"));//TODO
     }
 
     private void onDisconnectFromGame() {
@@ -61,7 +62,10 @@ public class FearsomeMod implements ClientModInitializer {
         TimeSynchronizer.reset();
         HintsScreenController.reset();
         SelectedItemDisplayer.reset();
+        NameDisplayer.reset();
+        TimerUpdater.reset();
 
+        ToolsPartController.reset();
         GlowingEntities.reset();
         GlowingBlocks.reset();
     }

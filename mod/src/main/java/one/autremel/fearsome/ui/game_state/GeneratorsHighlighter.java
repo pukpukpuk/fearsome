@@ -30,6 +30,12 @@ class GeneratorsHighlighter {
         BindingEvents.onToggle(BindingId.HIGHLIGHT_GENERATORS, GeneratorsHighlighter::onBindingToggle);
     }
 
+    static void reset() {
+        if (isEnabled) setBlocksGlowingState(false);
+        isEnabled = false;
+        shownGenerators.clear();
+    }
+
     private static void setBlocksGlowingState(boolean mustBeGlowed) {
         if (mustBeGlowed) shownGenerators.forEach(GlowingBlocks::setGlowingGenerator);
         else shownGenerators.forEach(GlowingBlocks::removeGlowing);
@@ -59,13 +65,17 @@ class GeneratorsHighlighter {
     }
 
     private static void handleMarkPayload(MarkBlocksAsGeneratorsPayload payload) {
+        if (payload.blockPositions() == null) {
+            setEnabledState(false);
+            reset();
+            return;
+        }
+
         if (isEnabled) setBlocksGlowingState(false);
         shownGenerators.clear();
 
-        if (payload.blockPositions() != null) {
-            shownGenerators.addAll(payload.blockPositions());
-            if (isEnabled) setBlocksGlowingState(true);
-        }
+        shownGenerators.addAll(payload.blockPositions());
+        if (isEnabled) setBlocksGlowingState(true);
     }
 
     private static void handleUnmarkPayload(UnmarkGeneratorBlockPayload payload) {

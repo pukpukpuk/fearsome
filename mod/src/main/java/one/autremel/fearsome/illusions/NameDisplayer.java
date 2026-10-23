@@ -16,6 +16,10 @@ public class NameDisplayer {
         NetworkController.register(SetDisplayNameVisibilityPayload.ID, NameDisplayer::handleSetPayload);
     }
 
+    public static void reset() {
+        entitiesWithDisplayedName.clear();
+    }
+
     public static boolean isNameVisible(int entityId) {
         return entitiesWithDisplayedName.contains(entityId);
     }

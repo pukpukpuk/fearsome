@@ -33,10 +33,9 @@ public class GameStateScreenController {
         var team = ownIndex == 0 ? CharacterTeam.MURDERERS : CharacterTeam.SURVIVORS;
         var screen = new GameStateScreen(team, payload.ownCharacterKey());
         OverlayScreenRegistrar.create(GameStateScreen.ID, screen);
+        data = new Data(screen, ownIndex);
 
         GlobalInfoPartController.setTotalGeneratorsCount(payload.generatorsCount());
-
-        data = new Data(screen, ownIndex);
     }
 
     private static void handleScreensRemove() {
