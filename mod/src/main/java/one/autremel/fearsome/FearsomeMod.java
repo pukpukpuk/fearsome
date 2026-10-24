@@ -13,6 +13,7 @@ import one.autremel.fearsome.illusions.SelectedItemDisplayer;
 import one.autremel.fearsome.illusions.SkinOverrides;
 import one.autremel.fearsome.input.KeyBindings;
 import one.autremel.fearsome.input.BindingEvents;
+import one.autremel.fearsome.movement.ClimbingPreventer;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.network.ping.ModPingController;
 import one.autremel.fearsome.network.ping.TimeSynchronizer;
@@ -50,6 +51,7 @@ public class FearsomeMod implements ClientModInitializer {
         SkinOverrides.initialize();
         GlowingEntities.initialize();
         GlowingBlocks.initialize();
+        ClimbingPreventer.initialize();
 
         UiController.initialize();
     }
@@ -71,6 +73,7 @@ public class FearsomeMod implements ClientModInitializer {
         ToolsPartController.reset();
         GlowingEntities.reset();
         GlowingBlocks.reset();
+        ClimbingPreventer.reset();
     }
 
     public static String bindingTextIdentifier(String path) {

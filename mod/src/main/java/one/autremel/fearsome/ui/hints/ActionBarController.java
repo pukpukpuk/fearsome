@@ -61,6 +61,7 @@ class ActionBarController {
             case SimpleActionData.ID -> new SimpleActionData(actionId, priority, text);
             case GeneratorFixActionData.ID -> new GeneratorFixActionData(actionId, priority, text);
             case HiddenBarActionData.ID -> new HiddenBarActionData(actionId, priority, text);
+            case HealingActionData.ID -> new HealingActionData(actionId, priority, text);
             default -> throw new IllegalStateException("Unexpected action progress type id: " + payload.type());
         };
 
@@ -72,6 +73,7 @@ class ActionBarController {
         if (actionData == null) return;
 
         if (payload.duration() == 0) {
+            actionData.setAnimation(null);
             actionData.setCurrentProgress(payload.target());
             return;
         }
@@ -99,9 +101,8 @@ class ActionBarController {
     }
 
     private static void handleSetParameters(SetActionProgressParametersPayload payload) {
-        if (currentlyShownAction != null) {
-            currentlyShownAction.handle(payload);
-        }
+        var actionData = registeredActions.get(payload.actionId());
+        if (actionData != null) actionData.handle(payload);
     }
 
     private static void handleScreensRemove() {
