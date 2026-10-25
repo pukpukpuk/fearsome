@@ -25,6 +25,7 @@ public class LabelCommandRendererCommandsMixin {
     private static final float SCALE_FACTOR = 0.65f;
 
     @Shadow @Final List<OrderedRenderCommandQueueImpl.LabelCommand> normalLabels;
+    @Shadow @Final List<OrderedRenderCommandQueueImpl.LabelCommand> seethroughLabels;
 
     @Inject(
             method = "add",
@@ -48,7 +49,9 @@ public class LabelCommandRendererCommandsMixin {
             float f = (float)(-minecraftClient.textRenderer.getWidth(label)) / 2.0F;
             int i = (int)(minecraftClient.options.getTextBackgroundOpacity(0.25F) * 255.0F) << 24;
 
-            this.normalLabels.add(new OrderedRenderCommandQueueImpl.LabelCommand(matrix4f, f, (float)y + VERTICAL_SHIFT, label, light, -1, i, squaredDistanceToCamera));
+            var command = new OrderedRenderCommandQueueImpl.LabelCommand(matrix4f, f, (float)y + VERTICAL_SHIFT, label, light, -1, i, squaredDistanceToCamera);
+            this.normalLabels.add(command);
+            if (notSneaking) this.seethroughLabels.add(command);
 
             matrices.pop();
         }

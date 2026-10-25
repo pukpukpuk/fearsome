@@ -167,7 +167,8 @@
                     },
                     "buterenko.{}": {
                         "record": "Record",
-                        "cancel": "Cancel"
+                        "cancel": "Cancel",
+                        "destroy_mannequin": "Destroy Mannequin"
                     }
                 },
                 "spectators.{}": {

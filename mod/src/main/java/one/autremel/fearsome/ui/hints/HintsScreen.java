@@ -3,6 +3,7 @@ package one.autremel.fearsome.ui.hints;
 import com.google.common.base.Preconditions;
 import io.wispforest.owo.ui.component.LabelComponent;
 import net.minecraft.text.Text;
+import net.minecraft.util.Language;
 import net.minecraft.util.Identifier;
 import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.input.BindingId;
@@ -26,6 +27,7 @@ public class HintsScreen extends OverlayScreen {
     private io.wispforest.owo.ui.container.FlowLayout actionControlsList;
 
     private CollapseHelper actionBarCollapseHelper;
+    private Language progressBarTextLanguage;
 
     private final List<ActionControlLabel> actionControlLabels = new ArrayList<>();
 
@@ -57,9 +59,11 @@ public class HintsScreen extends OverlayScreen {
     }
 
     public void setProgressBarText(Text text) {
-        if (!text.equals(actionBarLabel.text())) {
-            actionBarLabel.text(text);
-        }
+        var language = Language.getInstance();
+        if (text.equals(actionBarLabel.text()) && language == progressBarTextLanguage) return;
+
+        progressBarTextLanguage = language;
+        actionBarLabel.text(text);
     }
 
     public void setActionProgressAmount(float amount) {

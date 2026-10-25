@@ -1,6 +1,7 @@
 package one.autremel.fearsome.illusions.glowing;
 
 import com.google.common.base.Preconditions;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -37,6 +38,7 @@ public class GlowingBlocks {
 
         NetworkController.register(SetBlockGlowingPayload.ID, GlowingBlocks::handleSetPayload);
         NetworkController.register(SetGlowingBlockNamePayload.ID, GlowingBlocks::handleSetNamePayload);
+        ClientWorldEvents.AFTER_CLIENT_WORLD_CHANGE.register((client, world) -> forgetAll());
     }
 
     public static void setGlowing(Layer layer, BlockPos pos, int color) {
@@ -70,6 +72,13 @@ public class GlowingBlocks {
     public static void reset() {
         glowingBlocks.clear();
         names.clear();
+    }
+
+    private static void forgetAll() {
+        for (var block : glowingBlocks.values()) {
+            GlowingEntities.unsetGlowing(block.display.getId());
+        }
+        reset();
     }
 
     @Nullable

@@ -11,5 +11,8 @@ import java.util.List;
 public interface LabelCommandRendererCommandsAccessor extends ICommandsAccess {
     @Accessor("normalLabels") @Override
     List<OrderedRenderCommandQueueImpl.LabelCommand> getNormalLabels();
+
+    @Accessor("seethroughLabels") @Override
+    List<OrderedRenderCommandQueueImpl.LabelCommand> getSeethroughLabels();
 }
 

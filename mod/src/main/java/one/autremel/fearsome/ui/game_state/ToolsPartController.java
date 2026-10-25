@@ -25,8 +25,8 @@ public class ToolsPartController {
         if (data == null) return;
 
         var gameTools = data.screen().getToolsPart();
-        var anyAffected = gameTools.getWithBindingStackLayoutList().stream()
-                .anyMatch(withBindingStackLayout -> withBindingStackLayout.getBindingId() == bindingId);
-        if (anyAffected) gameTools.getRoot().onChildMutated(null);
+        for (var withBindingStackLayout : gameTools.getWithBindingStackLayoutList()) {
+            if (withBindingStackLayout.getBindingId() == bindingId) withBindingStackLayout.onChildMutated(null);
+        }
     }
 }

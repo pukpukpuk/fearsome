@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ICommandsAccess {
     List<OrderedRenderCommandQueueImpl.LabelCommand> getNormalLabels();
+
+    List<OrderedRenderCommandQueueImpl.LabelCommand> getSeethroughLabels();
 }
