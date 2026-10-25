@@ -11,6 +11,7 @@ import one.autremel.fearsome.illusions.glowing.GlowingEntities;
 import one.autremel.fearsome.illusions.NameDisplayer;
 import one.autremel.fearsome.illusions.SelectedItemDisplayer;
 import one.autremel.fearsome.illusions.SkinOverrides;
+import one.autremel.fearsome.illusions.ghost.GhostManifestation;
 import one.autremel.fearsome.input.KeyBindings;
 import one.autremel.fearsome.input.BindingEvents;
 import one.autremel.fearsome.movement.ClimbingPreventer;
@@ -52,13 +53,13 @@ public class FearsomeMod implements ClientModInitializer {
         GlowingEntities.initialize();
         GlowingBlocks.initialize();
         ClimbingPreventer.initialize();
+        GhostManifestation.initialize();
 
         UiController.initialize();
     }
 
     private void onSuccessfulHandshake() {
         HintsScreenController.onSuccessfulHandshake();
-        //OverlayScreenRegistrar.create(GameStateScreen.ID, new GameStateScreen(CharacterTeam.MURDERERS, "dream"));//TODO
     }
 
     private void onDisconnectFromGame() {
@@ -74,6 +75,7 @@ public class FearsomeMod implements ClientModInitializer {
         GlowingEntities.reset();
         GlowingBlocks.reset();
         ClimbingPreventer.reset();
+        GhostManifestation.reset();
     }
 
     public static String bindingTextIdentifier(String path) {

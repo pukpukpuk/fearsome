@@ -1,5 +1,6 @@
 package one.autremel.fearsome.ui.survivor_list;
 
+import one.autremel.fearsome.Easings;
 import one.autremel.fearsome.ui.DefaultBlurredSurface;
 import one.autremel.fearsome.ui.OverlayScreenRegistrar;
 
@@ -21,11 +22,6 @@ class EntryPinger {
         animationStartTimeMap.put(entry, System.currentTimeMillis());
     }
 
-
-    private static float ease(float progress) {
-        var a = 2*progress - 1;
-        return -a*a + 1;
-    }
 
     private static int lerpColor(int first, int second, float k) {
         var a1 = (first >> 24) & 0xFF;
@@ -51,7 +47,7 @@ class EntryPinger {
         for (var mapEntry : animationStartTimeMap.entrySet()) {
             var elapsed = currentTime - mapEntry.getValue();
             var progress = (float)elapsed / ANIMATION_DURATION;
-            var eased = ease(progress);
+            var eased = Easings.easeAndBack(progress);
 
             var color = lerpColor(DefaultBlurredSurface.DEFAULT_COLOR, PING_COLOR, eased);
             mapEntry.getKey().surface().setColor(color);

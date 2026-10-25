@@ -1,5 +1,7 @@
 package one.autremel.fearsome.ui;
 
+import one.autremel.fearsome.Easings;
+
 public record AnimationData(
         float start,
         float target,
@@ -7,10 +9,6 @@ public record AnimationData(
         boolean isLinear,
         long startTime
 ) {
-    public static float easeOut(float x) {
-        return (float)(1d - Math.pow(1 - x, 2));
-    }
-
     public float getCurrentValue() {
         return (target - start) * getProgress() + start;
     }
@@ -24,6 +22,6 @@ public record AnimationData(
         if (passed >= duration) return 1;
         return isLinear ?
                 (float) passed / duration :
-                easeOut((float) (passed) / duration);
+                Easings.easeOut((float) (passed) / duration);
     }
 }

@@ -24,6 +24,15 @@ public class EntityMixin {
     }
 
     @Inject(
+            method = "shouldRender(D)Z",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    public void shouldRender(double distance, CallbackInfoReturnable<Boolean> cir) {
+        if (ModPingController.isOnFearServer()) cir.setReturnValue(true);
+    }
+
+    @Inject(
             method = "getTeamColorValue",
             at = @At("HEAD"),
             cancellable = true
