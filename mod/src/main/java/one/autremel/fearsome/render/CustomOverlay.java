@@ -4,7 +4,7 @@ import lombok.Getter;
 import net.minecraft.client.render.OverlayTexture;
 
 public enum CustomOverlay {
-    GHOST_EDGE(0, 0, 0x4952E5E5),
+    GHOST_THIRD_RING(0, 0, 0x4952E5E5),
     ;
 
     @Getter

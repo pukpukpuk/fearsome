@@ -4,23 +4,17 @@ import io.netty.buffer.Unpooled;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import one.autremel.fearsome.ui.components.LinearBar;
 import one.autremel.fearsome.ui.hints.payloads.SetActionProgressParametersPayload;
 
-public class GeneratorFixActionData extends ActionData {
+public final class GeneratorFixActionData extends ActionDataWithSpeedIndicator {
     public static final byte ID = 1;
 
-    private static final int YELLOW_COLOR = 0xF2F27B;
-    private static final int RED_COLOR = 0xE29083;
     private static final Style LIGHT_BLUE = Style.EMPTY.withColor(0x7FE1FF);
-    private static final Style YELLOW = Style.EMPTY.withColor(YELLOW_COLOR);
-    private static final Style RED = Style.EMPTY.withColor(RED_COLOR);
 
     private final String prefix;
 
     private int displayedPercents;
     private boolean isSurvivorInfoDrawn;
-    private Boolean isFixingSpeeded;
     private int usedAccuracyPoints;
     private int ownAccuracyPoints;
 
@@ -40,11 +34,12 @@ public class GeneratorFixActionData extends ActionData {
             isSurvivorInfoDrawn = true;
             var data = buf.readShort();
 
-            isFixingSpeeded = (data & 1) == 0 ? null : ((data & 2) != 0) ? Boolean.TRUE : Boolean.FALSE;
+            speedState = (data & 1) == 0 ? null : ((data & 2) != 0) ? Boolean.TRUE : Boolean.FALSE;
             ownAccuracyPoints = (data >> 2) & 127;
             usedAccuracyPoints = (data >> 9) & 127;
         } else {
             isSurvivorInfoDrawn = false;
+            speedState = null;
         }
 
         isTextUpdateRequired = true;
@@ -59,20 +54,6 @@ public class GeneratorFixActionData extends ActionData {
         return text;
     }
 
-    @Override
-    protected void onUpdateInternal(HintsScreen screen) {
-        super.onUpdateInternal(screen);
-        if (!isSurvivorInfoDrawn) return;
-
-        if (isFixingSpeeded != null) {
-            if (isFixingSpeeded) {
-                screen.setProgressBarColor(YELLOW_COLOR);
-            } else {
-                screen.setProgressBarColor(RED_COLOR);
-            }
-        }
-    }
-
 
     private void updateText() {
         text = Text.translatable(prefix);
@@ -85,13 +66,6 @@ public class GeneratorFixActionData extends ActionData {
             text.append(Text.literal(String.format(" [%s]", usedAccuracyPoints)).setStyle(accuracyStyle));
         }
 
-        if (isFixingSpeeded != null) {
-            if (isFixingSpeeded) {
-                text.append(Text.literal(" ⏩").setStyle(YELLOW));
-            } else {
-                text.append(Text.literal(" ⏪").setStyle(RED));
-            }
-        }
-
+        appendSpeedArrow(text);
     }
 }

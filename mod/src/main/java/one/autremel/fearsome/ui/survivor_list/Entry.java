@@ -17,11 +17,6 @@ public class Entry {
     private static final int HEALTH_BAR_INJURED = 0xFFBBFF56;
     private static final int HEALTH_BAR_FATAL = 0xFFF24A3E;
 
-    private static final int DEATH_TIMER_FULL = 0xFF6DCE5F;
-    private static final int DEATH_TIMER_HIGH = 0xFFF2F27B;
-    private static final int DEATH_TIMER_MEDIUM = 0xFFFFA538;
-    private static final int DEATH_TIMER_LOW = 0xFFE8634E;
-
     private final String name;
     private final FlowLayout baseElement;
     private final TiledTextureComponent healthBarProgress;
@@ -55,15 +50,7 @@ public class Entry {
     }
 
     public void setDeathTimerProgress(float progress) {
-        progress = Math.min(Math.max(progress, 0f), 1f);
-
-        var color = DEATH_TIMER_LOW;
-        var multiplied = progress * 3;
-        if (multiplied >= 3) color = DEATH_TIMER_FULL;
-        else if (multiplied >= 2) color = DEATH_TIMER_HIGH;
-        else if (multiplied >= 1) color = DEATH_TIMER_MEDIUM;
-
-        deathTimerBar.setProgressColor(color);
+        deathTimerBar.setProgressColor(DeathTimersController.getColor(progress));
         deathTimerBar.setProgress(progress);
     }
 }

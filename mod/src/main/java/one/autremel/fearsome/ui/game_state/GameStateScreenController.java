@@ -34,6 +34,7 @@ public class GameStateScreenController {
         var screen = new GameStateScreen(team, payload.ownCharacterKey());
         OverlayScreenRegistrar.create(GameStateScreen.ID, screen);
         data = new Data(screen, ownIndex);
+        GeneratorsHighlighter.onScreenCreated();
 
         GlobalInfoPartController.setTotalGeneratorsCount(payload.generatorsCount());
     }

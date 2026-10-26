@@ -182,7 +182,10 @@
                         "": "Fixing",
                         "disabled": "Broken"
                     },
-                    "healing": "Healing",
+                    "healing.{}": {
+                        "": "Healing",
+                        "waiting_for_help": "Waiting for Help"
+                    },
 
                     "ghost.manifestation": "Manifestation",
                     "mercenary.reloading": "Reloading",

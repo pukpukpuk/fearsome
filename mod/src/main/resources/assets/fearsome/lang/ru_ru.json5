@@ -131,7 +131,10 @@
                         "": "Починка",
                         "disabled": "Cломано"
                     },
-                    "healing": "Лечение",
+                    "healing.{}": {
+                        "": "Лечение",
+                        "waiting_for_help": "Ожидание помощи"
+                    },
 
                     "ghost.manifestation": "Воплощение",
                     "mercenary.reloading": "Перезарядка",

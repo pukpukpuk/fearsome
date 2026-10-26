@@ -13,11 +13,15 @@ import org.joml.Matrix4fc;
 import java.util.List;
 
 public class GhostManifestation {
-private static final float CLIP_TOP_MARGIN = 0.25f;
-    private static final float ROUGH_EDGE_LENGTH = 1/16f;
+    private static final float CLIP_TOP_MARGIN = 0.25f;
+    private static final float RING_HEIGHT = 1/16f;
     private static final int
-            EDGE1_COLOR = 0x73FFFFFF,
-            EDGE2_COLOR = 0x31FFFFFF;
+            FIRST_RING_COLOR = 0xFFC1FFFF,
+            SECOND_RING_COLOR = 0xFF6CFFFF,
+            THIRD_RING_COLOR = 0x31FFFFFF,
+            FIRST_RING_LIGHT = 3,
+            SECOND_RING_LIGHT = 7,
+            THIRD_RING_LIGHT = 10;
 
     private static boolean initialized;
 
@@ -45,24 +49,30 @@ private static final float CLIP_TOP_MARGIN = 0.25f;
 
     public static List<ClippingPass> createClippingPasses(Matrix4fc basePositionMatrix, float entityY, float entityHeight, float progress) {
         var cutY = entityY + progress * (entityHeight + CLIP_TOP_MARGIN);
-        var edge1StartY = cutY - ROUGH_EDGE_LENGTH*2;
-        var edge2StartY = edge1StartY + ROUGH_EDGE_LENGTH;
+        var firstRingStartY = cutY - RING_HEIGHT * 2;
+        var secondRingStartY = cutY - RING_HEIGHT;
+        var thirdRingEndY = cutY + RING_HEIGHT;
 
         return List.of(
-                ClippingPass.of(ClipPlane.keepBelow(basePositionMatrix, edge1StartY)),
+                ClippingPass.of(ClipPlane.keepBelow(basePositionMatrix, firstRingStartY)),
                 ClippingPass.of(
-                        EDGE1_COLOR,
-                        CustomOverlay.GHOST_EDGE,
-                        15, 15,
-                        ClipPlane.keepAbove(basePositionMatrix, edge1StartY),
-                        ClipPlane.keepBelow(basePositionMatrix, edge2StartY)
+                        FIRST_RING_COLOR,
+                        FIRST_RING_LIGHT, FIRST_RING_LIGHT,
+                        ClipPlane.keepAbove(basePositionMatrix, firstRingStartY),
+                        ClipPlane.keepBelow(basePositionMatrix, secondRingStartY)
                 ),
                 ClippingPass.of(
-                        EDGE2_COLOR,
-                        CustomOverlay.GHOST_EDGE,
-                        15, 15,
-                        ClipPlane.keepAbove(basePositionMatrix, edge2StartY),
+                        SECOND_RING_COLOR,
+                        SECOND_RING_LIGHT, SECOND_RING_LIGHT,
+                        ClipPlane.keepAbove(basePositionMatrix, secondRingStartY),
                         ClipPlane.keepBelow(basePositionMatrix, cutY)
+                ),
+                ClippingPass.of(
+                        THIRD_RING_COLOR,
+                        CustomOverlay.GHOST_THIRD_RING,
+                        THIRD_RING_LIGHT, THIRD_RING_LIGHT,
+                        ClipPlane.keepAbove(basePositionMatrix, cutY),
+                        ClipPlane.keepBelow(basePositionMatrix, thirdRingEndY)
                 )
         );
     }

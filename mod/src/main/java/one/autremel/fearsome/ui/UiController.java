@@ -11,7 +11,7 @@ import one.autremel.fearsome.ui.game_state.GameStateScreenController;
 import one.autremel.fearsome.ui.hints.HintsScreenController;
 import one.autremel.fearsome.ui.lobby.LobbyScreenController;
 import one.autremel.fearsome.ui.survivor_list.SurvivorListController;
-import one.autremel.fearsome.ui.terror.TerrorIndicatorController;
+import one.autremel.fearsome.ui.personal_info.SurvivorPersonalInfoController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class UiController {
         SurvivorListController.initialize();
         GameStateScreenController.initialize();
         HintsScreenController.initialize();
-        TerrorIndicatorController.initialize();
+        SurvivorPersonalInfoController.initialize();
 
         LobbyScreenController.initialize();
     }

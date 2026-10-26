@@ -23,7 +23,6 @@ public class ScalableLabelComponent extends LabelComponent {
         graphics.push().translate(x(), y()).scale(scale, scale).translate(-x(), -y());
 
         super.draw(graphics, mouseX, mouseY, partialTicks, delta);
-
         graphics.pop();
     }
 

@@ -1,5 +1,6 @@
 package one.autremel.fearsome.render.clipping;
 
+import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
@@ -8,6 +9,7 @@ import java.util.List;
 
 public class ClippingVertexConsumer implements VertexConsumer {
     private static final int QUAD_SIZE = 4;
+    private static final int MAX_LIGHT_LEVEL = 15;
 
     private static final int COLOR = 1;
     private static final int TEXTURE = 1 << 1;
@@ -20,7 +22,8 @@ public class ClippingVertexConsumer implements VertexConsumer {
     private final VertexConsumer delegate;
     private final List<ClipPlane> planes;
     private final int colorMultiplier;
-    private final int overlayOverride, lightOverride;
+    private final int overlayOverride;
+    private final int blockLightBonus, skyLightBonus;
 
     private final Vertex[] quad = {new Vertex(), new Vertex(), new Vertex(), new Vertex()};
     private int count;
@@ -35,7 +38,8 @@ public class ClippingVertexConsumer implements VertexConsumer {
         this.planes = pass.planes();
         this.colorMultiplier = pass.colorMultiplier();
         this.overlayOverride = pass.overlayOverride();
-        this.lightOverride = pass.lightOverride();
+        this.blockLightBonus = LightmapTextureManager.getBlockLightCoordinates(pass.lightBonus());
+        this.skyLightBonus = LightmapTextureManager.getSkyLightCoordinates(pass.lightBonus());
 
         intersections = new Vertex[planes.size() * 2];
         for (int i = 0; i < intersections.length; i++) intersections[i] = new Vertex();
@@ -204,13 +208,13 @@ public class ClippingVertexConsumer implements VertexConsumer {
     private void emit(Vertex vertex) {
         if ((vertex.flags & BULK) == BULK) {
             delegate.vertex(vertex.x, vertex.y, vertex.z, multiplyColor(vertex.color), vertex.u, vertex.v,
-                    overrideOverlay(vertex.overlay), overrideLight(vertex.light), vertex.normalX, vertex.normalY, vertex.normalZ);
+                    overrideOverlay(vertex.overlay), addLight(vertex.light), vertex.normalX, vertex.normalY, vertex.normalZ);
         } else {
             delegate.vertex(vertex.x, vertex.y, vertex.z);
             if ((vertex.flags & COLOR) != 0) delegate.color(multiplyColor(vertex.color));
             if ((vertex.flags & TEXTURE) != 0) delegate.texture(vertex.u, vertex.v);
             if ((vertex.flags & OVERLAY) != 0) delegate.overlay(overrideOverlay(vertex.overlay));
-            if ((vertex.flags & LIGHT) != 0) delegate.light(overrideLight(vertex.light));
+            if ((vertex.flags & LIGHT) != 0) delegate.light(addLight(vertex.light));
             if ((vertex.flags & NORMAL) != 0) delegate.normal(vertex.normalX, vertex.normalY, vertex.normalZ);
         }
 
@@ -225,8 +229,12 @@ public class ClippingVertexConsumer implements VertexConsumer {
         return overlayOverride == ClippingPass.NO_OVERRIDE ? overlay : overlayOverride;
     }
 
-    private int overrideLight(int light) {
-        return lightOverride == ClippingPass.NO_OVERRIDE ? light : lightOverride;
+    private int addLight(int light) {
+        if (blockLightBonus == 0 && skyLightBonus == 0) return light;
+
+        var blockLight = Math.min(LightmapTextureManager.getBlockLightCoordinates(light) + blockLightBonus, MAX_LIGHT_LEVEL);
+        var skyLight = Math.min(LightmapTextureManager.getSkyLightCoordinates(light) + skyLightBonus, MAX_LIGHT_LEVEL);
+        return LightmapTextureManager.pack(blockLight, skyLight);
     }
 
     private static int pack(int u, int v) {

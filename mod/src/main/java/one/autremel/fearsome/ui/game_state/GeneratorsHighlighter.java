@@ -21,6 +21,7 @@ class GeneratorsHighlighter {
     private static boolean initialized;
 
     private static boolean isEnabled;
+    private static boolean isToggledOn;
     private static final Set<BlockPos> shownGenerators = new HashSet<>();
 
     static void initialize() {
@@ -31,6 +32,15 @@ class GeneratorsHighlighter {
         NetworkController.register(UnmarkGeneratorBlockPayload.ID, GeneratorsHighlighter::handleUnmarkPayload);
 
         BindingEvents.onToggle(BindingId.HIGHLIGHT_GENERATORS, GeneratorsHighlighter::onBindingToggle);
+    }
+
+    static void onScreenCreated() {
+        if (isEnabled) setBlocksGlowingState(false);
+        isEnabled = false;
+
+        if (isToggledOn && FearsomeMod.CONFIG.generatorsHighlightMethod() == ViewMethodType.TOGGLE) {
+            setEnabledState(true);
+        }
     }
 
     static void reset() {
@@ -61,7 +71,10 @@ class GeneratorsHighlighter {
         switch (FearsomeMod.CONFIG.generatorsHighlightMethod()) {
             case ViewMethodType.HOLD -> setEnabledState(currentState);
             case ViewMethodType.TOGGLE -> {
-                if (currentState) setEnabledState(!isEnabled);
+                if (!currentState || GameStateScreenController.getData() == null) return;
+
+                isToggledOn = !isEnabled;
+                setEnabledState(isToggledOn);
             }
             default -> throw new RuntimeException();
         }
@@ -79,6 +92,9 @@ class GeneratorsHighlighter {
 
         shownGenerators.addAll(payload.blockPositions());
         if (isEnabled) setBlocksGlowingState(true);
+        else if (isToggledOn && FearsomeMod.CONFIG.generatorsHighlightMethod() == ViewMethodType.TOGGLE) {
+            setEnabledState(true);
+        }
     }
 
     private static void handleUnmarkPayload(UnmarkGeneratorBlockPayload payload) {

@@ -1,0 +1,52 @@
+<owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.20/owo-ui.xsd">
+    <components>
+        <flow-layout direction="vertical">
+            <children>
+                <fearsome.hideable_flow_layout direction="horizontal" id="death_timer_root">
+                    <children>
+                        <fearsome.scalable_label>
+                            <text>☠</text>
+                            <scale>0.5</scale>
+                            <sizing>
+                                <vertical method="fixed">8</vertical>
+                                <horizontal method="fixed">8</horizontal>
+                            </sizing>
+                            <margins><right>1</right></margins>
+                        </fearsome.scalable_label>
+                        <fearsome.linear_bar id="death_timer_bar">
+                            <is-vertical>false</is-vertical>
+                            <background-color>#FF332727</background-color>
+
+                            <sizing>
+                                <vertical method="fixed">2</vertical>
+                                <horizontal method="fixed">40</horizontal>
+                            </sizing>
+                        </fearsome.linear_bar>
+                    </children>
+
+                    <padding><horizontal>1</horizontal></padding>
+
+                    <horizontal-alignment>center</horizontal-alignment>
+                    <vertical-alignment>center</vertical-alignment>
+                </fearsome.hideable_flow_layout>
+
+                <fearsome.hideable_flow_layout direction="vertical" id="terror_root">
+                    <children>
+                        <label id="heart_label">
+                            <shadow>true</shadow>
+                        </label>
+                    </children>
+
+                    <horizontal-alignment>center</horizontal-alignment>
+                    <is-visible>false</is-visible>
+                </fearsome.hideable_flow_layout>
+            </children>
+
+            <horizontal-alignment>center</horizontal-alignment>
+            <vertical-alignment>top</vertical-alignment>
+            <padding><all>6</all></padding>
+            <gap>4</gap>
+        </flow-layout>
+    </components>
+</owo-ui>

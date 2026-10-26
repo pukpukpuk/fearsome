@@ -29,6 +29,7 @@
         "LabelCommandRendererCommandsAccessor",
         "LabelCommandRendererCommandsMixin",
         "LabelCommandRendererMixin",
+        "LabelComponentMixin",
         "LivingEntityMixin",
         "LivingEntityRendererMixin",
         "MannequinMixin",

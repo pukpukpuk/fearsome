@@ -4,7 +4,7 @@ import io.wispforest.owo.ui.core.Color;
 import net.minecraft.network.PacketByteBuf;
 import one.autremel.fearsome.network.IPayload;
 
-record Bound(Color color, int heartbeatPeriodMillis, boolean isWithHeartShaking, float beatVolume) {
+public record Bound(Color color, int heartbeatPeriodMillis, boolean isWithHeartShaking, float beatVolume) {
     private static final int BITS_FOR_PERIOD = 15;
 
     public static Bound read(PacketByteBuf buf) {
