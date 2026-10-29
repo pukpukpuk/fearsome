@@ -4,7 +4,6 @@ import com.google.common.base.Preconditions;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.ui.OverlayScreenRegistrar;
 import one.autremel.fearsome.ui.UiController;
-import one.autremel.fearsome.ui.survivor_list.DeathTimersController;
 import one.autremel.fearsome.ui.terror.TerrorPartController;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,6 +18,7 @@ public class SurvivorPersonalInfoController {
         initialized = true;
 
         NetworkController.register(CreateSurvivorPersonalInfoScreenPayload.ID, SurvivorPersonalInfoController::handleCreatePayload);
+        NetworkController.register(SetDeathTimerVisibilityPayload.ID, SurvivorPersonalInfoController::handleDeathTimerVisibilityPayload);
         UiController.registerForScreensRemoval(SurvivorPersonalInfoController::handleScreensRemove, true);
         OverlayScreenRegistrar.registerBeforeScreenDrawing(SurvivorPersonalInfoScreen.ID, SurvivorPersonalInfoController::update);
 
@@ -33,6 +33,11 @@ public class SurvivorPersonalInfoController {
         TerrorPartController.attach(screen.getTerrorPart(), payload.bounds());
     }
 
+    private static void handleDeathTimerVisibilityPayload(SetDeathTimerVisibilityPayload payload) {
+        if (data == null) return;
+        data.screen().getDeathTimerPart().setVisible(payload.isVisible());
+    }
+
     private static void handleScreensRemove() {
         OverlayScreenRegistrar.remove(SurvivorPersonalInfoScreen.ID);
         data = null;
@@ -44,9 +49,7 @@ public class SurvivorPersonalInfoController {
         if (data == null) return;
 
         TerrorPartController.update();
-
-        var deathTimerProgress = DeathTimersController.getProgress(data.characterIndex());
-        data.screen().getDeathTimerPart().setProgress(deathTimerProgress);
+        data.screen().getDeathTimerPart().update(data.characterIndex());
     }
 
     private record Data(SurvivorPersonalInfoScreen screen, int characterIndex) {}

@@ -36,6 +36,26 @@
             "in_queue_count": "In queue: ",
             "until_start": "Until start: "
         },
+        "title.{}": {
+            "outcome.{}": {
+                "victory": "Victory",
+                "defeat": "Defeat",
+                "draw": "Draw"
+            },
+            "cause.{}": {
+                "manual_stop": "Game stopped",
+                "murderer.{}": {
+                    "time": "Time ran out",
+                    "kills": "All survivors were killed",
+                    "survivors_left": "All survivors left the game",
+                },
+                "survivors.{}": {
+                    "generators": "All generators were fixed",
+                    "murderer_left": "Murderer left the game",
+                    "murderer_drowned": "Murderer was drowned"
+                }
+            }
+        }
     },
     ///
 
@@ -52,6 +72,7 @@
         "first_ability": "First Ability",
         "interaction": "Interaction",
         "second_ability": "Second Ability",
+        "third_ability": "Third Ability",
 
         // UI
         "expand_survivor_list": "Expand Survivor List",
@@ -150,7 +171,8 @@
                     "dream.{}": {
                         "peek": "Peek",
                         "emerge": "Emerge",
-                        "cancel_viewing": "Cancel"
+                        "cancel_viewing": "Cancel",
+                        "portal_info": "Inspect"
                     },
                     "artist.{}": {
                         "link": "Link",
@@ -191,6 +213,10 @@
                     "mercenary.reloading": "Reloading",
                     "artist.searching": "Searching",
                     "dream.activation": "Activation",
+                    "dream.portal_charge.{}": {
+                        "": "Charging...",
+                        "charged": "Charged"
+                    },
 
                     "nun.teleporting": "Teleporting"
                 },

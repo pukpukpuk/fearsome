@@ -11,14 +11,14 @@ public class NameDisplayer {
 
     private static final Int2ObjectOpenHashMap<DisplayedName> displayedNames = new Int2ObjectOpenHashMap<>();
 
-    public static void initialize() {
+    static void initialize() {
         Preconditions.checkState(!initialized);
         initialized = true;
 
         NetworkController.register(SetDisplayNameVisibilityPayload.ID, NameDisplayer::handleSetPayload);
     }
 
-    public static void reset() {
+    static void reset() {
         displayedNames.clear();
     }
 

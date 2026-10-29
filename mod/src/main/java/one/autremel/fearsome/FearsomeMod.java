@@ -6,12 +6,7 @@ import net.minecraft.util.Identifier;
 import one.autremel.fearsome.config.ClientConfig;
 import one.autremel.fearsome.config.GameConfig;
 import one.autremel.fearsome.effects.EffectController;
-import one.autremel.fearsome.illusions.glowing.GlowingBlocks;
-import one.autremel.fearsome.illusions.glowing.GlowingEntities;
-import one.autremel.fearsome.illusions.NameDisplayer;
-import one.autremel.fearsome.illusions.SelectedItemDisplayer;
-import one.autremel.fearsome.illusions.SkinOverrides;
-import one.autremel.fearsome.illusions.ghost.GhostManifestation;
+import one.autremel.fearsome.illusions.Illusions;
 import one.autremel.fearsome.input.KeyBindings;
 import one.autremel.fearsome.input.BindingEvents;
 import one.autremel.fearsome.movement.ClimbingPreventer;
@@ -47,13 +42,8 @@ public class FearsomeMod implements ClientModInitializer {
         WrappedEvents.initialize();
         TimerUpdater.initialize();
         EffectController.initialize();
-        SelectedItemDisplayer.initialize();
-        NameDisplayer.initialize();
-        SkinOverrides.initialize();
-        GlowingEntities.initialize();
-        GlowingBlocks.initialize();
+        Illusions.initialize();
         ClimbingPreventer.initialize();
-        GhostManifestation.initialize();
 
         UiController.initialize();
     }
@@ -66,16 +56,11 @@ public class FearsomeMod implements ClientModInitializer {
         UiController.reset();
         TimeSynchronizer.reset();
         HintsScreenController.reset();
-        SelectedItemDisplayer.reset();
-        NameDisplayer.reset();
-        SkinOverrides.reset();
-        TimerUpdater.reset();
+        Illusions.reset();
 
+        TimerUpdater.reset();
         ToolsPartController.reset();
-        GlowingEntities.reset();
-        GlowingBlocks.reset();
         ClimbingPreventer.reset();
-        GhostManifestation.reset();
     }
 
     public static String bindingTextIdentifier(String path) {

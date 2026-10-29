@@ -1,6 +1,7 @@
 package one.autremel.fearsome.ui.survivor_list;
 
 import one.autremel.fearsome.FearsomeMod;
+import one.autremel.fearsome.Palette;
 import one.autremel.fearsome.timer.TimerSignature;
 import one.autremel.fearsome.timer.TimerUpdater;
 import one.autremel.fearsome.ui.OverlayScreenRegistrar;
@@ -13,7 +14,7 @@ public class DeathTimersController {
     private static final String TIMER_KEY = "death_timer";
 
     private static final int DEATH_TIMER_FULL = 0xFF6DCE5F;
-    private static final int DEATH_TIMER_HIGH = 0xFFF2F27B;
+    private static final int DEATH_TIMER_HIGH = Palette.WARNING;
     private static final int DEATH_TIMER_MEDIUM = 0xFFFFA538;
     private static final int DEATH_TIMER_LOW = 0xFFE8634E;
 
@@ -23,11 +24,13 @@ public class DeathTimersController {
         OverlayScreenRegistrar.registerBeforeScreenDrawing(SurvivorList.ID, DeathTimersController::update);
     }
 
-    public static float getProgress(int characterIndex) {
+    public static int getRemainingTime(int characterIndex) {
         var timer = TimerUpdater.getTimer(getSignatureFor(characterIndex - 1));
-        var remainingTime = timer != null ? timer.getRemainingTime() : 0;
+        return timer != null ? Math.max(timer.getRemainingTime(), 0) : 0;
+    }
 
-        var progress = (float) remainingTime / FearsomeMod.GAME_CONFIG.deathTimerInitialValue();
+    public static float getProgress(int characterIndex) {
+        var progress = (float) getRemainingTime(characterIndex) / FearsomeMod.GAME_CONFIG.deathTimerInitialValue();
         return Math.min(Math.max(progress, 0f), 1f);
     }
 

@@ -5,6 +5,7 @@ import net.minecraft.client.render.OverlayTexture;
 
 public enum CustomOverlay {
     GHOST_THIRD_RING(0, 0, 0x4952E5E5),
+    DREAM_THIRD_RING(1, 0, 0x49B452E5),
     ;
 
     @Getter

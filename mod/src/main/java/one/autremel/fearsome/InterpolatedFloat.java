@@ -1,6 +1,6 @@
 package one.autremel.fearsome;
 
-import org.joml.Math;
+import net.minecraft.util.math.MathHelper;
 
 public class InterpolatedFloat {
     private final int durationMillis;
@@ -14,8 +14,8 @@ public class InterpolatedFloat {
 
     public float get() {
         var passed = System.currentTimeMillis() - interpolationStartTime;
-        var progress = org.joml.Math.min(org.joml.Math.max(passed / durationMillis, 0), 1);
-        return Math.lerp(start, target, progress);
+        var progress = MathHelper.clamp((float) passed / durationMillis, 0, 1);
+        return MathHelper.lerp(progress, start, target);
     }
 
     public void setValue(float newTarget) {

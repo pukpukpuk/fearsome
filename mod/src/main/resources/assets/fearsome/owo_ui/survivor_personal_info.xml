@@ -23,9 +23,18 @@
                                 <horizontal method="fixed">40</horizontal>
                             </sizing>
                         </fearsome.linear_bar>
+                        <fearsome.scalable_label id="death_timer_label">
+                            <text>0:00</text>
+                            <scale>0.5</scale>
+                            <sizing>
+                                <vertical method="fixed">8</vertical>
+                            </sizing>
+                            <margins><left>1</left></margins>
+                        </fearsome.scalable_label>
                     </children>
 
                     <padding><horizontal>1</horizontal></padding>
+                    <is-visible>false</is-visible>
 
                     <horizontal-alignment>center</horizontal-alignment>
                     <vertical-alignment>center</vertical-alignment>

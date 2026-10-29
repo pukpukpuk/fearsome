@@ -1,4 +1,4 @@
-package one.autremel.fearsome.illusions.ghost;
+package one.autremel.fearsome.illusions.manifestation;
 
 import net.minecraft.network.PacketByteBuf;
 import one.autremel.fearsome.network.IPayload;
@@ -10,30 +10,32 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Payload
-public record SetGhostManifestationPayload(
+public record SetManifestationPayload(
         int entityId,
+        int manifestationId,
         long startTime,
         long endTime,
         @Nullable Float start,
         float target
-) implements IServerPayload<SetGhostManifestationPayload> {
-    public static final ServerPayloadId<SetGhostManifestationPayload> ID = new ServerPayloadId<>(
-            SetGhostManifestationPayload.class,
-            SetGhostManifestationPayload::decode
+) implements IServerPayload<SetManifestationPayload> {
+    public static final ServerPayloadId<SetManifestationPayload> ID = new ServerPayloadId<>(
+            SetManifestationPayload.class,
+            SetManifestationPayload::decode
     );
 
-    private static SetGhostManifestationPayload decode(PacketByteBuf buf) {
+    private static SetManifestationPayload decode(PacketByteBuf buf) {
         var startTime = System.currentTimeMillis();
         var entityId = buf.readVarInt();
+        var manifestationId = Byte.toUnsignedInt(buf.readByte());
         var endTime = TimeSynchronizer.toLocalTime(buf.readLong());
         var start = IPayload.readOptional01FloatFromShort(buf);
         var target = IPayload.read01FloatFromShort(buf);
 
-        return new SetGhostManifestationPayload(entityId, startTime, endTime, start, target);
+        return new SetManifestationPayload(entityId, manifestationId, startTime, endTime, start, target);
     }
 
     @Override
-    public @NotNull ServerPayloadId<SetGhostManifestationPayload> getPayloadId() {
+    public @NotNull ServerPayloadId<SetManifestationPayload> getPayloadId() {
         return ID;
     }
 }

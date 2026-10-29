@@ -63,6 +63,7 @@ public class KeyBindings {
         createMouseBinding(BindingId.FIRST_ABILITY, GLFW.GLFW_MOUSE_BUTTON_RIGHT, GENERAL);
 
         createKeyboardBinding(BindingId.SECOND_ABILITY, GLFW.GLFW_KEY_Q, GENERAL);
+        createKeyboardBinding(BindingId.THIRD_ABILITY, GLFW.GLFW_KEY_F, GENERAL);
         createKeyboardBinding(BindingId.INTERACTION, GLFW.GLFW_KEY_E, GENERAL);
 
         ClientLifecycleEvents.CLIENT_STARTED.register((client) -> {

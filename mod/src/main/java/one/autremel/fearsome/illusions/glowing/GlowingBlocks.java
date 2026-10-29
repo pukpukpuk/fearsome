@@ -12,6 +12,7 @@ import net.minecraft.entity.decoration.DisplayEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.AffineTransformation;
 import net.minecraft.util.math.BlockPos;
+import one.autremel.fearsome.illusions.LocalEntityIds;
 import one.autremel.fearsome.network.NetworkController;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
@@ -19,7 +20,6 @@ import org.joml.Vector3f;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class GlowingBlocks {
     public static final int OUTLINE_ONLY_LIGHT_MARKER = 0b1;
@@ -28,7 +28,6 @@ public class GlowingBlocks {
 
     private static boolean initialized;
 
-    private static final AtomicInteger idCounter = new AtomicInteger(-1000);
     private static final HashMap<BlockPos, GlowingBlock> glowingBlocks = new HashMap<>();
     private static final HashMap<BlockPos, String> names = new HashMap<>();
 
@@ -87,7 +86,7 @@ public class GlowingBlocks {
         if (world == null) return null;
 
         var display = new DisplayEntity.BlockDisplayEntity(EntityType.BLOCK_DISPLAY, world);
-        display.setId(idCounter.getAndDecrement());
+        display.setId(LocalEntityIds.next());
         display.setPosition(pos.getX(), pos.getY(), pos.getZ());
         display.setInvisible(true);
 

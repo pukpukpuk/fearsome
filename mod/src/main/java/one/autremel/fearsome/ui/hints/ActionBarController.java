@@ -62,6 +62,7 @@ class ActionBarController {
             case GeneratorFixActionData.ID -> new GeneratorFixActionData(actionId, priority, text);
             case HiddenBarActionData.ID -> new HiddenBarActionData(actionId, priority, text);
             case HealingActionData.ID -> new HealingActionData(actionId, priority, text);
+            case DreamPortalChargeActionData.ID -> new DreamPortalChargeActionData(actionId, priority, text);
             default -> throw new IllegalStateException("Unexpected action progress type id: " + payload.type());
         };
 

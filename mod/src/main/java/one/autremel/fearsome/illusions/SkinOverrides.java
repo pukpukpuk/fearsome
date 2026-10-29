@@ -14,20 +14,20 @@ public class SkinOverrides {
 
     private static final Int2ObjectOpenHashMap<SkinTextures> overrides = new Int2ObjectOpenHashMap<>();
 
-    public static void initialize() {
+    static void initialize() {
         Preconditions.checkState(!initialized);
         initialized = true;
 
         NetworkController.register(SetEntitySkinPayload.ID, SkinOverrides::handleSetPayload);
     }
 
+    static void reset() {
+        overrides.clear();
+    }
+
     @Nullable
     public static SkinTextures get(int entityId) {
         return overrides.get(entityId);
-    }
-
-    public static void reset() {
-        overrides.clear();
     }
 
     private static void handleSetPayload(SetEntitySkinPayload payload) {

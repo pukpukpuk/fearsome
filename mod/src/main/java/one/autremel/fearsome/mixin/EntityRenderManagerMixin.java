@@ -5,7 +5,6 @@ import net.minecraft.client.render.entity.EntityRenderManager;
 import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.client.render.state.CameraRenderState;
 import net.minecraft.client.util.math.MatrixStack;
-import one.autremel.fearsome.illusions.ghost.GhostManifestation;
 import one.autremel.fearsome.mixinhelpers.IClippingPassesHolder;
 import one.autremel.fearsome.mixinhelpers.IManifestationProgressHolder;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,11 +20,13 @@ public class EntityRenderManagerMixin {
     )
     private void applyManifestationClipping(EntityRenderState state, CameraRenderState cameraState, double x, double y, double z,
                                             MatrixStack matrices, OrderedRenderCommandQueue queue, CallbackInfo ci) {
-        var progress = ((IManifestationProgressHolder) state).getManifestationProgress();
-        if (Float.isNaN(progress)) return;
+        var holder = (IManifestationProgressHolder) state;
+        var manifestation = holder.getManifestation();
+        var progress = holder.getManifestationProgress();
+        if (manifestation == null || Float.isNaN(progress)) return;
 
         var entry = matrices.peek();
-        var passes = GhostManifestation.createClippingPasses(entry.getPositionMatrix(), (float) y, state.height, progress);
+        var passes = manifestation.createClippingPasses(entry.getPositionMatrix(), (float) y, state.height, progress);
         ((IClippingPassesHolder) (Object) entry).setClippingPasses(passes);
     }
 

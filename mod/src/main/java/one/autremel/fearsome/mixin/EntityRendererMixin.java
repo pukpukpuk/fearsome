@@ -14,7 +14,7 @@ import net.minecraft.util.math.Vec3d;
 import one.autremel.fearsome.Easings;
 import one.autremel.fearsome.illusions.NameDisplayer;
 import one.autremel.fearsome.input.VanillaActionsSuppressor;
-import one.autremel.fearsome.illusions.ghost.GhostManifestation;
+import one.autremel.fearsome.illusions.manifestation.Manifestations;
 import one.autremel.fearsome.mixinhelpers.IManifestationProgressHolder;
 import one.autremel.fearsome.network.ping.ModPingController;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,8 +30,18 @@ public class EntityRendererMixin {
             at = @At("TAIL")
     )
     private void updateManifestationProgress(Entity entity, EntityRenderState state, float tickProgress, CallbackInfo ci) {
-        var progress = ModPingController.isOnFearServer() ? GhostManifestation.getProgress(entity.getId()) : Float.NaN;
-        ((IManifestationProgressHolder) state).setManifestationProgress(progress);
+        var holder = (IManifestationProgressHolder) state;
+        if (!ModPingController.isOnFearServer()) {
+            holder.setManifestation(null);
+            holder.setManifestationProgress(Float.NaN);
+            return;
+        }
+
+        var progress = Manifestations.getProgress(entity.getId());
+        holder.setManifestationProgress(progress);
+        holder.setManifestation(Manifestations.getManifestation(entity.getId()));
+
+        if (progress < 1) state.displayName = null;
     }
 
     @Inject(

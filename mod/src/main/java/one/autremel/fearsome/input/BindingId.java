@@ -22,6 +22,7 @@ public enum BindingId {
     INTERACTION(2, "interaction"),
     SECOND_ABILITY(3, "second_ability"),
     SNEAK_KEY(4, "sneak_key"),
+    THIRD_ABILITY(5, "third_ability"),
     ;
 
     public static final PacketCodec<? super ByteBuf, BindingId> CODEC = new PacketCodec<>() {

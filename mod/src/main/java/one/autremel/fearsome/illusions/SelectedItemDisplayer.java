@@ -10,14 +10,14 @@ public class SelectedItemDisplayer {
 
     private static final Int2ObjectOpenHashMap<Data> dataMap = new Int2ObjectOpenHashMap<>();
 
-    public static void initialize() {
+    static void initialize() {
         Preconditions.checkState(!initialized);
         initialized = true;
 
         NetworkController.register(SetSelectedItemPayload.ID, SelectedItemDisplayer::handleItemSetPayload);
     }
 
-    public static void reset() {
+    static void reset() {
         dataMap.clear();
     }
 

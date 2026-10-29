@@ -36,6 +36,26 @@
             "in_queue_count": "В очереди: ",
             "until_start": "До начала: "
         },
+        "title.{}": {
+            "outcome.{}": {
+                "victory": "Победа",
+                "defeat": "Поражение",
+                "draw": "Ничья"
+            },
+            "cause.{}": {
+                "manual_stop": "Игра остановлена",
+                "murderer.{}": {
+                    "time": "Время кончилось",
+                    "kills": "Выжившие были убиты",
+                    "survivors_left": "Все выжившие покинули игру",
+                },
+                "survivors.{}": {
+                    "generators": "Выжившие починили генераторы",
+                    "murderer_left": "Маньяк покинул игру",
+                    "murderer_drowned": "Маньяк утонул"
+                }
+            }
+        }
     },
     ///
 
@@ -52,6 +72,7 @@
         "first_ability": "Первая способность",
         "interaction": "Взаимодействие",
         "second_ability": "Вторая способность",
+        "third_ability": "Третья способность",
 
         // UI
         "expand_survivor_list": "Раскрыть список выживших",
@@ -99,7 +120,8 @@
                     "dream.{}": {
                         "peek": "Подглянуть",
                         "emerge": "Появиться",
-                        "cancel_viewing": "Отменить"
+                        "cancel_viewing": "Отменить",
+                        "portal_info": "Осмотреть"
                     },
                     "artist.{}": {
                         "link": "Связаться",
@@ -140,6 +162,10 @@
                     "mercenary.reloading": "Перезарядка",
                     "artist.searching": "Поиск",
                     "dream.activation": "Активация",
+                    "dream.portal_charge.{}": {
+                        "": "Заряжается...",
+                        "charged": "Заряжен"
+                    },
 
                     "nun.teleporting": "Телепортация"
                 },
