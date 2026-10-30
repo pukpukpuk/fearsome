@@ -25,7 +25,7 @@ public class KeyboardBindingDrawer extends AbstractBindingDrawer {
         width = textRenderer.getWidth(text) + 1 + PADDING*2;
     }
 
-    private static String tinify(String keyId) {
+    public static String tinify(String keyId) {
         if (keyId.length() == KEYBOARD_KEY_PREFIX.length() + 1) {
             return keyId.substring(KEYBOARD_KEY_PREFIX.length()).toUpperCase();
         }

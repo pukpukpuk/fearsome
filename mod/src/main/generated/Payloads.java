@@ -6,7 +6,7 @@ public class Payloads {
     public static final List<ServerPayloadId<?>> SERVER_PAYLOAD_IDS = List.of(
 			one.autremel.fearsome.ui.game_state.payloads.PlayAbilityProgressAnimationPayload.ID,
 			one.autremel.fearsome.network.ping.PongPayload.ID,
-			one.autremel.fearsome.effects.SetDisplayedEffectNamePayload.ID,
+			one.autremel.fearsome.effects.SetDisplayedEffectArgsPayload.ID,
 			one.autremel.fearsome.ui.survivor_list.payloads.CreateSurvivorListPayload.ID,
 			one.autremel.fearsome.ui.game_state.payloads.UnmarkGeneratorBlockPayload.ID,
 			one.autremel.fearsome.ui.hints.payloads.UnregisterAllActionControlsPayload.ID,

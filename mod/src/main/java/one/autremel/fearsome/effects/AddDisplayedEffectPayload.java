@@ -6,6 +6,7 @@ import one.autremel.fearsome.network.Payload;
 import one.autremel.fearsome.network.ServerPayloadId;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Optional;
 
 @Payload
@@ -13,7 +14,8 @@ public record AddDisplayedEffectPayload(
         int effectId,
         int characterIndex,
         Optional<String> timerKey,
-        Optional<String> name,
+        Optional<String> nameKey,
+        List<Integer> nameArgs,
         Optional<Character> iconSymbol
 ) implements IServerPayload<AddDisplayedEffectPayload> {
     public static final ServerPayloadId<AddDisplayedEffectPayload> ID = new ServerPayloadId<>(
@@ -31,9 +33,10 @@ public record AddDisplayedEffectPayload(
 
         var mask = buf.readByte();
         var timerKey = (mask & TIMER_KEY_MASK) != 0 ? Optional.of(buf.readString()) : Optional.<String>empty();
-        var name = (mask & NAME_MASK) != 0 ? Optional.of(buf.readString()) : Optional.<String>empty();
+        var nameKey = (mask & NAME_MASK) != 0 ? Optional.of(buf.readString()) : Optional.<String>empty();
+        var nameArgs = nameKey.isPresent() ? SetDisplayedEffectArgsPayload.ARGS_CODEC.decode(buf) : List.<Integer>of();
         var iconSymbol = (mask & ICON_MASK) != 0 ? Optional.of(buf.readChar()) : Optional.<Character>empty();
-        return new AddDisplayedEffectPayload(uniqueId, characterIndex, timerKey, name, iconSymbol);
+        return new AddDisplayedEffectPayload(uniqueId, characterIndex, timerKey, nameKey, nameArgs, iconSymbol);
     }
 
     @Override

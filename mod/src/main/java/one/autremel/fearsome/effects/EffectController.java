@@ -25,7 +25,7 @@ public class EffectController {
 
         NetworkController.register(AddDisplayedEffectPayload.ID, EffectController::handleEffectAdd);
         NetworkController.register(RemoveDisplayedEffectPayload.ID, EffectController::handleEffectRemove);
-        NetworkController.register(SetDisplayedEffectNamePayload.ID, EffectController::handleEffectDisplayNameChange);
+        NetworkController.register(SetDisplayedEffectArgsPayload.ID, EffectController::handleEffectArgsChange);
 
         UiController.registerForScreensRemoval(EffectController::handleScreensRemove, true);
     }
@@ -82,12 +82,12 @@ public class EffectController {
         }
     }
 
-    private static void handleEffectDisplayNameChange(SetDisplayedEffectNamePayload payload) {
+    private static void handleEffectArgsChange(SetDisplayedEffectArgsPayload payload) {
         var holder = getHolder(payload.characterIndex());
         var effect = holder.get(payload.effectId());
         if (effect == null) return;
 
-        effect.setName(payload.newName());
+        effect.setNameArgs(payload.args());
         onEffectDisplayNameChange.forEach(c -> c.accept(effect));
     }
 }

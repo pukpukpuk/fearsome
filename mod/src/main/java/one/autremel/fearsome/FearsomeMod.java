@@ -3,16 +3,20 @@ package one.autremel.fearsome;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
+import one.autremel.fearsome.builds.GameBuilds;
+import one.autremel.fearsome.builds.PlayerBuilds;
+import one.autremel.fearsome.catalog.CatalogContainer;
 import one.autremel.fearsome.config.ClientConfig;
 import one.autremel.fearsome.config.GameConfig;
 import one.autremel.fearsome.effects.EffectController;
 import one.autremel.fearsome.illusions.Illusions;
-import one.autremel.fearsome.input.KeyBindings;
 import one.autremel.fearsome.input.BindingEvents;
+import one.autremel.fearsome.input.KeyBindings;
 import one.autremel.fearsome.movement.ClimbingPreventer;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.network.ping.ModPingController;
 import one.autremel.fearsome.network.ping.TimeSynchronizer;
+import one.autremel.fearsome.text.FearText;
 import one.autremel.fearsome.timer.TimerUpdater;
 import one.autremel.fearsome.ui.UiController;
 import one.autremel.fearsome.ui.game_state.ToolsPartController;
@@ -44,6 +48,10 @@ public class FearsomeMod implements ClientModInitializer {
         EffectController.initialize();
         Illusions.initialize();
         ClimbingPreventer.initialize();
+        FearText.initialize();
+        CatalogContainer.initialize();
+        PlayerBuilds.initialize();
+        GameBuilds.initialize();
 
         UiController.initialize();
     }
@@ -61,6 +69,9 @@ public class FearsomeMod implements ClientModInitializer {
         TimerUpdater.reset();
         ToolsPartController.reset();
         ClimbingPreventer.reset();
+        CatalogContainer.reset();
+        PlayerBuilds.reset();
+        GameBuilds.reset();
     }
 
     public static String bindingTextIdentifier(String path) {
@@ -70,11 +81,9 @@ public class FearsomeMod implements ClientModInitializer {
     public static Identifier uiIdentifier(String path) {
         return identifier("ui/"+path);
     }
+
     public static Identifier textureIdentifier(String path) {
         return identifier("textures/"+path+".png");
-    }
-    public static Identifier skinsIdentifier(String path) {
-        return identifier("skins/"+path+".png");
     }
 
     public static Identifier identifier(String path) {

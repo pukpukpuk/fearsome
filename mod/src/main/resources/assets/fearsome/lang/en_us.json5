@@ -130,9 +130,487 @@
             "scroll.lock": "SCLOCK",
             "up": "↑",
         },
-        "mouse": "M%1$s",
+        "mouse.{}": {
+            "": "M%1$s",
+            "left": "LMB",
+            "right": "RMB",
+            "middle": "MMB"
+        },
+    },
+
+    /// Menus
+    "fearsome.menu.{}": {
+        "specificities": "» <white>Notes:</white>",
+
+        "title.{}": {
+            "main": "▶ <white>Main Menu",
+            "team.{}": {
+                "survivors": "▶ <white>Morale Menu <surv>⏺",
+                "murderers": "▶ <white>Blood Menu <murd>⏺"
+            },
+            "characters.{}": {
+                "survivors": "▶ <white>Survivors: ({page}/{pages}) <surv>⏺⏺",
+                "murderers": "▶ <white>Murderers: ({page}/{pages}) <murd>⏺⏺"
+            },
+            "perks.{}": {
+                "survivors": "▶ <white>Skills: {name} ({page}/{pages}) <surv>⏺⏺",
+                "murderers": "▶ <white>Skills: {name} ({page}/{pages}) <murd>⏺⏺"
+            },
+            "description.{}": {
+                "survivors": "▶ <white>{name} <surv>★",
+                "murderers": "▶ <white>{name} <murd>★"
+            },
+            "builds.{}": {
+                "": "▶ <white>Players' Builds",
+                "paged": "▶ <white>Players' Builds ({page}/{pages})"
+            }
+        },
+
+        "button.{}": {
+            "team.{}": {
+                "survivors.{}": {
+                    "name": "» <surv>Seal of Morale",
+                    "description": "Menu of survivors and morale perks"
+                },
+                "murderers.{}": {
+                    "name": "» <murd>Seal of Blood",
+                    "description": "Menu of murderers and blood perks"
+                }
+            },
+            "bestiary.{}": {
+                "name": "» <#93EA93>Bestiary",
+                "description": "A collection of information about various creatures, items and phenomena of the <fear>Fear</fear> world"
+            },
+            "perks.{}": {
+                "survivors.{}": {
+                    "name": "» <surv>Skills Menu",
+                    "description": "Here you can view the available survivor skills"
+                },
+                "murderers.{}": {
+                    "name": "» <murd>Skills Menu",
+                    "description": "Here you can view the available murderer skills"
+                }
+            },
+            "characters.{}": {
+                "survivors.{}": {
+                    "name": "» <surv>Survivor Selection",
+                    "description": "Here you can choose the survivor you will play as next time"
+                },
+                "murderers.{}": {
+                    "name": "» <murd>Murderer Selection",
+                    "description": "Here you can choose the murderer you will play as next time"
+                }
+            },
+            "back.{}": {
+                "name": "» <#F2F27B>Back"
+            },
+            "main.{}": {
+                "name": "» <#EF7FEF>Back to Main Menu"
+            },
+            "without_any_perk.{}": {
+                "name": "» <white>Nobody took a single perk!"
+            },
+            "previous_page.{}": {
+                "name": "» <white>Previous Page",
+                "description": "» <white>Go to the first page: <control_keys>RMB</control_keys>"
+            },
+            "next_page.{}": {
+                "name": "» <white>Next Page",
+                "description": "» <white>Go to the last page: <control_keys>RMB</control_keys>"
+            }
+        },
+
+        "choice.{}": {
+            "name": "<success>✉<white> {name} <control_keys>(↓ LMB, ↑ RMB)",
+            "selected": "<success> ⏺ {value}",
+            "other": " ○ {value}",
+            "filter": "Filter",
+            "sort": "Sorting"
+        },
+        "filter.{}": {
+            "all": "All",
+            "only_available": "Only available"
+        },
+        "sort.{}": {
+            "by_history": "By creation order",
+            "alphabet": "Alphabetically",
+            "slots": "By slot count"
+        },
+
+        "status.{}": {
+            "unavailable": "» <error>Unavailable",
+            "selected": "» <success>Selected!",
+            "select": "» <white>Select: <control_keys>LMB",
+            "info": "» <white>View information: <control_keys>RMB"
+        },
+        "perk_cost": "» Cost: <slots>{dots}",
+
+        "specs.{}": {
+            "name": "⏵> <white>Stats:",
+            "speed": "» Walking speed: {value}",
+            "fix_accuracy": "» Accuracy: {value}",
+            "terror_radius": "» Terror radius: {value}",
+            "sounds_radius": "» Sounds radius: {value}",
+            "slots": "» Slot count: {value}"
+        },
+        "description.{}": {
+            "ability": "⏵> <white>Ability: <accent>{name}",
+            "passive": "⏵> <white>Passive: <accent>{name}",
+            "page": "<white>Page {page} of {pages}. <control_keys>LMB← →RMB"
+        },
+        "go_to_perks.{}": {
+            "name": "⏵> <white>Skills",
+            "slots": "» <white>Slots: {dots}"
+        }
     },
     ///
+
+    "fearsome.character.{}": {
+        "survivors.{}": {
+            "mechanic.{}": {
+                "name": "John Hoffman",
+                "short_name": "John",
+                "ability.{}": {
+                    "name": "Wrench",
+                    "description": "Number of charges - 1. Look at a generator and press {key_first_ability} to instantly repair {amount}% of its progress. Once every 60 seconds since the start of the match, the progress repaired by the item increases by 1%. Charges are not restored",
+                    "specificities.{}": [
+                        "The item can be used on a discharged generator",
+                        "The progress repaired by the item spends accuracy points the same way as normal repair",
+                        "Tokens of the «Technique» skill are added to the progress repaired by the item"
+                    ]
+                },
+                "passive.{}": {
+                    "name": "Mastery",
+                    "description": "Your repair speed increases by {percent}% for each other generator you repaired less than {window, plural, one{# second} other{# seconds}} ago"
+                }
+            },
+            "nurse.{}": {
+                "name": "Agnes Violet",
+                "short_name": "Agnes",
+                "ability.{}": {
+                    "name": "First Aid Kit",
+                    "description": "First aid kit capacity - {capacity} ❤. <control_keys>Crouch</control_keys> and hold {key_first_ability} to heal yourself. While self-healing, you restore 1 ❤ per {period, plural, one{# second} other{# seconds}} and cannot heal other survivors or receive healing from them. Self-healing spends {ratio} ❤ of the kit capacity for each restored ❤. Hold {key_second_ability} while healing another survivor to increase your healing speed by {bonus}%. Such healing spends 1 ❤ of the kit capacity for each restored ❤. The kit capacity is not restored",
+                    "specificities.{}": [
+                        "In the dying state, you do not need to crouch to heal yourself"
+                    ]
+                },
+                "passive.{}": {
+                    "name": "Quick Healing",
+                    "description": "If you heal a survivor in the injured state alone, your healing speed increases by {percent}%"
+                }
+            },
+            "addict.{}": {
+                "name": "Bobby Wenstone",
+                "short_name": "Bobby",
+                "ability.{}": {
+                    "name": "Syringe",
+                    "description": "Number of charges - 1. Press {key_first_ability} to get the <effect>Speed {level}</effect> effect for {duration, plural, one{# second} other{# seconds}}. On use, your walking speed returns to {speed}, and its reduction from the passive ability starts over. Charges are not restored",
+                    "specificities.{}": [
+                        "If you already have the <effect>Speed</effect> effect, the level of the new effect increases by the level of the current one"
+                    ]
+                },
+                "passive.{}": {
+                    "name": "Addiction",
+                    "description": "Your walking speed decreases by {reduce} once every {period, plural, one{# second} other{# seconds}}. Minimum walking speed - {min_speed}"
+                }
+            },
+            "nun.{}": {
+                "name": "Rosa Frank",
+                "short_name": "Rosa",
+                "ability.{}": {
+                    "name": "Glass Shards",
+                    "description": "Number of charges - {charges}. Hold {key_first_ability} for {hold, plural, one{# second} other{# seconds}} to teleport to the closet farthest from the murderer. While holding, your walking speed decreases to {speed}, you get the <effect>Blindness</effect> effect and cannot jump or sprint. When teleporting, you lose {damage} ❤. Charges are not restored. Cooldown - {cooldown, plural, one{# second} other{# seconds}}",
+                    "specificities.{}": [
+                        "Losing ❤ can put you into the injured or dying state"
+                    ]
+                },
+                "passive.{}": {
+                    "name": "Help from Above",
+                    "description": "The number of quests on the map increases by {quests}"
+                }
+            },
+            "buterenko.{}": {
+                "name": "Alexander Buterenko",
+                "short_name": "Alexander",
+                "ability.{}": {
+                    "name": "Mannequin",
+                    "description": "Press {key_first_ability} to start recording your actions for {record, plural, one{# second} other{# seconds}}. Pressing {key_first_ability} again or taking damage cancels the recording. When the recording ends, the mannequin repeats the recorded actions in a loop for {play, plural, one{# second} other{# seconds}}. The mannequin is destroyed when this time ends, when the murderer hits it, or when you hit it from less than {destroy_distance, plural, one{# block} other{# blocks}} away. After destruction, an item remains in the mannequin's place. Come within {pickup_distance, plural, one{# block} other{# blocks}} of the item to pick it up and use the ability again. If you do not pick up the item within {lifetime, plural, one{# second} other{# seconds}}, it disappears",
+                    "specificities.{}": [
+                        "If you destroy the mannequin by hitting it from less than {destroy_distance, plural, one{# block} other{# blocks}} away, the item instantly returns to you",
+                        "The mannequin cannot have statuses",
+                        "Changes in action speed do not affect the mannequin",
+                        "Skills do not affect the mannequin",
+                        "The mannequin leaves no tracks and is not highlighted for the murderer"
+                    ]
+                },
+                "passive.{}": {
+                    "name": "Support",
+                    "description": "If there is at least 1 other survivor within {radius, plural, one{# block} other{# blocks}} of you, your repair speed increases by {percent}% and you get the <effect>Speed {level}</effect> effect",
+                    "specificities.{}": [
+                        "The mannequin also activates the bonus"
+                    ]
+                }
+            }
+        },
+        "murderers.{}": {
+            "ghost.{}": {
+                "name": "Ghost",
+                "short_name": "Ghost",
+                "ability.{}": {
+                    "name": "Bell",
+                    "description": "Press {key_first_ability} to enter the spectral state. In the spectral state, you get the <term>Invisibility</term> status, your walking speed increases to {spectral_speed}, and you cannot attack. Survivors do not feel your terror radius while you are in the spectral state. Hold {key_first_ability} for {hold, plural, one{# second} other{# seconds}} to leave the spectral state. While holding, you become visible and ring the bell, your walking speed decreases to {holding_speed}, and you cannot jump or sprint. After leaving, your walking speed stays {spectral_speed} for {speed_reset_delay, plural, one{# second} other{# seconds}}. Cooldown - {cooldown, plural, one{# second} other{# seconds}}",
+                    "specificities.{}": [
+                        "While holding {key_first_ability}, visibility and the terror radius are restored in proportion to the hold time",
+                        "If you hold {key_first_ability} for less than {hold, plural, one{# second} other{# seconds}}, you get the <term>Invisibility</term> status again",
+                        "While you break a door or a generator in the spectral state, you become {breaking_visibility}% visible"
+                    ]
+                },
+                "passive.{}": {
+                    "name": "Scrap of Chiton",
+                    "description": "The number of quests on the map increases by {quests}. Additionally, ghost quests appear on the map, their number - {fake_quests}. Using a ghost quest does not reduce the number of quests that must be used to charge the generators"
+                }
+            },
+            "mercenary.{}": {
+                "name": "Mercenary",
+                "short_name": "Mercenary",
+                "ability.{}": {
+                    "name": "Poison Vial",
+                    "description": "Number of charges - {charges}. Press {key_first_ability} to throw a vial. Throwing reduces the number of charges by 1. On impact, the vial breaks and leaves a poison cloud for {cloud_lifetime, plural, one{# second} other{# seconds}}. A survivor in the cloud is highlighted for you, gets the <effect>Blindness</effect>, <effect>Nausea</effect> and <effect>Slowness {slowness_level}</effect> effects and cannot jump or sprint. The effects, restrictions and highlighting last while the survivor is in the cloud and for {effects_duration, plural, one{# second} other{# seconds}} after leaving it. If you stay in the cloud for more than {scan_time, plural, one{# second} other{# seconds}}, all survivors within {scan_radius, plural, one{# block} other{# blocks}} of you are highlighted for you. The highlighting lasts while you are in the cloud and for 1 second after leaving it. Hold {key_second_ability} for {reload, plural, one{# second} other{# seconds}} to restore all charges. While holding, your walking speed decreases to {reload_speed}, and you cannot jump, sprint or throw vials",
+                    "specificities.{}": [
+                        "Holding {key_second_ability} is only available if you have less than {charges} charges",
+                        "If you hold {key_second_ability} for less than {reload, plural, one{# second} other{# seconds}}, the charges are not restored",
+                        "A survivor hit by the vial instantly gets the cloud effects",
+                        "The cloud grows if the vial breaks more than {growth_distance, plural, one{# block} other{# blocks}} away from you, and reaches its maximum size at {max_growth_distance, plural, one{# block} other{# blocks}}",
+                        "After receiving your hit, the survivor loses the cloud effects and cannot get them again for {immunity, plural, one{# second} other{# seconds}}"
+                    ]
+                },
+                "passive.{}": {
+                    "name": "Slowing Ampoule",
+                    "description": "When repairing a generator or using a quest, a survivor gets the <effect>Slowness {level}</effect> effect for {duration, plural, one{# second} other{# seconds}}",
+                    "specificities.{}": [
+                        "During repair, the effect duration is refreshed with every 1% of generator progress"
+                    ]
+                }
+            },
+            "artist.{}": {
+                "name": "Artist",
+                "short_name": "Artist",
+                "ability.{}": {
+                    "name": "Castling",
+                    "description": "Hold {key_first_ability} for at least {min_hold, plural, one{# second} other{# seconds}} to create a link with the nearest able-bodied survivor within {radius, plural, one{# block} other{# blocks}} of you. While holding, you get the <effect>Slowness V</effect> effect. When the link is created, the linked survivor gets the <term>Link</term> status and is highlighted for you for {glow_duration, plural, one{# second} other{# seconds}}. The repair time of the linked survivor increases by {percent}%, and their speed of healing other survivors decreases by {percent}%. Press {key_first_ability} to swap places with the linked survivor. After the swap, the link disappears",
+                    "specificities.{}": [
+                        "While you hold {key_first_ability}, the link moves to the nearest suitable survivor",
+                        "The link disappears if the linked survivor enters the dying state"
+                    ]
+                },
+                "passive.{}": {
+                    "name": "Bloody Canvas",
+                    "description": "When the generators are discharged, all quests on the map are highlighted for you for {glow_duration, plural, one{# second} other{# seconds}}",
+                    "specificities.{}": [
+                        "A quest stops being highlighted when it is used or when the generators are charged"
+                    ]
+                }
+            },
+            "dream.{}": {
+                "name": "Dream",
+                "short_name": "Dream",
+                "ability.{}": {
+                    "name": "Falling Asleep",
+                    "description": "Survivors outside the dream world cannot see you, and your hits on them deal no damage. Hit a survivor outside the dream world to make them start falling asleep. After {falling_asleep, plural, one{# second} other{# seconds}}, the survivor enters the dream world, and an inactive portal appears in their place. After {charge, plural, one{# second} other{# seconds}}, the portal becomes active. A survivor in the dream world sees you, feels your terror radius and gets the <effect>Darkness</effect> effect, and their repair time increases by {debuff}%. Your hits on a survivor in the dream world deal damage. After a sleep hit, you get the <effect>Slowness III</effect> effect and cannot jump for {falling_asleep, plural, one{# second} other{# seconds}}. Cooldown - {cooldown, plural, one{# second} other{# seconds}}",
+                    "specificities.{}": [
+                        "A survivor who passes through an active portal enters or leaves the dream world, and the portal becomes inactive for {charge, plural, one{# second} other{# seconds}}",
+                        "A survivor leaves the dream world when entering the dying state",
+                        "While a survivor is falling asleep, they get the <effect>Nausea</effect> effect and start seeing you",
+                        "Portals within {portals_glow_radius, plural, one{# block} other{# blocks}} of a survivor are highlighted for them",
+                        "If there is another portal within {min_portal_distance, plural, one{# block} other{# blocks}} of the survivor, the new portal appears only when the survivor leaves this radius",
+                        "Maximum number of portals on the map - {max_portals}",
+                        "If the number of portals exceeds the maximum, the oldest portal disappears",
+                        "Survivors outside the dream world feel your terror radius only within {awake_terror_radius, plural, one{# block} other{# blocks}} of you"
+                    ]
+                },
+                "ability2.{}": {
+                    "name": "Hypnic Jerk",
+                    "description": "Look at a portal and press {key_second_ability} to start watching through it. While watching, you cannot move, attack or interact with the map. If the portal is active, press {key_third_ability} to emerge from it after {emerge, plural, one{# second} other{# seconds}}. Emerging makes the portal inactive for {charge, plural, one{# second} other{# seconds}}. Look at another portal and press {key_second_ability} to switch to it. <control_keys>Crouch</control_keys> to return to your initial position",
+                    "specificities.{}": [
+                        "Switching to another portal and returning to the initial position cancel the emergence"
+                    ]
+                },
+                "passive.{}": {
+                    "name": "Mysterious Presence",
+                    "description": "The repair time of survivors within {radius, plural, one{# block} other{# blocks}} of you increases by {percent}%, and their speed of healing other survivors decreases by {percent}%"
+                }
+            }
+        }
+    },
+    "fearsome.perk.{}": {
+        "murderers.{}": {
+            "eruption.{}": {
+                "name": "Eruption",
+                "description": "When only one generator is left to repair, all completed generators instantly lose {percent}% of their progress and start regressing. Triggers once per match",
+                "specificities.{}": [
+                    "Does not work if there is only 1 survivor in the match"
+                ]
+            },
+            "last_breath.{}": {
+                "name": "Last Breath",
+                "description": "When only one generator is left to repair, the accuracy points of all survivors decrease by {accuracy}"
+            },
+            "technician.{}": {
+                "name": "Technician",
+                "effect": "Technician x{0}",
+                "description": "When you put a survivor into the dying state, your token count increases by 1. If you have tokens and the generators are charged, breaking a generator discharges all generators and your token count decreases by 1. Maximum number of tokens - {max_tokens}"
+            },
+            "pursuit.{}": {
+                "name": "Pursuit",
+                "description": "When a generator is repaired, all survivors are highlighted for you for {duration, plural, one{# second} other{# seconds}}",
+                "specificities.{}": [
+                    "Does not trigger when the last generator is repaired",
+                    "The generator repair sound can be heard across the whole map"
+                ]
+            },
+            "brutal_force.{}": {
+                "name": "Brutal Force",
+                "description": "The time it takes you to break doors and generators is reduced by {percent}%"
+            },
+            "energy.{}": {
+                "name": "Energy Drink",
+                "description": "After a successful hit, you get a weapon and ability cooldown, the <effect>Slowness V</effect> effect, and cannot jump, sprint or climb. The duration of all these restrictions is reduced by {percent}%"
+            },
+            "fear_help.{}": {
+                "name": "Help of Fear",
+                "description": "At the start of the match, the number of quests that must be used to charge the generators increases by {amount}"
+            },
+            "fresh_cut.{}": {
+                "name": "Fresh Cut",
+                "description": "After your hit, the survivor is highlighted for you for {duration, plural, one{# second} other{# seconds}}"
+            },
+            "blocking.{}": {
+                "name": "Blocking",
+                "description": "When the generators are charged, all generators are blocked for {duration, plural, one{# second} other{# seconds}}"
+            },
+            "combo.{}": {
+                "name": "Combo",
+                "description": "When you put a survivor into the dying state and all survivors have already been in it, all survivors are highlighted for you for {glow_duration, plural, one{# second} other{# seconds}} and get the <term>Vulnerability</term> status for {vulnerability_duration, plural, one{# second} other{# seconds}}. Triggers once per match"
+            },
+            "observe.{}": {
+                "name": "Observation",
+                "effect": "Observation x{0}",
+                "description": "Once every {period, plural, one{# second} other{# seconds}}, your token count increases by {gain} for each able-bodied survivor within {radius, plural, one{# block} other{# blocks}} of you and within the terror radius. If there are no such survivors, your token count decreases by {loss}. When you have at least {required} tokens, all tokens are spent and all survivors are highlighted for you for {glow_duration, plural, one{# second} other{# seconds}}"
+            },
+            "bloody_spring.{}": {
+                "name": "Bloody Spring",
+                "description": "The generator repair time of all survivors increases by {percent}% for each ❤ missing across all survivors"
+            },
+            "distant_view.{}": {
+                "name": "Distant Gaze",
+                "description": "When you put a survivor into the dying state, all survivors farther than {radius, plural, one{# block} other{# blocks}} from you are highlighted for you for {duration, plural, one{# second} other{# seconds}}"
+            },
+            "ritual_macana.{}": {
+                "name": "Ritual Macana",
+                "description": "When a survivor heals another survivor to the injured or healthy state, the healing survivor is highlighted for you for {glow_duration, plural, one{# second} other{# seconds}} and gets the <term>Vulnerability</term> status for {vulnerability_duration, plural, one{# second} other{# seconds}}"
+            },
+            "overload.{}": {
+                "name": "Overload",
+                "description": "When you put a survivor into the dying state, the unfinished generator with the most progress instantly loses {percent}% of its progress and starts regressing"
+            }
+        },
+        "survivors.{}": {
+            "skillful_hands.{}": {
+                "name": "Skillful Hands",
+                "description": "Your accuracy points increase by {points}"
+            },
+            "adrenaline.{}": {
+                "name": "Adrenaline",
+                "description": "After receiving a hit that puts you into the injured state, you get the <effect>Speed {level}</effect> effect for {duration, plural, one{# second} other{# seconds}}",
+                "specificities.{}": [
+                    "The effect replaces your current <effect>Speed</effect> effect, even if its level is higher"
+                ]
+            },
+            "victim_for_survival.{}": {
+                "name": "Sacrifice for Salvation",
+                "effect": "Precision",
+                "description": "When you receive a hit from the murderer, the generators are instantly charged, and all other survivors get the <term>Precision</term> status for {duration, plural, one{# second} other{# seconds}}. While the status is active, the next {percent}% of generator progress repaired by a survivor does not spend their accuracy points"
+            },
+            "wait_and_see.{}": {
+                "name": "Wait and See",
+                "description": "If you do not move or interact for {duration, plural, one{# second} other{# seconds}}, the murderer within {radius, plural, one{# block} other{# blocks}} of you is highlighted for you until you start moving or interacting"
+            },
+            "distortion.{}": {
+                "name": "Distortion",
+                "effect": "Distortion x{0}",
+                "description": "While you are within the terror radius and not in the dying state, your distortion points increase by 1 once every {gain_period, plural, one{# second} other{# seconds}}. Outside the terror radius and in the dying state, your distortion points decrease by 1 once every {loss_period, plural, one{# second} other{# seconds}}. While you have distortion points, your death timer does not decrease. Maximum number of distortion points - {max_points}"
+            },
+            "disgraceful.{}": {
+                "name": "Indomitable",
+                "description": "In the dying state, your walking speed is multiplied by {speed_multiplier}, and your self-healing time is divided by {healing_divider}"
+            },
+            "harden.{}": {
+                "name": "Hardening",
+                "effect": "Hardening +{0}%",
+                "description": "The speed at which other survivors heal you increases by {percent}% for each hit you have received"
+            },
+            "excerpt.{}": {
+                "name": "Endurance",
+                "description": "If you have already been in the dying state and your death timer has no more than {max_timer, plural, one{# second} other{# seconds}} left, entering the healthy state gives you the <term>Invisibility</term> status for {duration, plural, one{# second} other{# seconds}}"
+            },
+            "hurry.{}": {
+                "name": "Hurry",
+                "effect": "Delayed Healing",
+                "description": "When another survivor heals you in the injured state, you get the <term>Delayed Healing</term> status for {per_heart, plural, one{# second} other{# seconds}} for each missing ❤. While the status is active, you cannot receive healing. When the status ends, you enter the healthy state",
+                "specificities.{}": [
+                    "The skill also triggers right after another survivor has healed you to the injured state",
+                    "Minimum duration of the <term>Delayed Healing</term> status - {per_heart, plural, one{# second} other{# seconds}}",
+                    "The <term>Delayed Healing</term> status disappears without entering the healthy state when you receive any damage or the <term>Weakness</term> status"
+                ]
+            },
+            "one_more_chance.{}": {
+                "name": "One More Chance",
+                "description": "When you heal a survivor from the dying state to the injured state, they get the <term>Armor</term> status for {duration, plural, one{# second} other{# seconds}}",
+                "specificities.{}": [
+                    "The skill triggers if you heal together with other survivors",
+                    "The <term>Armor</term> status is not granted if the survivor already has the <term>Armor</term> or <term>Deep Wound</term> status"
+                ]
+            },
+            "fortification.{}": {
+                "name": "Fortification",
+                "description": "If the murderer opens a door that you opened or closed less than {window, plural, one{# second} other{# seconds}} ago, the duration of the <effect>Slowness V</effect> effect they receive is multiplied by {multiplier}. If the murderer starts breaking such a door, its breaking time is multiplied by {multiplier}. Cooldown - {cooldown, plural, one{# second} other{# seconds}}",
+                "specificities.{}": [
+                    "Together with the effect, the murderer's weapon and ability cooldown after opening the door is multiplied by {multiplier}",
+                    "The cooldown starts when you open or close a door, even if the murderer does not interact with it"
+                ]
+            },
+            "recovery.{}": {
+                "name": "Recovery",
+                "description": "If you have been in the dying state for more than {duration, plural, one{# second} other{# seconds}}, you instantly restore {hearts} ❤ when leaving it"
+            },
+            "technique.{}": {
+                "name": "Technique",
+                "effect": "Technique x{0}",
+                "description": "When you use a quest, your token count increases by 1, and each next quest gives 1 more than the previous one. Maximum token gain per quest - {max_gain}. On your next generator repair, you additionally repair 1% of generator progress for each token, and all tokens are spent. Maximum number of tokens - {max_tokens}",
+                "specificities.{}": [
+                    "After the tokens are spent, the token gain per quest starts from 1 again"
+                ]
+            },
+            "rebirth.{}": {
+                "name": "Rebirth",
+                "description": "When any generator is repaired, you instantly restore {hearts} ❤"
+            },
+            "concentration.{}": {
+                "name": "Stress Resistance",
+                "description": "If you have no more than {hearts} ❤, your repair speed and your speed of healing other survivors increase by {percent}%"
+            }
+        }
+    },
+
+    "fearsome.status.{}": {
+        "armor": "Armor",
+        "deep_wound": "Deep Wound",
+        "invisibility": "Invisibility",
+        "vulnerability": "Vulnerability",
+        "weakness": "Weakness",
+        "linked": "Link",
+        "support": "Support"
+    },
 
 
     "fearsome.{}": {

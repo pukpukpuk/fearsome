@@ -1,6 +1,9 @@
 package one.autremel.fearsome.effects;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 class EffectHolder {
     private final HashMap<Integer, DisplayedEffect> effectMap = new HashMap<>();
@@ -19,7 +22,7 @@ class EffectHolder {
 
     void add(DisplayedEffect effect) {
         effectMap.put(effect.getUniqueId(), effect);
-        if (effect.getName() != null) withDisplayName.add(effect);
+        if (effect.getNameKey() != null) withDisplayName.add(effect);
         if (effect.getIconSymbol() != null) withIcon.add(effect);
     }
 
@@ -27,7 +30,7 @@ class EffectHolder {
         var effect = effectMap.remove(id);
         if (effect == null) return null;
 
-        if (effect.getName() != null) withDisplayName.remove(effect);
+        if (effect.getNameKey() != null) withDisplayName.remove(effect);
         if (effect.getIconSymbol() != null) withIcon.remove(effect);
         return effect;
     }

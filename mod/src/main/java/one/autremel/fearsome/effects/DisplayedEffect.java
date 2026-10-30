@@ -1,9 +1,14 @@
 package one.autremel.fearsome.effects;
 
 import lombok.Getter;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import one.autremel.fearsome.text.FearText;
 import one.autremel.fearsome.timer.TimerSignature;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.List;
 
 @Getter
 public class DisplayedEffect {
@@ -13,19 +18,20 @@ public class DisplayedEffect {
     @Getter @Nullable
     private final TimerSignature timerSignature;
     @Nullable
-    private String name;
+    private final String nameKey;
     @Nullable
     private final Character iconSymbol;
 
     private Text displayNameText;
 
-    public DisplayedEffect(int uniqueId, int characterIndex, @Nullable TimerSignature timerSignature, @Nullable String name, @Nullable Character iconSymbol) {
+    public DisplayedEffect(int uniqueId, int characterIndex, @Nullable TimerSignature timerSignature, @Nullable String nameKey, List<Integer> nameArgs, @Nullable Character iconSymbol) {
         this.uniqueId = uniqueId;
         this.characterIndex = characterIndex;
         this.timerSignature = timerSignature;
+        this.nameKey = nameKey;
         this.iconSymbol = iconSymbol;
 
-        setName(name);
+        setNameArgs(nameArgs);
     }
 
     public static DisplayedEffect of(AddDisplayedEffectPayload payload) {
@@ -39,15 +45,25 @@ public class DisplayedEffect {
                 payload.effectId(),
                 characterIndex,
                 signature,
-                payload.name().orElse(null),
+                payload.nameKey().orElse(null),
+                payload.nameArgs(),
                 payload.iconSymbol().orElse(null)
         );
     }
 
-    void setName(String name) {
-        this.name = name;
-        this.displayNameText = name != null
-                ? Text.of(name + (iconSymbol != null ? (" " + iconSymbol) : ""))
-                : null;
+    void setNameArgs(List<Integer> nameArgs) {
+        if (nameKey == null) {
+            displayNameText = null;
+            return;
+        }
+
+        var params = new HashMap<String, Object>();
+        for (int i = 0; i < nameArgs.size(); i++) {
+            params.put(String.valueOf(i), nameArgs.get(i));
+        }
+
+        var text = FearText.format(nameKey, params, Style.EMPTY);
+        if (iconSymbol != null) text.append(" " + iconSymbol);
+        displayNameText = text;
     }
 }
