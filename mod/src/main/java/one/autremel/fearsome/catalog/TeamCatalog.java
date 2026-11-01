@@ -13,7 +13,7 @@ public record TeamCatalog(
         List<PerkEntry> perks
 ) {
     static TeamCatalog read(PacketByteBuf buf, CharacterTeam team) {
-        var middleValues = new MiddleValues(buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat());
+        var middleValues = new MiddleValues(buf.readFloat(), buf.readFloat(), buf.readFloat());
         var characters = CatalogReader.readList(buf, buf.readVarInt(), CharacterEntry::read);
         var perks = CatalogReader.readList(buf, buf.readVarInt(), PerkEntry::read);
         return new TeamCatalog(team, middleValues, characters, perks);
@@ -35,5 +35,5 @@ public record TeamCatalog(
         return null;
     }
 
-    public record MiddleValues(float speed, float teamStat, float soundsRadius, float slots) {}
+    public record MiddleValues(float speed, float teamStat, float slots) {}
 }

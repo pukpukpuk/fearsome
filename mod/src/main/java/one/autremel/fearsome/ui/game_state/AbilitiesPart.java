@@ -1,7 +1,6 @@
 package one.autremel.fearsome.ui.game_state;
 
 import io.wispforest.owo.ui.component.LabelComponent;
-import io.wispforest.owo.ui.component.UIComponents;
 import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.container.StackLayout;
 import io.wispforest.owo.ui.core.Insets;
@@ -18,7 +17,10 @@ import one.autremel.fearsome.ui.components.HideableStackLayout;
 import one.autremel.fearsome.ui.components.RadialProgressBar;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class AbilitiesPart {
     private static final HashMap<String, List<Identifier>> cachedSprites = new HashMap<>();
@@ -67,8 +69,6 @@ public class AbilitiesPart {
         );
 
         var bar = cardRoot.childById(RadialProgressBar.class, "bar");
-        bar.setColor(team.getAbilityProgressBarColor());
-
         var margin = bar.width() + DefaultBlurredSurface.MARGIN;
         var side = cardRoot.horizontalSizing().get().value - 4*margin;
         var icon = new ColorableTextureComponent(texture, side);
@@ -82,7 +82,7 @@ public class AbilitiesPart {
         var countLabel = cardRoot.childById(LabelComponent.class, "ability_count");
 
         root.child(cardRoot);
-        var card = new AbilityCard(bar, hideableCountRoot, countLabel, icon);
+        var card = new AbilityCard(team, bar, hideableCountRoot, countLabel, icon);
         card.setActiveState(true);
 
         return card;

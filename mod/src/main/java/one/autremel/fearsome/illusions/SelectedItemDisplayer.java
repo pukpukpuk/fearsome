@@ -30,6 +30,11 @@ public class SelectedItemDisplayer {
     }
 
     private static void handleItemSetPayload(SetSelectedItemPayload payload) {
+        if (payload.isCleanupRequest()) {
+            dataMap.clear();
+            return;
+        }
+
         var data = dataMap.computeIfAbsent(payload.entityId(), i -> new Data());
 
         var itemStack = new ItemStack(payload.item());

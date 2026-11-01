@@ -97,7 +97,6 @@ public class CharacterDescriptionScreen extends InventoryMenuScreen {
         tooltip.add(isSurvivors
                 ? MenuTexts.text("specs.fix_accuracy", Map.of("value", MenuTexts.formatStat(character.teamStat(), middle.teamStat(), false)))
                 : MenuTexts.text("specs.terror_radius", Map.of("value", MenuTexts.formatStat(character.teamStat(), middle.teamStat(), true))));
-        tooltip.add(MenuTexts.text("specs.sounds_radius", Map.of("value", MenuTexts.formatStat(character.soundsRadius(), middle.soundsRadius(), true))));
         tooltip.add(MenuTexts.text("specs.slots", Map.of("value", MenuTexts.formatStat(character.slots(), middle.slots(), false))));
 
         return MenuSlot.of(Items.MAP, tooltip);

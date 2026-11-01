@@ -16,6 +16,7 @@ import net.minecraft.util.math.Vec3d;
 import one.autremel.fearsome.Easings;
 import one.autremel.fearsome.illusions.LocalEntityIds;
 import one.autremel.fearsome.illusions.glowing.GlowingEntities;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -101,18 +102,18 @@ class DreamPortal {
         updateBlockStates();
     }
 
-    void setCharging(long chargeEndTime) {
+    void setCharging(@Nullable Long chargeStartTime, long chargeEndTime) {
         var now = System.currentTimeMillis();
         this.chargeEndTime = chargeEndTime;
         if (isCharging) return;
         isCharging = true;
-        chargingSince = now;
+        chargingSince = chargeStartTime != null ? chargeStartTime : now;
 
         if (isCharged) {
             dischargeEndTime = now + DISCHARGE_DURATION;
             setupAnimation(false);
         } else {
-            beginChargingAnimation(now);
+            beginChargingAnimation(chargingSince);
         }
     }
 

@@ -250,7 +250,6 @@
             "speed": "» Walking speed: {value}",
             "fix_accuracy": "» Accuracy: {value}",
             "terror_radius": "» Terror radius: {value}",
-            "sounds_radius": "» Sounds radius: {value}",
             "slots": "» Slot count: {value}"
         },
         "description.{}": {
@@ -304,14 +303,18 @@
                 "short_name": "Bobby",
                 "ability.{}": {
                     "name": "Syringe",
-                    "description": "Number of charges - 1. Press {key_first_ability} to get the <effect>Speed {level}</effect> effect for {duration, plural, one{# second} other{# seconds}}. On use, your walking speed returns to {speed}, and its reduction from the passive ability starts over. Charges are not restored",
+                    "description": "Press {key_first_ability} to get the <effect>Speed {level}</effect> effect for {duration, plural, one{# second} other{# seconds}}. On use, your walking speed increases by {boost, number, #.######}. For each previous use, the duration of the <effect>Speed</effect> effect decreases by {duration_reduce}%, and the walking speed bonus decreases by {boost_reduce}%. For each previous use, the rate at which the passive ability decreases your walking speed increases by {change_increase}%. Maximum walking speed - {max_speed}. Cooldown - {cooldown, plural, one{# second} other{# seconds}}",
                     "specificities.{}": [
-                        "If you already have the <effect>Speed</effect> effect, the level of the new effect increases by the level of the current one"
+                        "A new <effect>Speed</effect> effect replaces the <effect>Speed</effect> effect you already have",
+                        "The cooldown starts when the <effect>Speed</effect> effect ends"
                     ]
                 },
                 "passive.{}": {
                     "name": "Addiction",
-                    "description": "Your walking speed decreases by {reduce} once every {period, plural, one{# second} other{# seconds}}. Minimum walking speed - {min_speed}"
+                    "description": "Your walking speed decreases by {change, number, #.######} per second. Minimum walking speed - {min_speed}",
+                    "specificities.{}": [
+                        "While the effect from your ability is active, your walking speed does not decrease"
+                    ]
                 }
             },
             "nun.{}": {
@@ -336,7 +339,6 @@
                     "name": "Mannequin",
                     "description": "Press {key_first_ability} to start recording your actions for {record, plural, one{# second} other{# seconds}}. Pressing {key_first_ability} again or taking damage cancels the recording. When the recording ends, the mannequin repeats the recorded actions in a loop for {play, plural, one{# second} other{# seconds}}. The mannequin is destroyed when this time ends, when the murderer hits it, or when you hit it from less than {destroy_distance, plural, one{# block} other{# blocks}} away. After destruction, an item remains in the mannequin's place. Come within {pickup_distance, plural, one{# block} other{# blocks}} of the item to pick it up and use the ability again. If you do not pick up the item within {lifetime, plural, one{# second} other{# seconds}}, it disappears",
                     "specificities.{}": [
-                        "If you destroy the mannequin by hitting it from less than {destroy_distance, plural, one{# block} other{# blocks}} away, the item instantly returns to you",
                         "The mannequin cannot have statuses",
                         "Changes in action speed do not affect the mannequin",
                         "Skills do not affect the mannequin",
@@ -559,7 +561,6 @@
                 "description": "When another survivor heals you in the injured state, you get the <term>Delayed Healing</term> status for {per_heart, plural, one{# second} other{# seconds}} for each missing ❤. While the status is active, you cannot receive healing. When the status ends, you enter the healthy state",
                 "specificities.{}": [
                     "The skill also triggers right after another survivor has healed you to the injured state",
-                    "Minimum duration of the <term>Delayed Healing</term> status - {per_heart, plural, one{# second} other{# seconds}}",
                     "The <term>Delayed Healing</term> status disappears without entering the healthy state when you receive any damage or the <term>Weakness</term> status"
                 ]
             },
@@ -636,6 +637,7 @@
                         "break": "Break"
                     },
                     use_elevator: "Use elevator",
+                    "healing": "Healing",
 
 
                     "ghost.{}": {

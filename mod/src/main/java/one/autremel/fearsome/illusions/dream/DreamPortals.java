@@ -73,7 +73,7 @@ public class DreamPortals {
         if (portal == null) return;
 
         if (payload.chargeEndTime() == null) portal.setCharged();
-        else portal.setCharging(payload.chargeEndTime());
+        else portal.setCharging(payload.chargeStartTime(), payload.chargeEndTime());
     }
 
     private static void handleGlowingPayload(SetDreamPortalGlowingPayload payload) {

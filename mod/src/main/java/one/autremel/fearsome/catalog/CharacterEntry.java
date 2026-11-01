@@ -13,7 +13,6 @@ public record CharacterEntry(
         Item icon,
         float speed,
         float teamStat,
-        float soundsRadius,
         List<DescriptionPage> abilityPages,
         List<DescriptionPage> passivePages
 ) {
@@ -26,11 +25,10 @@ public record CharacterEntry(
 
         var speed = buf.readFloat();
         var teamStat = buf.readFloat();
-        var soundsRadius = buf.readFloat();
 
         var abilityPages = CatalogReader.readList(buf, Byte.toUnsignedInt(buf.readByte()), DescriptionPage::read);
         var passivePages = CatalogReader.readList(buf, Byte.toUnsignedInt(buf.readByte()), DescriptionPage::read);
 
-        return new CharacterEntry(id, key, slots, isPlayable, icon, speed, teamStat, soundsRadius, abilityPages, passivePages);
+        return new CharacterEntry(id, key, slots, isPlayable, icon, speed, teamStat, abilityPages, passivePages);
     }
 }

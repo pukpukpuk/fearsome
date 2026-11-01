@@ -4,8 +4,10 @@ import com.google.common.base.Preconditions;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.util.math.MathHelper;
 import one.autremel.fearsome.Easings;
+import one.autremel.fearsome.FearsomeMod;
 import one.autremel.fearsome.network.NetworkController;
 import one.autremel.fearsome.render.CustomOverlay;
+import one.autremel.fearsome.ui.UiController;
 import org.jetbrains.annotations.Nullable;
 
 public class Manifestations {
@@ -32,6 +34,7 @@ public class Manifestations {
         initialized = true;
 
         NetworkController.register(SetManifestationPayload.ID, Manifestations::handleSetPayload);
+        UiController.registerForScreensRemoval(Manifestations::reset, true);
     }
 
     @Nullable
@@ -49,6 +52,17 @@ public class Manifestations {
 
     public static void reset() {
         states.clear();
+    }
+
+    public static void logEntityDestroy(int entityId) {
+        var state = states.get(entityId);
+        if (state == null) return;
+
+        var now = System.currentTimeMillis();
+        FearsomeMod.LOGGER.info(
+                "[ManifestationDebug] entity {} destroyed {} ms before animation end (target {}, progress {})",
+                entityId, state.endTime() - now, state.target(), state.getProgress(now)
+        );
     }
 
     @Nullable
